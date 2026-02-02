@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
-
-void main() {
-  runApp(const ProviderScope(child: CareConnectApp()));
-}
 
 class CareConnectApp extends StatelessWidget {
   const CareConnectApp({super.key});
@@ -13,6 +8,7 @@ class CareConnectApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      title: 'CareConnect',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       routerConfig: appRouter,
