@@ -16,7 +16,8 @@ void main() {
         ),
       );
 
-      // Note: The widget has hardcoded 'Back to Dashboard' text
+      // The widget always displays 'Back to Dashboard' regardless of text parameter
+      // The text parameter is only used for semantic labels
       expect(find.text('Back to Dashboard'), findsOneWidget);
     });
 
