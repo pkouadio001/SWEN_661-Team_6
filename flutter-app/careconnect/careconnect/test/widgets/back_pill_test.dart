@@ -4,7 +4,7 @@ import 'package:careconnect/widgets/back_pill.dart';
 
 void main() {
   group('BackPill', () {
-    testWidgets('renders with text', (WidgetTester tester) async {
+    testWidgets('renders with hardcoded Dashboard text', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -16,6 +16,7 @@ void main() {
         ),
       );
 
+      // Note: The widget has hardcoded 'Back to Dashboard' text
       expect(find.text('Back to Dashboard'), findsOneWidget);
     });
 
