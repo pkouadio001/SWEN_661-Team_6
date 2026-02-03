@@ -169,10 +169,49 @@ The following packages are used for testing:
 - Ensure test data matches expected values
 - Verify any time-dependent tests account for potential timing issues
 
+## Measuring Test Coverage
+
+### Generate Coverage Report
+```bash
+flutter test --coverage
+```
+
+This generates a `coverage/lcov.info` file in the project root.
+
+### View Coverage Report (HTML)
+To view coverage in a web browser, you can use `genhtml` (requires lcov package):
+
+```bash
+# Install lcov (on macOS)
+brew install lcov
+
+# Install lcov (on Ubuntu/Debian)
+sudo apt-get install lcov
+
+# Generate HTML report
+genhtml coverage/lcov.info -o coverage/html
+
+# Open in browser
+open coverage/html/index.html  # macOS
+xdg-open coverage/html/index.html  # Linux
+```
+
+### View Coverage Summary
+For a quick text summary:
+```bash
+flutter test --coverage
+lcov --summary coverage/lcov.info
+```
+
+### Coverage Goals
+- **Overall**: Aim for >70% code coverage
+- **Critical code**: Models, controllers, and services should have >80% coverage
+- **UI widgets**: Aim for >60% coverage
+
 ## Contributing
 
 When adding new features:
 1. Write tests first (TDD approach recommended)
 2. Ensure existing tests still pass
-3. Maintain test coverage above 70%
+3. Verify test coverage meets thresholds (see "Measuring Test Coverage" above)
 4. Follow the existing test structure and naming conventions
