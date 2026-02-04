@@ -23,7 +23,7 @@ class BackPill extends StatelessWidget {
             border: Border.all(color: const Color(0xFFE6EDF7)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 18,
                 offset: const Offset(0, 10),
               ),
@@ -31,10 +31,10 @@ class BackPill extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.arrow_back),
-              SizedBox(width: 10),
-              Text('Back to Dashboard'),
+            children: [
+              const Icon(Icons.arrow_back),
+              const SizedBox(width: 10),
+              Text(text), // ✅ use the parameter
             ],
           ),
         ),
