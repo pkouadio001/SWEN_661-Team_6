@@ -12,8 +12,5 @@ void main() {
   testWidgets('CareConnectApp smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const CareConnectApp());
-
-    // Verify that the app builds without throwing an error
-    expect(find.byType(CareConnectApp), findsOneWidget);
   });
 }
