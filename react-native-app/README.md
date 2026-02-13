@@ -48,6 +48,7 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<<<<<<< HEAD
 
 🧪 Running Tests – CareConnect
 
@@ -160,3 +161,5 @@ Tests run in a Node environment, not in the Expo runtime.
 You do NOT need to run expo start to execute tests.
 
 Testing libraries should never be imported into production app files.
+=======
+>>>>>>> 1722beedcbea5d623ae0fa6ae695986d1e8eff9c

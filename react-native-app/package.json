@@ -8,9 +8,13 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+<<<<<<< HEAD
     "lint": "expo lint",
     "test": "jest --runInBand",
     "test:watch": "jest --watch"
+=======
+    "lint": "expo lint"
+>>>>>>> 1722beedcbea5d623ae0fa6ae695986d1e8eff9c
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -43,16 +47,22 @@
     "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^13.3.3",
     "@types/jest": "29.5.14",
+=======
+>>>>>>> 1722beedcbea5d623ae0fa6ae695986d1e8eff9c
     "@types/react": "~19.1.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+<<<<<<< HEAD
     "jest": "~29.7.0",
     "jest-expo": "^54.0.17",
     "react-test-renderer": "^19.1.0",
+=======
+>>>>>>> 1722beedcbea5d623ae0fa6ae695986d1e8eff9c
     "typescript": "~5.9.2"
   },
   "private": true
