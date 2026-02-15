@@ -186,12 +186,17 @@ export default function AlertsScreen() {
             </Text>
 
             {/* Push Notifications */}
-            <View 
-              style={[styles.rowCard, { backgroundColor: colors.mutedCard, borderColor: colors.border }]}
+            <Pressable
+              onPress={() => router.push("/notification-settings")}
               accessible={true}
               accessibilityRole="button"
               accessibilityLabel="Push Notifications. Configure"
               accessibilityHint="Configure push notification settings"
+              style={({ pressed }) => [
+                styles.rowCard,
+                { backgroundColor: colors.mutedCard, borderColor: colors.border },
+                pressed && { opacity: 0.92 },
+              ]}
             >
               <Text 
                 style={{ fontWeight: "900", color: colors.title }}
@@ -200,13 +205,9 @@ export default function AlertsScreen() {
                 Push Notifications
               </Text>
 
-              <Pressable
-                onPress={() => router.push("/notification-settings")}
+              <View
                 accessible={false}
-                style={({ pressed }) => [
-                  styles.configureBtn,
-                  pressed && { opacity: 0.92 },
-                ]}
+                style={styles.configureBtn}
               >
                 <Text 
                   style={{ color: colors.accent, fontWeight: "900" }}
@@ -214,8 +215,8 @@ export default function AlertsScreen() {
                 >
                   Configure
                 </Text>
-              </Pressable>
-            </View>
+              </View>
+            </Pressable>
 
             {/* Normal Priority Vibration */}
             <View
