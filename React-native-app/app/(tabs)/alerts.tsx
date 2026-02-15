@@ -53,28 +53,76 @@ export default function AlertsScreen() {
   );
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerIconWrap}>
-            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : colors.danger }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}>
+        <View 
+          style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}
+          accessible={false}
+        >
+          <View 
+            style={styles.headerIconWrap}
+            accessible={false}
+          >
+            <View 
+              style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : colors.danger }]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Notifications icon"
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}
+                accessible={false}
+              >
                 🔔
               </Text>
             </View>
           </View>
 
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.backBtn}>
-              <Text style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Dashboard"
+              accessibilityHint="Navigate back to Dashboard"
+              style={styles.backBtn}
+            >
+              <Text 
+                style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+                accessible={false}
+              >
                 ←
               </Text>
             </Pressable>
 
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Notifications & Reminders</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Stay on track with your care</Text>
+            <View 
+              style={{ flex: 1, alignItems: "center" }}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Notifications & Reminders
+              </Text>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Stay on track with your care
+              </Text>
             </View>
 
             {/* spacer (web had hidden right button) */}
@@ -83,10 +131,18 @@ export default function AlertsScreen() {
         </View>
 
         {/* Main */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Back to Dashboard - "Sticky" alternative */}
           <Pressable
             onPress={() => router.push("/dashboard")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Dashboard"
+            accessibilityHint="Navigate back to Dashboard"
             style={({ pressed }) => [
               styles.backCard,
               {
@@ -96,32 +152,68 @@ export default function AlertsScreen() {
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+            <Text 
+              style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+              accessible={false}
+            >
               ← Back to Dashboard
             </Text>
           </Pressable>
 
           {/* Notification Settings Section */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.title }]}>Notification Settings</Text>
+          <View 
+            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+            accessible={false}
+          >
+            <View 
+              style={styles.sectionHeader}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.sectionTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Notification Settings
+              </Text>
             </View>
-            <Text style={[styles.sectionSub, { color: colors.sub }]}>
+            <Text 
+              style={[styles.sectionSub, { color: colors.sub }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
               Customize how you receive reminders
             </Text>
 
             {/* Push Notifications */}
-            <View style={[styles.rowCard, { backgroundColor: colors.mutedCard, borderColor: colors.border }]}>
-              <Text style={{ fontWeight: "900", color: colors.title }}>Push Notifications</Text>
+            <View 
+              style={[styles.rowCard, { backgroundColor: colors.mutedCard, borderColor: colors.border }]}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Push Notifications. Configure"
+              accessibilityHint="Configure push notification settings"
+            >
+              <Text 
+                style={{ fontWeight: "900", color: colors.title }}
+                accessible={false}
+              >
+                Push Notifications
+              </Text>
 
               <Pressable
                 onPress={() => router.push("/notification-settings")}
+                accessible={false}
                 style={({ pressed }) => [
                   styles.configureBtn,
                   pressed && { opacity: 0.92 },
                 ]}
               >
-                <Text style={{ color: colors.accent, fontWeight: "900" }}>Configure</Text>
+                <Text 
+                  style={{ color: colors.accent, fontWeight: "900" }}
+                  accessible={false}
+                >
+                  Configure
+                </Text>
               </Pressable>
             </View>
 
@@ -134,11 +226,20 @@ export default function AlertsScreen() {
                   borderColor: highContrastMode ? colors.border : "#BFDBFE",
                 },
               ]}
+              accessible={true}
+              accessibilityRole="text"
+              accessibilityLabel={`Normal Priority Vibration. Current: ${normalVibration}`}
             >
-              <Text style={{ fontWeight: "900", color: colors.title }}>
+              <Text 
+                style={{ fontWeight: "900", color: colors.title }}
+                accessible={false}
+              >
                 Normal Priority Vibration
               </Text>
-              <Text style={{ marginTop: 6, fontWeight: "800", color: highContrastMode ? colors.accent : colors.accent }}>
+              <Text 
+                style={{ marginTop: 6, fontWeight: "800", color: highContrastMode ? colors.accent : colors.accent }}
+                accessible={false}
+              >
                 Current: <Text style={{ textTransform: "capitalize" }}>{normalVibration}</Text>
               </Text>
             </View>
@@ -152,11 +253,20 @@ export default function AlertsScreen() {
                   borderColor: highContrastMode ? colors.border : "#FECACA",
                 },
               ]}
+              accessible={true}
+              accessibilityRole="text"
+              accessibilityLabel={`Urgent Priority Vibration. Current: ${urgentVibration}`}
             >
-              <Text style={{ fontWeight: "900", color: colors.title }}>
+              <Text 
+                style={{ fontWeight: "900", color: colors.title }}
+                accessible={false}
+              >
                 Urgent Priority Vibration
               </Text>
-              <Text style={{ marginTop: 6, fontWeight: "800", color: highContrastMode ? colors.title : colors.danger }}>
+              <Text 
+                style={{ marginTop: 6, fontWeight: "800", color: highContrastMode ? colors.title : colors.danger }}
+                accessible={false}
+              >
                 Current: <Text style={{ textTransform: "capitalize" }}>{urgentVibration}</Text>
               </Text>
             </View>
@@ -166,41 +276,115 @@ export default function AlertsScreen() {
         </ScrollView>
 
         {/* Bottom Navigation (RN) */}
-        <View style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}>
-          <View style={styles.navRow}>
+        <View 
+          style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}
+          accessible={false}
+          accessibilityRole="tabbar"
+        >
+          <View 
+            style={styles.navRow}
+            accessible={false}
+          >
             <Link href="/dashboard" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Home</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Home"
+                accessibilityHint="Navigate to Home tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Home
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/tasks" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Tasks</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Tasks"
+                accessibilityHint="Navigate to Tasks tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Tasks
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/health" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Health</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Health"
+                accessibilityHint="Navigate to Health tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Health
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/communication" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Messages</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Messages"
+                accessibilityHint="Navigate to Messages tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Messages
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/alerts" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }}>Alerts</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Alerts"
+                accessibilityHint="Navigate to Alerts tab"
+                accessibilityState={{ selected: true }}
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }}
+                  accessible={false}
+                >
+                  Alerts
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/profile" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Profile</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Profile"
+                accessibilityHint="Navigate to Profile tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Profile
+                </Text>
               </Pressable>
             </Link>
           </View>

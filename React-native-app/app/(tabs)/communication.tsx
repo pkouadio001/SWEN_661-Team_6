@@ -82,8 +82,14 @@ export default function CommunicationScreen() {
   const unread = getUnreadCount();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
         <View
           style={[
@@ -93,23 +99,58 @@ export default function CommunicationScreen() {
               borderBottomColor: colors.border,
             },
           ]}
+          accessible={false}
         >
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900", fontSize: 20 }}>
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Dashboard"
+              accessibilityHint="Navigate back to Dashboard"
+              style={styles.iconBtn}
+            >
+              <Text 
+                style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900", fontSize: 20 }}
+                accessible={false}
+              >
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.headerIcon, { backgroundColor: colors.purple }]}>
-              <Text style={{ color: "#fff", fontWeight: "900", fontSize: 18 }}>💬</Text>
+            <View 
+              style={[styles.headerIcon, { backgroundColor: colors.purple }]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Communication icon"
+            >
+              <Text 
+                style={{ color: "#fff", fontWeight: "900", fontSize: 18 }}
+                accessible={false}
+              >
+                💬
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>
+            <View 
+              style={{ flex: 1 }}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
                 Communication & Safety
               </Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
                 Messages and emergency contacts
               </Text>
             </View>
@@ -119,17 +160,28 @@ export default function CommunicationScreen() {
         </View>
 
         {/* Main Content */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Back to Dashboard Button */}
           <Pressable
             onPress={() => router.push("/dashboard")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Dashboard"
+            accessibilityHint="Navigate back to Dashboard"
             style={({ pressed }) => [
               styles.backCard,
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+            <Text 
+              style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+              accessible={false}
+            >
               ← Back to Dashboard
             </Text>
           </Pressable>
@@ -137,25 +189,56 @@ export default function CommunicationScreen() {
           {/* Messages Card */}
           <Link href="/messages" asChild>
             <Pressable
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Messages. Stay connected with your care team${unread > 0 ? `. ${unread} unread ${unread > 1 ? 'messages' : 'message'}` : ''}`}
+              accessibilityHint="Navigate to Messages"
               style={({ pressed }) => [
                 styles.bigCard,
                 { backgroundColor: colors.card, borderColor: colors.border },
                 pressed && { opacity: 0.92 },
               ]}
             >
-              <View style={{ alignItems: "center" }}>
-                <View style={[styles.bigIcon, { backgroundColor: colors.purple }]}>
-                  <Text style={{ color: "#fff", fontWeight: "900", fontSize: 20 }}>✉️</Text>
+              <View 
+                style={{ alignItems: "center" }}
+                accessible={false}
+              >
+                <View 
+                  style={[styles.bigIcon, { backgroundColor: colors.purple }]}
+                  accessible={false}
+                >
+                  <Text 
+                    style={{ color: "#fff", fontWeight: "900", fontSize: 20 }}
+                    accessible={false}
+                  >
+                    ✉️
+                  </Text>
 
                   {unread > 0 && (
-                    <View style={styles.badge}>
-                      <Text style={styles.badgeText}>{unread}</Text>
+                    <View 
+                      style={styles.badge}
+                      accessible={false}
+                    >
+                      <Text 
+                        style={styles.badgeText}
+                        accessible={false}
+                      >
+                        {unread}
+                      </Text>
                     </View>
                   )}
                 </View>
 
-                <Text style={[styles.bigTitle, { color: colors.title }]}>Messages</Text>
-                <Text style={[styles.bigSub, { color: colors.sub }]}>
+                <Text 
+                  style={[styles.bigTitle, { color: colors.title }]}
+                  accessible={false}
+                >
+                  Messages
+                </Text>
+                <Text 
+                  style={[styles.bigSub, { color: colors.sub }]}
+                  accessible={false}
+                >
                   Stay connected with your care team
                 </Text>
               </View>
@@ -163,47 +246,91 @@ export default function CommunicationScreen() {
           </Link>
 
           {/* Safety Section */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View 
+            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+            accessible={false}
+          >
             <View
               style={[
                 styles.sectionHeader,
                 { borderBottomColor: colors.border },
               ]}
+              accessible={false}
             >
-              <View>
-                <Text style={[styles.sectionTitle, { color: colors.title }]}>Safety</Text>
-                <Text style={[styles.sectionSub, { color: colors.sub }]}>Emergency contacts</Text>
+              <View accessible={false}>
+                <Text 
+                  style={[styles.sectionTitle, { color: colors.title }]}
+                  accessible={true}
+                  accessibilityRole="header"
+                >
+                  Safety
+                </Text>
+                <Text 
+                  style={[styles.sectionSub, { color: colors.sub }]}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  Emergency contacts
+                </Text>
               </View>
 
               <Pressable
                 onPress={() => setIsEditingEmergencyContact(true)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Edit emergency contact"
+                accessibilityHint="Edit your emergency contact information"
                 style={({ pressed }) => [
                   styles.editBtn,
                   pressed && { opacity: 0.9 },
                 ]}
               >
-                <Text style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900" }}>
+                <Text 
+                  style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900" }}
+                  accessible={false}
+                >
                   ✎ Edit
                 </Text>
               </Pressable>
             </View>
 
-            <View style={{ gap: 12, marginTop: 12 }}>
+            <View 
+              style={{ gap: 12, marginTop: 12 }}
+              accessible={false}
+            >
               {/* Primary Emergency Contact */}
               <Pressable
                 onPress={() => {}}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`Emergency contact: ${emergencyContactData.name}. Phone: ${emergencyContactData.phone}`}
+                accessibilityHint="Call emergency contact"
                 style={({ pressed }) => [
                   styles.rowCard,
                   { backgroundColor: colors.card2, borderColor: colors.border },
                   pressed && { opacity: 0.92 },
                 ]}
               >
-                <Text style={{ fontSize: 18 }}>📞</Text>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+                <Text 
+                  style={{ fontSize: 18 }}
+                  accessible={false}
+                >
+                  📞
+                </Text>
+                <View 
+                  style={{ flex: 1 }}
+                  accessible={false}
+                >
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+                    accessible={false}
+                  >
                     {emergencyContactData.name}
                   </Text>
-                  <Text style={{ fontWeight: "800", color: highContrastMode ? "#fff" : colors.sub }}>
+                  <Text 
+                    style={{ fontWeight: "800", color: highContrastMode ? "#fff" : colors.sub }}
+                    accessible={false}
+                  >
                     {emergencyContactData.phone}
                   </Text>
                 </View>
@@ -212,18 +339,36 @@ export default function CommunicationScreen() {
               {/* Emergency 911 */}
               <Pressable
                 onPress={() => {}}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Emergency: 911. Police, Fire, EMS"
+                accessibilityHint="Call emergency services"
                 style={({ pressed }) => [
                   styles.rowCard,
                   { backgroundColor: colors.card2, borderColor: highContrastMode ? "#EF4444" : colors.border },
                   pressed && { opacity: 0.92 },
                 ]}
               >
-                <Text style={{ fontSize: 18 }}>🚨</Text>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+                <Text 
+                  style={{ fontSize: 18 }}
+                  accessible={false}
+                >
+                  🚨
+                </Text>
+                <View 
+                  style={{ flex: 1 }}
+                  accessible={false}
+                >
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+                    accessible={false}
+                  >
                     Emergency: 911
                   </Text>
-                  <Text style={{ fontWeight: "800", color: highContrastMode ? "#fff" : colors.sub }}>
+                  <Text 
+                    style={{ fontWeight: "800", color: highContrastMode ? "#fff" : colors.sub }}
+                    accessible={false}
+                  >
                     Police/Fire/EMS
                   </Text>
                 </View>
@@ -235,49 +380,129 @@ export default function CommunicationScreen() {
         </ScrollView>
 
         {/* Bottom Navigation */}
-        <View style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}>
-          <View style={styles.navRow}>
+        <View 
+          style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}
+          accessible={false}
+          accessibilityRole="tabbar"
+        >
+          <View 
+            style={styles.navRow}
+            accessible={false}
+          >
             <Link href="/dashboard" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Home</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Home"
+                accessibilityHint="Navigate to Home tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Home
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/tasks" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Tasks</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Tasks"
+                accessibilityHint="Navigate to Tasks tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Tasks
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/health" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Health</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Health"
+                accessibilityHint="Navigate to Health tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Health
+                </Text>
               </Pressable>
             </Link>
 
             {/* Active */}
             <Link href="/communication" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }}>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={unread > 0 ? `Messages. ${unread} unread` : "Messages"}
+                accessibilityHint="Navigate to Messages tab"
+                accessibilityState={{ selected: true }}
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }}
+                  accessible={false}
+                >
                   Messages
                 </Text>
                 {unread > 0 && (
-                  <View style={[styles.navBadge, { backgroundColor: highContrastMode ? "#DC2626" : "#EF4444" }]}>
-                    <Text style={styles.navBadgeText}>{unread}</Text>
+                  <View 
+                    style={[styles.navBadge, { backgroundColor: highContrastMode ? "#DC2626" : "#EF4444" }]}
+                    accessible={false}
+                  >
+                    <Text 
+                      style={styles.navBadgeText}
+                      accessible={false}
+                    >
+                      {unread}
+                    </Text>
                   </View>
                 )}
               </Pressable>
             </Link>
 
             <Link href="/alerts" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Alerts</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Alerts"
+                accessibilityHint="Navigate to Alerts tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Alerts
+                </Text>
               </Pressable>
             </Link>
 
             <Link href="/profile" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Profile</Text>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Profile"
+                accessibilityHint="Navigate to Profile tab"
+                style={styles.navItem}
+              >
+                <Text 
+                  style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                  accessible={false}
+                >
+                  Profile
+                </Text>
               </Pressable>
             </Link>
           </View>
@@ -320,7 +545,10 @@ export default function CommunicationScreen() {
 
               {/* Modal Body */}
               <View style={styles.modalBody}>
-                <Text style={[styles.label, { color: highContrastMode ? colors.accent : colors.title }]}>
+                <Text 
+                  style={[styles.label, { color: highContrastMode ? colors.accent : colors.title }]}
+                  accessible={false}
+                >
                   Contact Name
                 </Text>
                 <TextInput
@@ -328,6 +556,9 @@ export default function CommunicationScreen() {
                   onChangeText={(t) => onChangeField("name", t)}
                   placeholder="Enter contact name"
                   placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+                  accessible={true}
+                  accessibilityLabel="Contact Name"
+                  accessibilityHint="Enter the emergency contact's name"
                   style={[
                     styles.input,
                     {
@@ -340,7 +571,10 @@ export default function CommunicationScreen() {
 
                 <View style={{ height: 14 }} />
 
-                <Text style={[styles.label, { color: highContrastMode ? colors.accent : colors.title }]}>
+                <Text 
+                  style={[styles.label, { color: highContrastMode ? colors.accent : colors.title }]}
+                  accessible={false}
+                >
                   Phone Number
                 </Text>
                 <TextInput
@@ -349,6 +583,9 @@ export default function CommunicationScreen() {
                   placeholder="Enter 10-digit phone number"
                   placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
                   keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
+                  accessible={true}
+                  accessibilityLabel="Phone Number"
+                  accessibilityHint="Enter 10-digit phone number for emergency contact"
                   style={[
                     styles.input,
                     {
@@ -369,13 +606,20 @@ export default function CommunicationScreen() {
               <View style={[styles.modalFooter, { borderTopColor: colors.border }]}>
                 <Pressable
                   onPress={handleCancelEmergencyEdit}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Cancel editing emergency contact"
                   style={({ pressed }) => [
                     styles.footerBtn,
                     { borderColor: colors.border },
                     pressed && { opacity: 0.9 },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}
+                    accessible={false}
+                  >
                     Cancel
                   </Text>
                 </Pressable>
@@ -383,6 +627,11 @@ export default function CommunicationScreen() {
                 <Pressable
                   onPress={handleSaveEmergencyContact}
                   disabled={phoneError !== "" && editFormData.phone !== ""}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Save Changes"
+                  accessibilityHint="Save emergency contact information"
+                  accessibilityState={{ disabled: phoneError !== "" && editFormData.phone !== "" }}
                   style={({ pressed }) => [
                     styles.footerBtnPrimary,
                     {
@@ -408,6 +657,7 @@ export default function CommunicationScreen() {
                             : "#6B7280"
                           : "#fff",
                     }}
+                    accessible={false}
                   >
                     Save Changes
                   </Text>

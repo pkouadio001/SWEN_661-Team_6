@@ -115,18 +115,38 @@ export default function PatientInfoScreen() {
   const age = calculateAge(formData.dateOfBirth);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={{ flex: 1, backgroundColor: colors.bg }}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
         <View
           style={[
             styles.header,
             { backgroundColor: colors.headerBg, borderBottomColor: colors.border },
           ]}
+          accessible={false}
         >
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontSize: 20, fontWeight: "900" }}>
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Dashboard"
+              accessibilityHint="Navigate back to Dashboard"
+              style={styles.iconBtn}
+            >
+              <Text 
+                style={{ color: highContrastMode ? colors.primary : colors.title, fontSize: 20, fontWeight: "900" }}
+                accessible={false}
+              >
                 ←
               </Text>
             </Pressable>
@@ -136,46 +156,98 @@ export default function PatientInfoScreen() {
                 styles.headerIcon,
                 { backgroundColor: highContrastMode ? colors.primary : colors.orange },
               ]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Patient information icon"
             >
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>
+              <Text 
+                style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}
+                accessible={false}
+              >
                 👤
               </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>
+            <View 
+              style={{ flex: 1 }}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
                 Patient Information
               </Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
                 Medical details & emergency contact
               </Text>
             </View>
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Back to Dashboard */}
           <Pressable
             onPress={() => router.push("/dashboard")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Dashboard"
+            accessibilityHint="Navigate back to Dashboard"
             style={({ pressed }) => [
               styles.backCard,
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+            <Text 
+              style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+              accessible={false}
+            >
               ← Back to Dashboard
             </Text>
           </Pressable>
 
           {/* Patient Information Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.cardHeaderRow, { borderBottomColor: colors.border }]}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                <Text style={{ fontSize: 18 }}>{highContrastMode ? "👤" : "👤"}</Text>
-                <View>
-                  <Text style={{ fontWeight: "900", color: colors.title }}>Patient Information</Text>
-                  <Text style={{ fontWeight: "800", color: colors.sub, marginTop: 2 }}>
+          <View 
+            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+            accessible={false}
+          >
+            <View 
+              style={[styles.cardHeaderRow, { borderBottomColor: colors.border }]}
+              accessible={false}
+            >
+              <View 
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+                accessible={false}
+              >
+                <Text 
+                  style={{ fontSize: 18 }}
+                  accessible={false}
+                >
+                  {highContrastMode ? "👤" : "👤"}
+                </Text>
+                <View accessible={false}>
+                  <Text 
+                    style={{ fontWeight: "900", color: colors.title }}
+                    accessible={true}
+                    accessibilityRole="header"
+                  >
+                    Patient Information
+                  </Text>
+                  <Text 
+                    style={{ fontWeight: "800", color: colors.sub, marginTop: 2 }}
+                    accessible={true}
+                    accessibilityRole="text"
+                  >
                     Personal and medical details
                   </Text>
                 </View>
@@ -183,16 +255,26 @@ export default function PatientInfoScreen() {
 
               <Pressable
                 onPress={() => setIsEditingPersonal(true)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Edit patient information"
+                accessibilityHint="Edit your personal and medical details"
                 style={({ pressed }) => [styles.editBtn, pressed && { opacity: 0.85 }]}
               >
-                <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                <Text 
+                  style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+                  accessible={false}
+                >
                   ✎ Edit
                 </Text>
               </Pressable>
             </View>
 
             {/* Personal Details */}
-            <View style={{ marginTop: 14, gap: 12 }}>
+            <View 
+              style={{ marginTop: 14, gap: 12 }}
+              accessible={false}
+            >
               <SectionTitle title="Personal Details" highContrast={highContrastMode} colors={colors} icon="🧾" />
 
               <Field label="Full Name" value={formData.fullName} colors={colors} />
@@ -219,24 +301,54 @@ export default function PatientInfoScreen() {
           </View>
 
           {/* Emergency Contact Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.cardHeaderRow, { borderBottomColor: colors.border }]}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                <Text style={{ fontSize: 18 }}>🆘</Text>
-                <Text style={{ fontWeight: "900", color: colors.title }}>Emergency Contact</Text>
+          <View 
+            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+            accessible={false}
+          >
+            <View 
+              style={[styles.cardHeaderRow, { borderBottomColor: colors.border }]}
+              accessible={false}
+            >
+              <View 
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+                accessible={false}
+              >
+                <Text 
+                  style={{ fontSize: 18 }}
+                  accessible={false}
+                >
+                  🆘
+                </Text>
+                <Text 
+                  style={{ fontWeight: "900", color: colors.title }}
+                  accessible={true}
+                  accessibilityRole="header"
+                >
+                  Emergency Contact
+                </Text>
               </View>
 
               <Pressable
                 onPress={() => setIsEditingEmergency(true)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Edit emergency contact"
+                accessibilityHint="Edit your emergency contact information"
                 style={({ pressed }) => [styles.editBtn, pressed && { opacity: 0.85 }]}
               >
-                <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                <Text 
+                  style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+                  accessible={false}
+                >
                   ✎ Edit
                 </Text>
               </Pressable>
             </View>
 
-            <View style={{ marginTop: 14, gap: 12 }}>
+            <View 
+              style={{ marginTop: 14, gap: 12 }}
+              accessible={false}
+            >
               <Field label="Contact Name" value={emergencyContactData.name} colors={colors} />
               <Field label="Phone Number" value={emergencyContactData.phone} colors={colors} />
             </View>
@@ -308,26 +420,40 @@ export default function PatientInfoScreen() {
               <View style={[styles.modalFooter, { borderTopColor: colors.border }]}>
                 <Pressable
                   onPress={handleCancelEdit}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Cancel editing personal details"
                   style={({ pressed }) => [
                     styles.footerBtn,
                     { borderColor: colors.border, backgroundColor: highContrastMode ? "transparent" : "#fff" },
                     pressed && { opacity: 0.9 },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+                    accessible={false}
+                  >
                     Cancel
                   </Text>
                 </Pressable>
 
                 <Pressable
                   onPress={handleSavePersonal}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Save Changes"
+                  accessibilityHint="Save your personal details"
                   style={({ pressed }) => [
                     styles.footerBtnPrimary,
                     { backgroundColor: highContrastMode ? colors.primary : colors.primary },
                     pressed && { opacity: 0.9 },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}
+                    accessible={false}
+                  >
                     Save Changes
                   </Text>
                 </Pressable>
@@ -384,26 +510,40 @@ export default function PatientInfoScreen() {
               <View style={[styles.modalFooter, { borderTopColor: colors.border }]}>
                 <Pressable
                   onPress={handleCancelEmergency}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Cancel editing emergency contact"
                   style={({ pressed }) => [
                     styles.footerBtn,
                     { borderColor: colors.border, backgroundColor: highContrastMode ? "transparent" : "#fff" },
                     pressed && { opacity: 0.9 },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+                    accessible={false}
+                  >
                     Cancel
                   </Text>
                 </Pressable>
 
                 <Pressable
                   onPress={handleSaveEmergency}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Save Changes"
+                  accessibilityHint="Save emergency contact"
                   style={({ pressed }) => [
                     styles.footerBtnPrimary,
                     { backgroundColor: highContrastMode ? colors.primary : colors.danger },
                     pressed && { opacity: 0.9 },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text 
+                    style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}
+                    accessible={false}
+                  >
                     Save Changes
                   </Text>
                 </Pressable>
@@ -427,9 +567,23 @@ function SectionTitle({
   colors: any;
 }) {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-      <Text style={{ fontSize: 16 }}>{icon}</Text>
-      <Text style={{ fontSize: 16, fontWeight: "900", color: colors.title }}>{title}</Text>
+    <View 
+      style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+      accessible={false}
+    >
+      <Text 
+        style={{ fontSize: 16 }}
+        accessible={false}
+      >
+        {icon}
+      </Text>
+      <Text 
+        style={{ fontSize: 16, fontWeight: "900", color: colors.title }}
+        accessible={true}
+        accessibilityRole="header"
+      >
+        {title}
+      </Text>
     </View>
   );
 }
@@ -446,13 +600,28 @@ function Field({
   colors: any;
 }) {
   return (
-    <View>
-      <Text style={{ fontSize: 13, fontWeight: "900", color: colors.sub, marginBottom: 4 }}>
+    <View 
+      accessible={true}
+      accessibilityRole="text"
+      accessibilityLabel={`${label}: ${value}${subValue ? '. ' + subValue : ''}`}
+    >
+      <Text 
+        style={{ fontSize: 13, fontWeight: "900", color: colors.sub, marginBottom: 4 }}
+        accessible={false}
+      >
         {label}
       </Text>
-      <Text style={{ fontSize: 15, fontWeight: "800", color: colors.title }}>{value}</Text>
+      <Text 
+        style={{ fontSize: 15, fontWeight: "800", color: colors.title }}
+        accessible={false}
+      >
+        {value}
+      </Text>
       {subValue ? (
-        <Text style={{ marginTop: 2, fontSize: 13, fontWeight: "800", color: colors.sub }}>
+        <Text 
+          style={{ marginTop: 2, fontSize: 13, fontWeight: "800", color: colors.sub }}
+          accessible={false}
+        >
           {subValue}
         </Text>
       ) : null}
@@ -483,7 +652,10 @@ function LabeledInput(props: {
 
   return (
     <View>
-      <Text style={{ fontSize: 13, fontWeight: "900", color: highContrastMode ? "#fff" : "#101828", marginBottom: 6 }}>
+      <Text 
+        style={{ fontSize: 13, fontWeight: "900", color: highContrastMode ? "#fff" : "#101828", marginBottom: 6 }}
+        accessible={false}
+      >
         {label}
       </Text>
       <TextInput
@@ -494,6 +666,9 @@ function LabeledInput(props: {
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
         multiline={multiline}
+        accessible={true}
+        accessibilityLabel={label}
+        accessibilityHint={`Enter ${label.toLowerCase()}`}
         style={[
           styles.input,
           {

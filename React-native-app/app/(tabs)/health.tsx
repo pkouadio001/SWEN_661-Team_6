@@ -25,9 +25,18 @@ export default function HealthScreen() {
   const go = (path: string) => router.push(path);
 
   const HeaderIcon = () => (
-    <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : "#00BBA7" }]}>
-      {/* icon: activity/heartline */}
-      <Text style={[styles.headerIconText, { color: highContrastMode ? "#000" : "#fff" }]}>❤</Text>
+    <View 
+      style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : "#00BBA7" }]}
+      accessible={true}
+      accessibilityRole="image"
+      accessibilityLabel="Health section icon"
+    >
+      <Text 
+        style={[styles.headerIconText, { color: highContrastMode ? "#000" : "#fff" }]}
+        accessible={false}
+      >
+        ❤
+      </Text>
     </View>
   );
 
@@ -46,18 +55,40 @@ export default function HealthScreen() {
   }) => (
     <Pressable
       onPress={() => go(to)}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${title}. ${subtitle}`}
+      accessibilityHint={`Navigate to ${title} section`}
       style={({ pressed }) => [
         styles.bigCard,
         { backgroundColor: colors.card, borderColor: colors.border },
         pressed && { transform: [{ scale: 0.99 }], opacity: 0.96 },
       ]}
     >
-      <View style={[styles.bigIcon, { backgroundColor: highContrastMode ? "#FFFF00" : tint }]}>
-        <Text style={[styles.bigIconText, { color: highContrastMode ? "#000" : "#fff" }]}>{icon}</Text>
+      <View 
+        style={[styles.bigIcon, { backgroundColor: highContrastMode ? "#FFFF00" : tint }]}
+        accessible={false}
+      >
+        <Text 
+          style={[styles.bigIconText, { color: highContrastMode ? "#000" : "#fff" }]}
+          accessible={false}
+        >
+          {icon}
+        </Text>
       </View>
 
-      <Text style={[styles.bigTitle, { color: colors.title }]}>{title}</Text>
-      <Text style={[styles.bigSub, { color: colors.sub }]}>{subtitle}</Text>
+      <Text 
+        style={[styles.bigTitle, { color: colors.title }]}
+        accessible={false}
+      >
+        {title}
+      </Text>
+      <Text 
+        style={[styles.bigSub, { color: colors.sub }]}
+        accessible={false}
+      >
+        {subtitle}
+      </Text>
     </Pressable>
   );
 
@@ -73,46 +104,123 @@ export default function HealthScreen() {
     to: string;
     active?: boolean;
     badge?: number;
-  }) => (
-    <Pressable onPress={() => go(to)} style={styles.navItem}>
-      <View style={styles.navIconWrap}>
-        <Text style={[styles.navIcon, { color: active ? colors.navActive : colors.navInactive }]}>{icon}</Text>
-        {badge && badge > 0 ? (
-          <View style={[styles.badge, { backgroundColor: colors.dangerBadgeBg }]}>
-            <Text style={[styles.badgeText, { color: colors.dangerBadgeText }]}>
-              {badge > 99 ? "99+" : badge}
-            </Text>
-          </View>
-        ) : null}
-      </View>
-      <Text style={[styles.navLabel, { color: active ? colors.navActive : colors.navInactive }]}>{label}</Text>
-    </Pressable>
-  );
+  }) => {
+    const accessibilityLabel = badge && badge > 0 
+      ? `${label}. ${badge} ${badge > 1 ? 'items' : 'item'}`
+      : label;
+
+    return (
+      <Pressable 
+        onPress={() => go(to)} 
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={`Navigate to ${label} tab`}
+        accessibilityState={{ selected: active }}
+        style={styles.navItem}
+      >
+        <View 
+          style={styles.navIconWrap}
+          accessible={false}
+        >
+          <Text 
+            style={[styles.navIcon, { color: active ? colors.navActive : colors.navInactive }]}
+            accessible={false}
+          >
+            {icon}
+          </Text>
+          {badge && badge > 0 ? (
+            <View 
+              style={[styles.badge, { backgroundColor: colors.dangerBadgeBg }]}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.badgeText, { color: colors.dangerBadgeText }]}
+                accessible={false}
+              >
+                {badge > 99 ? "99+" : badge}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+        <Text 
+          style={[styles.navLabel, { color: active ? colors.navActive : colors.navInactive }]}
+          accessible={false}
+        >
+          {label}
+        </Text>
+      </Pressable>
+    );
+  };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.navBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => go("/dashboard")} style={styles.backBtn}>
-              <Text style={[styles.backText, { color: highContrastMode ? "#fff" : "#101828" }]}>←</Text>
+        <View 
+          style={[styles.header, { backgroundColor: colors.navBg, borderBottomColor: colors.border }]}
+          accessible={false}
+        >
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => go("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Dashboard"
+              accessibilityHint="Navigate back to Dashboard"
+              style={styles.backBtn}
+            >
+              <Text 
+                style={[styles.backText, { color: highContrastMode ? "#fff" : "#101828" }]}
+                accessible={false}
+              >
+                ←
+              </Text>
             </Pressable>
 
             <HeaderIcon />
 
-            <View>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Notes & Health Logs</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Track your health and notes</Text>
+            <View accessible={false}>
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Notes & Health Logs
+              </Text>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Track your health and notes
+              </Text>
             </View>
           </View>
         </View>
 
         {/* Content */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Back to Dashboard */}
           <Pressable
             onPress={() => go("/dashboard")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Dashboard"
+            accessibilityHint="Navigate back to Dashboard"
             style={({ pressed }) => [
               styles.backCard,
               {
@@ -122,7 +230,10 @@ export default function HealthScreen() {
               pressed && { opacity: 0.95 },
             ]}
           >
-            <Text style={[styles.backCardText, { color: highContrastMode ? "#FFFF00" : "#101828" }]}>
+            <Text 
+              style={[styles.backCardText, { color: highContrastMode ? "#FFFF00" : "#101828" }]}
+              accessible={false}
+            >
               ← Back to Dashboard
             </Text>
           </Pressable>
@@ -156,8 +267,15 @@ export default function HealthScreen() {
         </ScrollView>
 
         {/* Bottom Nav */}
-        <View style={[styles.bottomNav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}>
-          <View style={styles.bottomNavRow}>
+        <View 
+          style={[styles.bottomNav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}
+          accessible={false}
+          accessibilityRole="tabbar"
+        >
+          <View 
+            style={styles.bottomNavRow}
+            accessible={false}
+          >
             <NavItem label="Home" icon="🏠" to="/dashboard" active={pathname === "/dashboard"} />
             <NavItem label="Tasks" icon="✅" to="/tasks" active={pathname === "/tasks"} />
             <NavItem label="Health" icon="❤" to="/health" active={pathname === "/health"} />
