@@ -374,10 +374,7 @@ export default function Profile() {
           {/* Change PIN */}
           <View 
             style={styles.settingRow}
-            accessible={true}
-            accessibilityRole="button"
-            accessibilityLabel="Change PIN. Update"
-            accessibilityHint="Change your security PIN"
+            accessible={false}
           >
             <Text 
               style={styles.settingText}
@@ -387,7 +384,10 @@ export default function Profile() {
             </Text>
             <Pressable 
               onPress={() => setIsChangingPin(true)} 
-              accessible={false}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Change PIN"
+              accessibilityHint="Change your security PIN"
               style={styles.smallBtnAlt}
             >
               <Text 
