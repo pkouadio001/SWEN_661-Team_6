@@ -209,28 +209,28 @@ export default function HistoryScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} accessible={false}>
+      <View style={[styles.screen, { backgroundColor: colors.bg }]} accessible={false}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontWeight: "900", fontSize: 20 }}>
+        <View style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]} accessible={false}>
+          <View style={styles.headerRow} accessible={false}>
+            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Back to health">
+              <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontWeight: "900", fontSize: 20 }} accessible={false}>
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.purple }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>⏱</Text>
+            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.purple }]} accessible={false}>
+              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }} accessible={false}>⏱</Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>History</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Your complete health and notes timeline</Text>
+            <View style={{ flex: 1 }} accessible={false}>
+              <Text style={[styles.headerTitle, { color: colors.title }]} accessibilityRole="header">History</Text>
+              <Text style={[styles.headerSub, { color: colors.sub }]} accessibilityRole="text">Your complete health and notes timeline</Text>
             </View>
 
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.primary : colors.muted, fontWeight: "900", fontSize: 18 }}>
+            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Next">
+              <Text style={{ color: highContrastMode ? colors.primary : colors.muted, fontWeight: "900", fontSize: 18 }} accessible={false}>
                 →
               </Text>
             </Pressable>
@@ -238,7 +238,7 @@ export default function HistoryScreen() {
         </View>
 
         {/* Content */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} accessible={false}>
           {/* Back to Health */}
           <Pressable
             onPress={() => router.push("/health")}
@@ -247,16 +247,19 @@ export default function HistoryScreen() {
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Notes and Health Logs"
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>
               ← Back to Notes & Health Logs
             </Text>
           </Pressable>
 
           {/* Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]} accessible={false}>
             {/* Filter button */}
-            <View style={{ alignItems: "flex-end", marginBottom: 14 }}>
+            <View style={{ alignItems: "flex-end", marginBottom: 14 }} accessible={false}>
               <Pressable
                 onPress={() => setShowDatePicker((v) => !v)}
                 style={({ pressed }) => [
@@ -269,47 +272,51 @@ export default function HistoryScreen() {
                   },
                   pressed && { opacity: 0.92 },
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={selectedDateFilter ? `Filtered by ${selectedDateFilter}` : "Filter by date"}
+                accessibilityHint="Double tap to select a date filter"
               >
-                <Text style={{ fontWeight: "900", color: selectedDateFilter ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? colors.primary : colors.title) }}>
+                <Text style={{ fontWeight: "900", color: selectedDateFilter ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? colors.primary : colors.title) }} accessible={false}>
                   {selectedDateFilter ?? "Filter by Date"}
                 </Text>
               </Pressable>
             </View>
 
             {/* Calendar modal */}
-            <Modal transparent visible={showDatePicker} animationType="fade" onRequestClose={() => setShowDatePicker(false)}>
-              <View style={styles.modalBackdrop}>
-                <View style={[styles.calendarCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]}>
+            <Modal transparent visible={showDatePicker} animationType="fade" onRequestClose={() => setShowDatePicker(false)} accessible={true} accessibilityLabel="Date filter calendar">
+              <View style={styles.modalBackdrop} accessible={false}>
+                <View style={[styles.calendarCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]} accessible={false}>
                   {/* Calendar header */}
-                  <View style={[styles.calendarHeader, { backgroundColor: highContrastMode ? colors.primary : colors.primary }]}>
-                    <View style={styles.calendarHeaderRow}>
-                      <Pressable onPress={handlePrevMonth} style={styles.calNavBtn}>
-                        <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>←</Text>
+                  <View style={[styles.calendarHeader, { backgroundColor: highContrastMode ? colors.primary : colors.primary }]} accessible={false}>
+                    <View style={styles.calendarHeaderRow} accessible={false}>
+                      <Pressable onPress={handlePrevMonth} style={styles.calNavBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Previous month">
+                        <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>←</Text>
                       </Pressable>
 
-                      <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                      <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessibilityRole="header">
                         {monthNames[calendarMonth.getMonth()]} {calendarMonth.getFullYear()}
                       </Text>
 
-                      <Pressable onPress={handleNextMonth} style={styles.calNavBtn}>
-                        <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>→</Text>
+                      <Pressable onPress={handleNextMonth} style={styles.calNavBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Next month">
+                        <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>→</Text>
                       </Pressable>
                     </View>
                   </View>
 
                   {/* Calendar body */}
-                  <View style={{ padding: 14 }}>
-                    <View style={styles.dayNameRow}>
+                  <View style={{ padding: 14 }} accessible={false}>
+                    <View style={styles.dayNameRow} accessible={false}>
                       {dayNames.map((d) => (
-                        <Text key={d} style={{ width: "14.285%", textAlign: "center", fontWeight: "900", color: colors.sub }}>
+                        <Text key={d} style={{ width: "14.285%", textAlign: "center", fontWeight: "900", color: colors.sub }} accessibilityRole="text">
                           {d}
                         </Text>
                       ))}
                     </View>
 
-                    <View style={styles.daysGrid}>
+                    <View style={styles.daysGrid} accessible={false}>
                       {calendarDays.map((day, idx) => {
-                        if (!day) return <View key={idx} style={styles.dayCell} />;
+                        if (!day) return <View key={idx} style={styles.dayCell} accessible={false} />;
 
                         const formatted = formatDateForComparison(
                           calendarMonth.getFullYear(),
@@ -339,7 +346,7 @@ export default function HistoryScreen() {
                             : "transparent";
 
                         return (
-                          <View key={idx} style={styles.dayCell}>
+                          <View key={idx} style={styles.dayCell} accessible={false}>
                             <Pressable
                               onPress={() => handleDateSelect(day)}
                               style={({ pressed }) => [
@@ -347,10 +354,15 @@ export default function HistoryScreen() {
                                 { backgroundColor: bg, borderColor, borderWidth: hasEntries && !isSelected ? 2 : isSelected ? 2 : 0 },
                                 pressed && { opacity: 0.92 },
                               ]}
+                              accessible={true}
+                              accessibilityRole="button"
+                              accessibilityLabel={`${day}${hasEntries ? ", has entries" : ""}`}
+                              accessibilityState={{ selected: isSelected }}
+                              accessibilityHint={hasEntries ? "Double tap to filter by this date" : undefined}
                             >
-                              <Text style={{ fontWeight: "900", color: textColor }}>{day}</Text>
+                              <Text style={{ fontWeight: "900", color: textColor }} accessible={false}>{day}</Text>
                               {hasEntries && !isSelected && (
-                                <View style={[styles.dot, { backgroundColor: highContrastMode ? "#000" : colors.primary }]} />
+                                <View style={[styles.dot, { backgroundColor: highContrastMode ? "#000" : colors.primary }]} accessible={false} />
                               )}
                             </Pressable>
                           </View>
@@ -360,7 +372,7 @@ export default function HistoryScreen() {
                   </View>
 
                   {/* Calendar footer */}
-                  <View style={[styles.calendarFooter, { borderTopColor: colors.border }]}>
+                  <View style={[styles.calendarFooter, { borderTopColor: colors.border }]} accessible={false}>
                     <Pressable
                       onPress={() => {
                         setSelectedDateFilter(null);
@@ -372,8 +384,12 @@ export default function HistoryScreen() {
                         { backgroundColor: highContrastMode ? colors.card2 : "#fff", borderColor: colors.border },
                         pressed && { opacity: 0.92 },
                       ]}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel="Clear filter"
+                      accessibilityHint="Clears the date filter"
                     >
-                      <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>Clear</Text>
+                      <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>Clear</Text>
                     </Pressable>
 
                     <Pressable
@@ -383,8 +399,12 @@ export default function HistoryScreen() {
                         { backgroundColor: colors.primary, borderColor: colors.primary },
                         pressed && { opacity: 0.92 },
                       ]}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel="Done"
+                      accessibilityHint="Closes the calendar"
                     >
-                      <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>Done</Text>
+                      <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>Done</Text>
                     </Pressable>
                   </View>
                 </View>
@@ -392,15 +412,15 @@ export default function HistoryScreen() {
             </Modal>
 
             {/* Timeline */}
-            <View style={{ gap: 16 }}>
+            <View style={{ gap: 16 }} accessible={false}>
               {Object.entries(groupedEntries).map(([date, dateEntries]) => (
-                <View key={date}>
-                  <View style={styles.dateRow}>
-                    <View style={[styles.bullet, { backgroundColor: colors.teal }]} />
-                    <Text style={{ fontWeight: "900", color: colors.muted }}>{date}</Text>
+                <View key={date} accessible={false}>
+                  <View style={styles.dateRow} accessible={false}>
+                    <View style={[styles.bullet, { backgroundColor: colors.teal }]} accessible={false} />
+                    <Text style={{ fontWeight: "900", color: colors.muted }} accessibilityRole="header">{date}</Text>
                   </View>
 
-                  <View style={{ marginLeft: 24, gap: 10 }}>
+                  <View style={{ marginLeft: 24, gap: 10 }} accessible={false}>
                     {dateEntries.map((entry) => {
                       const s = getEntryStyles(entry.type, entry.category);
 
@@ -414,23 +434,26 @@ export default function HistoryScreen() {
                               borderColor: s.border,
                             },
                           ]}
+                          accessible={true}
+                          accessibilityRole="text"
+                          accessibilityLabel={`${entry.title}${entry.value ? `, ${entry.value}` : ""}${entry.content ? `, ${entry.content}` : ""}`}
                         >
-                          <View style={{ flexDirection: "row", gap: 10, alignItems: "flex-start" }}>
-                            <Text style={{ fontSize: 18 }}>{s.icon}</Text>
+                          <View style={{ flexDirection: "row", gap: 10, alignItems: "flex-start" }} accessible={false}>
+                            <Text style={{ fontSize: 18 }} accessible={false}>{s.icon}</Text>
 
-                            <View style={{ flex: 1 }}>
-                              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}>
-                                <Text style={{ fontWeight: "900", color: "#101828", flex: 1 }} numberOfLines={2}>
+                            <View style={{ flex: 1 }} accessible={false}>
+                              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }} accessible={false}>
+                                <Text style={{ fontWeight: "900", color: "#101828", flex: 1 }} numberOfLines={2} accessible={false}>
                                   {entry.title}
                                 </Text>
 
                                 {entry.value ? (
-                                  <Text style={{ fontWeight: "900", color: "#101828" }}>{entry.value}</Text>
+                                  <Text style={{ fontWeight: "900", color: "#101828" }} accessible={false}>{entry.value}</Text>
                                 ) : null}
                               </View>
 
                               {entry.content ? (
-                                <Text style={{ marginTop: 4, fontWeight: "800", color: "#6B7280" }}>
+                                <Text style={{ marginTop: 4, fontWeight: "800", color: "#6B7280" }} accessible={false}>
                                   {entry.content}
                                 </Text>
                               ) : null}
@@ -453,24 +476,28 @@ export default function HistoryScreen() {
                   { backgroundColor: highContrastMode ? colors.card2 : "#fff", borderColor: colors.border },
                   pressed && { opacity: 0.92 },
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Show less"
+                accessibilityHint="Collapses the list to show fewer entries"
               >
-                <Text style={{ fontWeight: "900", color: colors.title }}>Show Less</Text>
+                <Text style={{ fontWeight: "900", color: colors.title }} accessible={false}>Show Less</Text>
               </Pressable>
             )}
 
             {/* Empty */}
             {filteredEntries.length === 0 && (
-              <View style={{ paddingVertical: 36, alignItems: "center" }}>
-                <View style={[styles.emptyIcon, { backgroundColor: highContrastMode ? colors.card2 : "#F3E8FF" }]}>
-                  <Text style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.primary : colors.purple }}>
+              <View style={{ paddingVertical: 36, alignItems: "center" }} accessible={false}>
+                <View style={[styles.emptyIcon, { backgroundColor: highContrastMode ? colors.card2 : "#F3E8FF" }]} accessible={false}>
+                  <Text style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.primary : colors.purple }} accessible={false}>
                     ⏱
                   </Text>
                 </View>
 
-                <Text style={{ marginTop: 10, fontSize: 16, fontWeight: "900", color: colors.title }}>
+                <Text style={{ marginTop: 10, fontSize: 16, fontWeight: "900", color: colors.title }} accessibilityRole="text">
                   {selectedDateFilter ? "No history on this date" : "No history yet"}
                 </Text>
-                <Text style={{ marginTop: 6, fontWeight: "800", color: colors.sub }}>
+                <Text style={{ marginTop: 6, fontWeight: "800", color: colors.sub }} accessibilityRole="text">
                   {selectedDateFilter ? "Try selecting a different date" : "Your health logs and notes will appear here"}
                 </Text>
               </View>

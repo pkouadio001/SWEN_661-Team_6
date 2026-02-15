@@ -70,21 +70,62 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
   const labelColor = highContrastMode ? "#fff" : "#101828";
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={cardStyle}>
-          <Text style={[styles.title, { color: labelColor }]}>Log Mood</Text>
+    <Modal 
+      visible={visible} 
+      transparent 
+      animationType="fade" 
+      onRequestClose={onClose}
+      accessible={true}
+      accessibilityViewIsModal={true}
+    >
+      <View 
+        style={styles.overlay}
+        accessible={true}
+        accessibilityRole="none"
+        accessibilityLabel="Mood logging form overlay"
+      >
+        <View 
+          style={cardStyle}
+          accessible={true}
+          accessibilityRole="none"
+          accessibilityLabel="Mood logging form"
+        >
+          <Text 
+            style={[styles.title, { color: labelColor }]}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            Log Mood
+          </Text>
 
-          <ScrollView contentContainerStyle={{ paddingBottom: 8 }}>
-            <Text style={[styles.label, { color: labelColor }]}>How are you feeling?</Text>
+          <ScrollView 
+            contentContainerStyle={{ paddingBottom: 8 }}
+            accessible={false}
+          >
+            <Text 
+              style={[styles.label, { color: labelColor }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              How are you feeling?
+            </Text>
 
-            <View style={styles.grid}>
+            <View 
+              style={styles.grid}
+              accessible={false}
+            >
               {moodOptions.map((option) => {
                 const selected = mood === option;
+                const moodLabel = option.split(" ").slice(1).join(" ");
                 return (
                   <Pressable
                     key={option}
                     onPress={() => setMood(option)}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${moodLabel} mood option`}
+                    accessibilityHint={`Select ${moodLabel} as your current mood`}
+                    accessibilityState={{ selected }}
                     style={[
                       styles.moodBtn,
                       selected
@@ -101,6 +142,7 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
                         styles.moodEmoji,
                         { color: selected ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? "#fff" : "#101828") },
                       ]}
+                      accessible={false}
                     >
                       {option.split(" ")[0]}
                     </Text>
@@ -109,15 +151,20 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
                         styles.moodText,
                         { color: selected ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? "#fff" : "#101828") },
                       ]}
+                      accessible={false}
                     >
-                      {option.split(" ").slice(1).join(" ")}
+                      {moodLabel}
                     </Text>
                   </Pressable>
                 );
               })}
             </View>
 
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>
+            <Text 
+              style={[styles.label, { color: labelColor, marginTop: 12 }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
               Notes (optional)
             </Text>
             <TextInput
@@ -126,6 +173,9 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
               placeholder="Add any notes about your mood..."
               placeholderTextColor={highContrastMode ? "#bbb" : "#9CA3AF"}
               multiline
+              accessible={true}
+              accessibilityLabel="Mood notes"
+              accessibilityHint="Optional text field for additional notes about your mood"
               style={[
                 styles.input,
                 styles.textarea,
@@ -135,10 +185,19 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
               ]}
             />
 
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>Date</Text>
+            <Text 
+              style={[styles.label, { color: labelColor, marginTop: 12 }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              Date
+            </Text>
             <TextInput
               value={date}
               onChangeText={setDate}
+              accessible={true}
+              accessibilityLabel="Date"
+              accessibilityHint="Date when mood was recorded"
               style={[
                 styles.input,
                 highContrastMode
@@ -147,10 +206,19 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
               ]}
             />
 
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>Time</Text>
+            <Text 
+              style={[styles.label, { color: labelColor, marginTop: 12 }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              Time
+            </Text>
             <TextInput
               value={time}
               onChangeText={setTime}
+              accessible={true}
+              accessibilityLabel="Time"
+              accessibilityHint="Time when mood was recorded"
               style={[
                 styles.input,
                 highContrastMode
@@ -160,9 +228,16 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
             />
           </ScrollView>
 
-          <View style={styles.actions}>
+          <View 
+            style={styles.actions}
+            accessible={false}
+          >
             <Pressable
               onPress={onClose}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Cancel"
+              accessibilityHint="Close mood logging form without saving"
               style={[
                 styles.actionBtn,
                 highContrastMode
@@ -170,19 +245,29 @@ export default function AddMoodForm({ visible, onClose }: AddMoodFormProps) {
                   : { backgroundColor: "#F3F4F6" },
               ]}
             >
-              <Text style={{ fontWeight: "700", color: highContrastMode ? "#fff" : "#101828" }}>
+              <Text 
+                style={{ fontWeight: "700", color: highContrastMode ? "#fff" : "#101828" }}
+                accessible={false}
+              >
                 Cancel
               </Text>
             </Pressable>
 
             <Pressable
               onPress={handleSubmit}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Add mood entry"
+              accessibilityHint="Save and add this mood entry to your health logs"
               style={[
                 styles.actionBtn,
                 highContrastMode ? { backgroundColor: "#FFFF00" } : { backgroundColor: "#155DFC" },
               ]}
             >
-              <Text style={{ fontWeight: "800", color: highContrastMode ? "#000" : "#fff" }}>
+              <Text 
+                style={{ fontWeight: "800", color: highContrastMode ? "#000" : "#fff" }}
+                accessible={false}
+              >
                 Add
               </Text>
             </Pressable>

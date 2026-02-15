@@ -163,48 +163,121 @@ export default function MessagesScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/communication")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.title, fontSize: 20, fontWeight: "900" }}>
+        <View 
+          style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}
+          accessible={false}
+        >
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/communication")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Communication"
+              accessibilityHint="Navigate back to Communication and Safety"
+              style={styles.iconBtn}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#FFFFFF" : colors.title, fontSize: 20, fontWeight: "900" }}
+                accessible={false}
+              >
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.purple }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#FFF", fontWeight: "900" }}>💬</Text>
+            <View 
+              style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.purple }]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Messages icon"
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#000" : "#FFF", fontWeight: "900" }}
+                accessible={false}
+              >
+                💬
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Messages</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Stay connected with your care team</Text>
+            <View 
+              style={{ flex: 1 }}
+              accessible={false}
+            >
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Messages
+              </Text>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Stay connected with your care team
+              </Text>
             </View>
           </View>
         </View>
 
         {/* Content */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Back to Communication */}
           <Pressable
             onPress={() => router.push("/communication")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Communication and Safety"
+            accessibilityHint="Navigate back to Communication and Safety"
             style={({ pressed }) => [
               styles.backCard,
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+            <Text 
+              style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}
+              accessible={false}
+            >
               ← Back to Communication & Safety
             </Text>
           </Pressable>
 
           {/* Messages Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.cardTitle, { color: colors.title }]}>Messages</Text>
-            <Text style={[styles.cardSub, { color: colors.sub }]}>Stay connected with your care team</Text>
+          <View 
+            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+            accessible={false}
+          >
+            <Text 
+              style={[styles.cardTitle, { color: colors.title }]}
+              accessible={true}
+              accessibilityRole="header"
+            >
+              Messages
+            </Text>
+            <Text 
+              style={[styles.cardSub, { color: colors.sub }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              Stay connected with your care team
+            </Text>
 
             <View style={{ marginTop: 14, gap: 12 }}>
               {messages.map((message) => (
@@ -212,6 +285,10 @@ export default function MessagesScreen() {
                   {/* Message card */}
                   <Pressable
                     onPress={() => handleViewHistory(message)}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Message from ${message.sender}. ${message.message}${message.userReply ? '. You replied: ' + message.userReply : ''}`}
+                    accessibilityHint="View message history"
                     style={({ pressed }) => [
                       styles.messageCard,
                       {
@@ -221,25 +298,50 @@ export default function MessagesScreen() {
                       pressed && { opacity: 0.95 },
                     ]}
                   >
-                    <View style={{ flexDirection: "row", gap: 12 }}>
+                    <View 
+                      style={{ flexDirection: "row", gap: 12 }}
+                      accessible={false}
+                    >
                       {/* Icon */}
-                      <View style={{ paddingTop: 2 }}>
-                        <Text style={{ color: highContrastMode ? colors.primary : colors.purple, fontSize: 18 }}>
+                      <View 
+                        style={{ paddingTop: 2 }}
+                        accessible={false}
+                      >
+                        <Text 
+                          style={{ color: highContrastMode ? colors.primary : colors.purple, fontSize: 18 }}
+                          accessible={false}
+                        >
                           💬
                         </Text>
                       </View>
 
-                      <View style={{ flex: 1 }}>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}>
-                          <Text style={{ fontWeight: "900", color: highContrastMode ? "#fff" : "#101828", flex: 1 }} numberOfLines={1}>
+                      <View 
+                        style={{ flex: 1 }}
+                        accessible={false}
+                      >
+                        <View 
+                          style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}
+                          accessible={false}
+                        >
+                          <Text 
+                            style={{ fontWeight: "900", color: highContrastMode ? "#fff" : "#101828", flex: 1 }} 
+                            numberOfLines={1}
+                            accessible={false}
+                          >
                             {message.sender}
                           </Text>
-                          <Text style={{ color: highContrastMode ? colors.primary : colors.sub, fontWeight: "800" }}>
+                          <Text 
+                            style={{ color: highContrastMode ? colors.primary : colors.sub, fontWeight: "800" }}
+                            accessible={false}
+                          >
                             {message.time}
                           </Text>
                         </View>
 
-                        <Text style={{ marginTop: 8, color: highContrastMode ? "#fff" : "#101828", fontWeight: "700" }}>
+                        <Text 
+                          style={{ marginTop: 8, color: highContrastMode ? "#fff" : "#101828", fontWeight: "700" }}
+                          accessible={false}
+                        >
                           {message.message}
                         </Text>
 
@@ -253,11 +355,18 @@ export default function MessagesScreen() {
                                 borderColor: highContrastMode ? colors.border : "#D1D5DB",
                               },
                             ]}
+                            accessible={false}
                           >
-                            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : "#6B7280", fontSize: 12 }}>
+                            <Text 
+                              style={{ fontWeight: "900", color: highContrastMode ? colors.primary : "#6B7280", fontSize: 12 }}
+                              accessible={false}
+                            >
                               ↳ You replied
                             </Text>
-                            <Text style={{ marginTop: 4, fontWeight: "800", color: highContrastMode ? "#fff" : "#101828" }}>
+                            <Text 
+                              style={{ marginTop: 4, fontWeight: "800", color: highContrastMode ? "#fff" : "#101828" }}
+                              accessible={false}
+                            >
                               {message.userReply}
                             </Text>
                           </View>
@@ -269,43 +378,71 @@ export default function MessagesScreen() {
                             styles.actionGroup,
                             { backgroundColor: highContrastMode ? "#1a1a1a" : "#F9FAFB", borderColor: colors.divider },
                           ]}
+                          accessible={false}
                         >
                           <Pressable
                             onPress={(e) => {
                               e.stopPropagation();
                               handleReply(message.id);
                             }}
+                            accessible={true}
+                            accessibilityRole="button"
+                            accessibilityLabel="Reply to message"
+                            accessibilityHint="Open reply input"
                             style={({ pressed }) => [styles.actionBtn, pressed && { opacity: 0.85 }]}
                           >
-                            <Text style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900", fontSize: 13 }}>
+                            <Text 
+                              style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900", fontSize: 13 }}
+                              accessible={false}
+                            >
                               Reply
                             </Text>
                           </Pressable>
 
-                          <View style={[styles.vDivider, { backgroundColor: colors.divider }]} />
+                          <View 
+                            style={[styles.vDivider, { backgroundColor: colors.divider }]}
+                            accessible={false}
+                          />
 
                           <Pressable
                             onPress={(e) => {
                               e.stopPropagation();
                               handleViewHistory(message);
                             }}
+                            accessible={true}
+                            accessibilityRole="button"
+                            accessibilityLabel="View message history"
+                            accessibilityHint="View full conversation"
                             style={({ pressed }) => [styles.actionBtn, pressed && { opacity: 0.85 }]}
                           >
-                            <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "900", fontSize: 13 }}>
+                            <Text 
+                              style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "900", fontSize: 13 }}
+                              accessible={false}
+                            >
                               History
                             </Text>
                           </Pressable>
 
-                          <View style={[styles.vDivider, { backgroundColor: colors.divider }]} />
+                          <View 
+                            style={[styles.vDivider, { backgroundColor: colors.divider }]}
+                            accessible={false}
+                          />
 
                           <Pressable
                             onPress={(e) => {
                               e.stopPropagation();
                               handleDeleteClick(message.id);
                             }}
+                            accessible={true}
+                            accessibilityRole="button"
+                            accessibilityLabel="Delete message"
+                            accessibilityHint="Delete this message"
                             style={({ pressed }) => [styles.actionBtn, pressed && { opacity: 0.85 }]}
                           >
-                            <Text style={{ color: colors.danger, fontWeight: "900", fontSize: 13 }}>
+                            <Text 
+                              style={{ color: colors.danger, fontWeight: "900", fontSize: 13 }}
+                              accessible={false}
+                            >
                               Delete
                             </Text>
                           </Pressable>
@@ -325,11 +462,18 @@ export default function MessagesScreen() {
                         },
                       ]}
                     >
-                      <Text style={{ color: highContrastMode ? colors.primary : "#6B7280", fontWeight: "900", marginBottom: 10 }}>
+                      <Text 
+                        style={{ color: highContrastMode ? colors.primary : "#6B7280", fontWeight: "900", marginBottom: 10 }}
+                        accessible={true}
+                        accessibilityRole="header"
+                      >
                         Replying to {message.sender}
                       </Text>
 
-                      <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+                      <View 
+                        style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+                        accessible={false}
+                      >
                         <TextInput
                           value={replyText}
                           onChangeText={setReplyText}
@@ -340,6 +484,9 @@ export default function MessagesScreen() {
                           onSubmitEditing={() => {
                             if (replyText.trim()) handleSendReply(message.id);
                           }}
+                          accessible={true}
+                          accessibilityLabel={`Reply to ${message.sender}`}
+                          accessibilityHint="Type your message and press send"
                           style={[
                             styles.input,
                             {
@@ -353,6 +500,11 @@ export default function MessagesScreen() {
                         <Pressable
                           onPress={() => handleSendReply(message.id)}
                           disabled={!replyText.trim()}
+                          accessible={true}
+                          accessibilityRole="button"
+                          accessibilityLabel="Send reply"
+                          accessibilityHint="Send your message"
+                          accessibilityState={{ disabled: !replyText.trim() }}
                           style={({ pressed }) => [
                             styles.sendBtn,
                             {
@@ -361,11 +513,20 @@ export default function MessagesScreen() {
                             },
                           ]}
                         >
-                          <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>Send</Text>
+                          <Text 
+                            style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}
+                            accessible={false}
+                          >
+                            Send
+                          </Text>
                         </Pressable>
 
                         <Pressable
                           onPress={handleCancelReply}
+                          accessible={true}
+                          accessibilityRole="button"
+                          accessibilityLabel="Cancel reply"
+                          accessibilityHint="Cancel replying to message"
                           style={({ pressed }) => [
                             styles.cancelIconBtn,
                             {
@@ -374,7 +535,10 @@ export default function MessagesScreen() {
                             },
                           ]}
                         >
-                          <Text style={{ color: highContrastMode ? colors.primary : "#6B7280", fontWeight: "900" }}>
+                          <Text 
+                            style={{ color: highContrastMode ? colors.primary : "#6B7280", fontWeight: "900" }}
+                            accessible={false}
+                          >
                             ✕
                           </Text>
                         </Pressable>
@@ -385,16 +549,33 @@ export default function MessagesScreen() {
               ))}
 
               {messages.length === 0 && (
-                <View style={{ alignItems: "center", paddingVertical: 28 }}>
-                  <View style={[styles.emptyIcon, { backgroundColor: highContrastMode ? "#2a2a2a" : "#F3E8FF" }]}>
-                    <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? colors.primary : colors.purple }}>
+                <View 
+                  style={{ alignItems: "center", paddingVertical: 28 }}
+                  accessible={true}
+                  accessibilityRole="text"
+                  accessibilityLabel="No messages yet. Messages from your care team will appear here"
+                >
+                  <View 
+                    style={[styles.emptyIcon, { backgroundColor: highContrastMode ? "#2a2a2a" : "#F3E8FF" }]}
+                    accessible={false}
+                  >
+                    <Text 
+                      style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? colors.primary : colors.purple }}
+                      accessible={false}
+                    >
                       💬
                     </Text>
                   </View>
-                  <Text style={{ marginTop: 10, fontSize: 16, fontWeight: "900", color: colors.title }}>
+                  <Text 
+                    style={{ marginTop: 10, fontSize: 16, fontWeight: "900", color: colors.title }}
+                    accessible={false}
+                  >
                     No messages yet
                   </Text>
-                  <Text style={{ marginTop: 6, fontWeight: "800", color: colors.sub }}>
+                  <Text 
+                    style={{ marginTop: 6, fontWeight: "800", color: colors.sub }}
+                    accessible={false}
+                  >
                     Messages from your care team will appear here
                   </Text>
                 </View>
@@ -548,25 +729,105 @@ export default function MessagesScreen() {
         </Modal>
 
         {/* Bottom Nav */}
-        <View style={[styles.nav, { backgroundColor: colors.headerBg, borderTopColor: colors.border }]}>
-          <View style={styles.navRow}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Home</Text>
+        <View 
+          style={[styles.nav, { backgroundColor: colors.headerBg, borderTopColor: colors.border }]}
+          accessible={false}
+          accessibilityRole="tabbar"
+        >
+          <View 
+            style={styles.navRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Home"
+              accessibilityHint="Navigate to Home tab"
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                accessible={false}
+              >
+                Home
+              </Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/tasks")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Tasks</Text>
+            <Pressable 
+              onPress={() => router.push("/tasks")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Tasks"
+              accessibilityHint="Navigate to Tasks tab"
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                accessible={false}
+              >
+                Tasks
+              </Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/health")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Health</Text>
+            <Pressable 
+              onPress={() => router.push("/health")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Health"
+              accessibilityHint="Navigate to Health tab"
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                accessible={false}
+              >
+                Health
+              </Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/messages")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900" }}>Messages</Text>
+            <Pressable 
+              onPress={() => router.push("/messages")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Messages"
+              accessibilityHint="Navigate to Messages tab"
+              accessibilityState={{ selected: true }}
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900" }}
+                accessible={false}
+              >
+                Messages
+              </Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/alerts")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Alerts</Text>
+            <Pressable 
+              onPress={() => router.push("/alerts")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Alerts"
+              accessibilityHint="Navigate to Alerts tab"
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                accessible={false}
+              >
+                Alerts
+              </Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/profile")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Profile</Text>
+            <Pressable 
+              onPress={() => router.push("/profile")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Profile"
+              accessibilityHint="Navigate to Profile tab"
+              style={styles.navItem}
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}
+                accessible={false}
+              >
+                Profile
+              </Text>
             </Pressable>
           </View>
         </View>

@@ -160,54 +160,58 @@ export default function UpcomingAppointments() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <SafeAreaView style={styles.screen} accessible={false}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerRow}>
-          <Pressable onPress={() => router.push("/tasks")} style={styles.iconBtn}>
-            <Text style={styles.iconText}>←</Text>
+      <View style={styles.header} accessible={false}>
+        <View style={styles.headerRow} accessible={false}>
+          <Pressable onPress={() => router.push("/tasks")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Back to Tasks">
+            <Text style={styles.iconText} accessible={false}>←</Text>
           </Pressable>
 
-          <View style={styles.headerTitleWrap}>
-            <View style={styles.headerIcon}>
-              <Text style={styles.headerIconText}>📅</Text>
+          <View style={styles.headerTitleWrap} accessible={false}>
+            <View style={styles.headerIcon} accessible={false}>
+              <Text style={styles.headerIconText} accessible={false}>📅</Text>
             </View>
-            <View>
-              <Text style={styles.headerTitle}>Upcoming Appointments</Text>
-              <Text style={styles.headerSub}>Your scheduled visits</Text>
+            <View accessible={false}>
+              <Text style={styles.headerTitle} accessibilityRole="header">Upcoming Appointments</Text>
+              <Text style={styles.headerSub} accessibilityRole="text">Your scheduled visits</Text>
             </View>
           </View>
 
-          <View style={{ width: 32 }} />
+          <View style={{ width: 32 }} accessible={false} />
         </View>
 
-        <Pressable onPress={() => router.push("/tasks")} style={styles.backToTasksBtn}>
-          <Text style={styles.backToTasksText}>← Back to Tasks & Scheduling</Text>
+        <Pressable onPress={() => router.push("/tasks")} style={styles.backToTasksBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Back to Tasks and Scheduling">
+          <Text style={styles.backToTasksText} accessible={false}>← Back to Tasks & Scheduling</Text>
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} accessible={false}>
         {/* Section header */}
-        <View style={styles.sectionHeader}>
-          <View>
-            <Text style={styles.sectionTitle}>Upcoming Appointments</Text>
-            <Text style={styles.sectionSub}>Your scheduled visits</Text>
+        <View style={styles.sectionHeader} accessible={false}>
+          <View accessible={false}>
+            <Text style={styles.sectionTitle} accessibilityRole="header">Upcoming Appointments</Text>
+            <Text style={styles.sectionSub} accessibilityRole="text">Your scheduled visits</Text>
           </View>
 
           {appointmentsWithinWeek.length > 5 && (
-            <Pressable onPress={() => setShowAll(!showAll)} style={styles.viewAllBtn}>
-              <Text style={styles.viewAllText}>{showAll ? "Show Less" : "View All"}</Text>
+            <Pressable onPress={() => setShowAll(!showAll)} style={styles.viewAllBtn} accessible={true} accessibilityRole="button" accessibilityLabel={showAll ? "Show less appointments" : "View all appointments"}>
+              <Text style={styles.viewAllText} accessible={false}>{showAll ? "Show Less" : "View All"}</Text>
             </Pressable>
           )}
         </View>
 
         {/* View toggle */}
-        <View style={styles.toggleRow}>
+        <View style={styles.toggleRow} accessible={false}>
           <Pressable
             onPress={() => setView("schedule")}
             style={[styles.toggleBtn, view === "schedule" && styles.toggleBtnActive]}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Schedule view"
+            accessibilityState={{ selected: view === "schedule" }}
           >
-            <Text style={[styles.toggleText, view === "schedule" && styles.toggleTextActive]}>
+            <Text style={[styles.toggleText, view === "schedule" && styles.toggleTextActive]} accessible={false}>
               Schedule
             </Text>
           </Pressable>
@@ -215,8 +219,12 @@ export default function UpcomingAppointments() {
           <Pressable
             onPress={() => setView("calendar")}
             style={[styles.toggleBtn, view === "calendar" && styles.toggleBtnActive]}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Calendar view"
+            accessibilityState={{ selected: view === "calendar" }}
           >
-            <Text style={[styles.toggleText, view === "calendar" && styles.toggleTextActive]}>
+            <Text style={[styles.toggleText, view === "calendar" && styles.toggleTextActive]} accessible={false}>
               Calendar
             </Text>
           </Pressable>
@@ -224,7 +232,7 @@ export default function UpcomingAppointments() {
 
         {/* Schedule view */}
         {view === "schedule" && (
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 10 }} accessible={false}>
             {displayedAppointments.map((appointment) => {
               const confirmed = isAppointmentConfirmed(appointment.id);
 
@@ -236,24 +244,28 @@ export default function UpcomingAppointments() {
                     styles.apptCard,
                     confirmed && styles.apptCardConfirmed,
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${appointment.title}, ${appointment.date} at ${appointment.time}${confirmed ? ", confirmed" : ""}`}
+                  accessibilityHint="Double tap to view appointment details"
                 >
-                  <View style={styles.apptRow}>
-                    <View style={[styles.apptBadge, confirmed ? styles.badgeConfirmed : styles.badgeDefault]}>
-                      <Text style={styles.badgeText}>⟲</Text>
+                  <View style={styles.apptRow} accessible={false}>
+                    <View style={[styles.apptBadge, confirmed ? styles.badgeConfirmed : styles.badgeDefault]} accessible={false}>
+                      <Text style={styles.badgeText} accessible={false}>⟲</Text>
                     </View>
 
-                    <View style={{ flex: 1 }}>
-                      <Text style={[styles.apptTitle, confirmed && styles.apptTitleConfirmed]}>
+                    <View style={{ flex: 1 }} accessible={false}>
+                      <Text style={[styles.apptTitle, confirmed && styles.apptTitleConfirmed]} accessible={false}>
                         {appointment.title}
                       </Text>
-                      <Text style={[styles.apptMeta, confirmed && styles.apptMetaConfirmed]}>
+                      <Text style={[styles.apptMeta, confirmed && styles.apptMetaConfirmed]} accessible={false}>
                         {appointment.date} at {appointment.time}
                       </Text>
                     </View>
 
                     {confirmed && (
-                      <View style={styles.check}>
-                        <Text style={styles.checkText}>✓</Text>
+                      <View style={styles.check} accessible={false}>
+                        <Text style={styles.checkText} accessible={false}>✓</Text>
                       </View>
                     )}
                   </View>
@@ -265,8 +277,8 @@ export default function UpcomingAppointments() {
 
         {/* Calendar view */}
         {view === "calendar" && (
-          <View style={styles.calendarCard}>
-            <View style={styles.monthRow}>
+          <View style={styles.calendarCard} accessible={false}>
+            <View style={styles.monthRow} accessible={false}>
               <Pressable
                 onPress={() => {
                   if (currentMonth > 0) {
@@ -276,11 +288,15 @@ export default function UpcomingAppointments() {
                 }}
                 disabled={currentMonth === 0}
                 style={[styles.monthNavBtn, currentMonth === 0 && styles.monthNavDisabled]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Previous month"
+                accessibilityState={{ disabled: currentMonth === 0 }}
               >
-                <Text style={styles.monthNavText}>←</Text>
+                <Text style={styles.monthNavText} accessible={false}>←</Text>
               </Pressable>
 
-              <Text style={styles.monthTitle}>{monthDisplay}</Text>
+              <Text style={styles.monthTitle} accessibilityRole="header">{monthDisplay}</Text>
 
               <Pressable
                 onPress={() => {
@@ -291,20 +307,24 @@ export default function UpcomingAppointments() {
                 }}
                 disabled={currentMonth === 12}
                 style={[styles.monthNavBtn, currentMonth === 12 && styles.monthNavDisabled]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Next month"
+                accessibilityState={{ disabled: currentMonth === 12 }}
               >
-                <Text style={styles.monthNavText}>→</Text>
+                <Text style={styles.monthNavText} accessible={false}>→</Text>
               </Pressable>
             </View>
 
-            <View style={styles.dowRow}>
+            <View style={styles.dowRow} accessible={false}>
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-                <Text key={d} style={styles.dowText}>{d}</Text>
+                <Text key={d} style={styles.dowText} accessibilityRole="text">{d}</Text>
               ))}
             </View>
 
-            <View style={styles.grid}>
+            <View style={styles.grid} accessible={false}>
               {calendarDays.map((day, idx) => {
-                if (day === null) return <View key={`empty-${idx}`} style={styles.dayEmpty} />;
+                if (day === null) return <View key={`empty-${idx}`} style={styles.dayEmpty} accessible={false} />;
 
                 const isToday = day === today && currentMonth === 0;
                 const hasAppts = hasAppointments(day, currentMonth);
@@ -323,32 +343,41 @@ export default function UpcomingAppointments() {
                       isSelected && styles.daySelected,
                       hasAppts && styles.dayHasAppts,
                     ]}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${day}${isToday ? ", today" : ""}${hasAppts ? ", has appointments" : ""}`}
+                    accessibilityState={{ selected: isSelected, disabled: !hasAppts }}
+                    accessibilityHint={hasAppts ? "Double tap to view appointments" : undefined}
                   >
-                    <Text style={[styles.dayText, (isToday || isSelected) && styles.dayTextActive]}>
+                    <Text style={[styles.dayText, (isToday || isSelected) && styles.dayTextActive]} accessible={false}>
                       {day}
                     </Text>
-                    {hasAppts && <View style={styles.dot} />}
+                    {hasAppts && <View style={styles.dot} accessible={false} />}
                   </Pressable>
                 );
               })}
             </View>
 
             {selectedDate && (
-              <View style={styles.selectedBlock}>
-                <Text style={styles.selectedTitle}>
+              <View style={styles.selectedBlock} accessible={false}>
+                <Text style={styles.selectedTitle} accessibilityRole="header">
                   Appointments on {displayDate.toLocaleDateString("en-US", { month: "short" })}{" "}
                   {selectedDate}
                 </Text>
 
-                <View style={{ gap: 10 }}>
+                <View style={{ gap: 10 }} accessible={false}>
                   {getAppointmentsForDate(selectedDate, currentMonth).map((apt) => (
                     <Pressable
                       key={apt.id}
                       onPress={() => setSelectedAppointment(apt)}
                       style={styles.selectedApptCard}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${apt.title} at ${apt.time}`}
+                      accessibilityHint="Double tap to view appointment details"
                     >
-                      <Text style={styles.selectedApptTitle}>{apt.title}</Text>
-                      <Text style={styles.selectedApptTime}>{apt.time}</Text>
+                      <Text style={styles.selectedApptTitle} accessible={false}>{apt.title}</Text>
+                      <Text style={styles.selectedApptTime} accessible={false}>{apt.time}</Text>
                     </Pressable>
                   ))}
                 </View>
@@ -367,13 +396,15 @@ export default function UpcomingAppointments() {
           cancelHoldConfirm();
           setSelectedAppointment(null);
         }}
+        accessible={true}
+        accessibilityLabel="Appointment details dialog"
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalCard}>
-            <View style={styles.modalHeaderRow}>
-              <View>
-                <Text style={styles.modalTitle}>Appointment Details</Text>
-                <Text style={styles.modalSub}>View information about your appointment</Text>
+        <View style={styles.modalOverlay} accessible={false}>
+          <View style={styles.modalCard} accessible={false}>
+            <View style={styles.modalHeaderRow} accessible={false}>
+              <View accessible={false}>
+                <Text style={styles.modalTitle} accessibilityRole="header">Appointment Details</Text>
+                <Text style={styles.modalSub} accessibilityRole="text">View information about your appointment</Text>
               </View>
               <Pressable
                 onPress={() => {
@@ -381,19 +412,23 @@ export default function UpcomingAppointments() {
                   setSelectedAppointment(null);
                 }}
                 style={styles.iconBtn}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Close"
+                accessibilityHint="Closes the appointment details dialog"
               >
-                <Text style={styles.iconText}>✕</Text>
+                <Text style={styles.iconText} accessible={false}>✕</Text>
               </Pressable>
             </View>
 
             {selectedAppointment && (
               <>
-                <View style={styles.modalTopCard}>
-                  <Text style={styles.modalApptTitle}>{selectedAppointment.title}</Text>
-                  <Text style={styles.modalApptSub}>{selectedAppointment.subtitle}</Text>
+                <View style={styles.modalTopCard} accessible={false}>
+                  <Text style={styles.modalApptTitle} accessibilityRole="header">{selectedAppointment.title}</Text>
+                  <Text style={styles.modalApptSub} accessibilityRole="text">{selectedAppointment.subtitle}</Text>
                 </View>
 
-                <View style={{ gap: 10 }}>
+                <View style={{ gap: 10 }} accessible={false}>
                   <InfoRow
                     styles={styles}
                     label="Date & Time"
@@ -410,18 +445,22 @@ export default function UpcomingAppointments() {
                   )}
                 </View>
 
-                <View style={styles.modalBtnRow}>
+                <View style={styles.modalBtnRow} accessible={false}>
                   <Pressable
                     onPress={() => {
                       cancelHoldConfirm();
                       setSelectedAppointment(null);
                     }}
                     style={styles.modalSecondaryBtn}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel="Close"
+                    accessibilityHint="Closes the appointment details"
                   >
-                    <Text style={styles.modalSecondaryText}>Close</Text>
+                    <Text style={styles.modalSecondaryText} accessible={false}>Close</Text>
                   </Pressable>
 
-                  <View style={{ flex: 1 }}>
+                  <View style={{ flex: 1 }} accessible={false}>
                     <Pressable
                       onPressIn={startHoldConfirm}
                       onPressOut={cancelHoldConfirm}
@@ -430,12 +469,18 @@ export default function UpcomingAppointments() {
                         styles.modalPrimaryBtn,
                         isAppointmentConfirmed(selectedAppointment.id) && styles.modalPrimaryDisabled,
                       ]}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel={isAppointmentConfirmed(selectedAppointment.id) ? "Appointment confirmed" : "Hold to confirm appointment"}
+                      accessibilityHint={isAppointmentConfirmed(selectedAppointment.id) ? undefined : "Press and hold for 5 seconds to confirm appointment"}
+                      accessibilityState={{ disabled: isAppointmentConfirmed(selectedAppointment.id) }}
                     >
                       <Text
                         style={[
                           styles.modalPrimaryText,
                           isAppointmentConfirmed(selectedAppointment.id) && styles.modalPrimaryTextDisabled,
                         ]}
+                        accessible={false}
                       >
                         {isAppointmentConfirmed(selectedAppointment.id)
                           ? "Confirmed ✓"
@@ -445,7 +490,7 @@ export default function UpcomingAppointments() {
                       </Text>
 
                       {isConfirming && (
-                        <View style={[styles.progressFill, { width: `${confirmProgress}%` }]} />
+                        <View style={[styles.progressFill, { width: `${confirmProgress}%` }]} accessible={false} />
                       )}
                     </Pressable>
                   </View>
@@ -469,9 +514,9 @@ function InfoRow({
   value: string;
 }) {
   return (
-    <View style={styles.infoRow}>
-      <Text style={styles.infoLabel}>{label}</Text>
-      <Text style={styles.infoValue}>{value}</Text>
+    <View style={styles.infoRow} accessible={true} accessibilityRole="text" accessibilityLabel={`${label}: ${value}`}>
+      <Text style={styles.infoLabel} accessible={false}>{label}</Text>
+      <Text style={styles.infoValue} accessible={false}>{value}</Text>
     </View>
   );
 }

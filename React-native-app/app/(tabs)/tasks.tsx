@@ -122,76 +122,175 @@ export default function TasksScreen() {
     to: string;
     active?: boolean;
     badge?: number;
-  }) => (
-    <Pressable onPress={() => go(to)} style={styles.navItem}>
-      <Text style={[styles.navIcon, { color: active ? colors.navActive : colors.navInactive }]}>
-        {label === "Home"
-          ? "🏠"
-          : label === "Tasks"
-          ? "✅"
-          : label === "Health"
-          ? "❤"
-          : label === "Messages"
-          ? "✉️"
-          : label === "Alerts"
-          ? "🔔"
-          : "👤"}
-      </Text>
+  }) => {
+    const accessibilityLabel = badge && badge > 0 
+      ? `${label}. ${badge} ${badge > 1 ? 'items' : 'item'}`
+      : label;
 
-      {badge && badge > 0 ? (
-        <View
-          style={[
-            styles.badge,
-            { backgroundColor: label === "Alerts" && highContrastMode ? "#FFFF00" : colors.danger },
-          ]}
+    return (
+      <Pressable 
+        onPress={() => go(to)} 
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={`Navigate to ${label} tab`}
+        accessibilityState={{ selected: active }}
+        style={styles.navItem}
+      >
+        <Text 
+          style={[styles.navIcon, { color: active ? colors.navActive : colors.navInactive }]}
+          accessible={false}
         >
-          <Text style={[styles.badgeText, { color: label === "Alerts" && highContrastMode ? "#000" : "#fff" }]}>
-            {badge}
-          </Text>
-        </View>
-      ) : null}
+          {label === "Home"
+            ? "🏠"
+            : label === "Tasks"
+            ? "✅"
+            : label === "Health"
+            ? "❤"
+            : label === "Messages"
+            ? "✉️"
+            : label === "Alerts"
+            ? "🔔"
+            : "👤"}
+        </Text>
 
-      <Text style={[styles.navLabel, { color: active ? colors.navActive : colors.navInactive }]}>{label}</Text>
-    </Pressable>
-  );
+        {badge && badge > 0 ? (
+          <View
+            style={[
+              styles.badge,
+              { backgroundColor: label === "Alerts" && highContrastMode ? "#FFFF00" : colors.danger },
+            ]}
+            accessible={false}
+          >
+            <Text 
+              style={[styles.badgeText, { color: label === "Alerts" && highContrastMode ? "#000" : "#fff" }]}
+              accessible={false}
+            >
+              {badge}
+            </Text>
+          </View>
+        ) : null}
+
+        <Text 
+          style={[styles.navLabel, { color: active ? colors.navActive : colors.navInactive }]}
+          accessible={false}
+        >
+          {label}
+        </Text>
+      </Pressable>
+    );
+  };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]}>
-        <View style={styles.headerRow}>
-          <Pressable onPress={() => go("/dashboard")} style={styles.backBtn}>
-            <Text style={{ color: highContrastMode ? "#fff" : "#101828", fontSize: 18 }}>←</Text>
+      <View 
+        style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]}
+        accessible={false}
+      >
+        <View 
+          style={styles.headerRow}
+          accessible={false}
+        >
+          <Pressable 
+            onPress={() => go("/dashboard")} 
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Dashboard"
+            accessibilityHint="Navigate back to Dashboard"
+            style={styles.backBtn}
+          >
+            <Text 
+              style={{ color: highContrastMode ? "#fff" : "#101828", fontSize: 18 }}
+              accessible={false}
+            >
+              ←
+            </Text>
           </Pressable>
 
-          <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}>
-            <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>🗓️</Text>
+          <View 
+            style={[styles.headerIcon, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel="Tasks section icon"
+          >
+            <Text 
+              style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}
+              accessible={false}
+            >
+              🗓️
+            </Text>
           </View>
 
-          <View>
-            <Text style={[styles.h1, { color: colors.text }]}>Tasks & Scheduling</Text>
-            <Text style={[styles.h2, { color: colors.sub }]}>Manage your daily routine</Text>
+          <View accessible={false}>
+            <Text 
+              style={[styles.h1, { color: colors.text }]}
+              accessible={true}
+              accessibilityRole="header"
+            >
+              Tasks & Scheduling
+            </Text>
+            <Text 
+              style={[styles.h2, { color: colors.sub }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              Manage your daily routine
+            </Text>
           </View>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        contentContainerStyle={styles.content} 
+        showsVerticalScrollIndicator={false}
+        accessible={false}
+      >
         {/* Back to Dashboard */}
         <Pressable
           onPress={() => go("/dashboard")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Back to Dashboard"
+          accessibilityHint="Navigate back to Dashboard"
           style={[styles.block, { backgroundColor: colors.card, borderColor: colors.border }]}
         >
-          <Text style={[styles.blockTitle, { color: colors.text }]}>← Back to Dashboard</Text>
+          <Text 
+            style={[styles.blockTitle, { color: colors.text }]}
+            accessible={false}
+          >
+            ← Back to Dashboard
+          </Text>
         </Pressable>
 
         {/* Today's Tasks */}
         <Pressable
           onPress={() => go("/today-tasks")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={`Today's Tasks. Your daily care routine. ${todaysPendingCount} ${todaysPendingCount === 1 ? 'task' : 'tasks'} pending, ${todaysCompletedCount} completed`}
+          accessibilityHint="Navigate to Today's Tasks"
           style={[styles.block, { backgroundColor: colors.card, borderColor: colors.border }]}
         >
-          <Text style={[styles.blockTitle, { color: colors.text }]}>Today's Tasks</Text>
-          <Text style={[styles.blockSub, { color: colors.sub }]}>Your daily care routine</Text>
-          <Text style={[styles.blockMeta, { color: colors.brand }]}>
+          <Text 
+            style={[styles.blockTitle, { color: colors.text }]}
+            accessible={false}
+          >
+            Today's Tasks
+          </Text>
+          <Text 
+            style={[styles.blockSub, { color: colors.sub }]}
+            accessible={false}
+          >
+            Your daily care routine
+          </Text>
+          <Text 
+            style={[styles.blockMeta, { color: colors.brand }]}
+            accessible={false}
+          >
             {todaysPendingCount} {todaysPendingCount === 1 ? "task" : "tasks"} pending
             <Text style={{ color: colors.sub }}> • </Text>
             <Text style={{ color: colors.sub }}>{todaysCompletedCount} completed</Text>
@@ -201,31 +300,87 @@ export default function TasksScreen() {
         {/* Upcoming Appointments */}
         <Pressable
           onPress={() => go("/upcoming-appointments")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={`Upcoming Appointments. Your scheduled visits. ${upcomingAppointmentsCount} appointments scheduled`}
+          accessibilityHint="Navigate to Upcoming Appointments"
           style={[styles.block, { backgroundColor: colors.card, borderColor: colors.border }]}
         >
-          <Text style={[styles.blockTitle, { color: colors.text }]}>Upcoming Appointments</Text>
-          <Text style={[styles.blockSub, { color: colors.sub }]}>Your scheduled visits</Text>
-          <Text style={[styles.blockMeta, { color: colors.brand }]}>{upcomingAppointmentsCount} appointments scheduled</Text>
+          <Text 
+            style={[styles.blockTitle, { color: colors.text }]}
+            accessible={false}
+          >
+            Upcoming Appointments
+          </Text>
+          <Text 
+            style={[styles.blockSub, { color: colors.sub }]}
+            accessible={false}
+          >
+            Your scheduled visits
+          </Text>
+          <Text 
+            style={[styles.blockMeta, { color: colors.brand }]}
+            accessible={false}
+          >
+            {upcomingAppointmentsCount} appointments scheduled
+          </Text>
         </Pressable>
 
         {/* Upcoming This Week */}
-        <View style={[styles.block, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Upcoming This Week</Text>
+        <View 
+          style={[styles.block, { backgroundColor: colors.card, borderColor: colors.border }]}
+          accessible={false}
+        >
+          <Text 
+            style={[styles.sectionTitle, { color: colors.text }]}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            Upcoming This Week
+          </Text>
 
-          <View style={{ gap: 10 }}>
+          <View 
+            style={{ gap: 10 }}
+            accessible={false}
+          >
             {upcomingItems.length > 0 ? (
               upcomingItems.map((item) => {
                 const isTask = item.type === "task";
                 const bg = isTask ? colors.card2 : colors.card3;
+                const statusLabel = isTask ? (item.completed ? "Completed" : "Pending") : "Appointment";
+                const dateLabel = "date" in item ? item.date : item.time;
+                const subtitle = "subtitle" in item && item.subtitle ? item.subtitle : "";
 
                 return (
-                  <View key={item.id} style={[styles.item, { backgroundColor: bg, borderColor: colors.border }]}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={[styles.itemTitle, { color: colors.text }]}>{item.title}</Text>
+                  <View 
+                    key={item.id} 
+                    style={[styles.item, { backgroundColor: bg, borderColor: colors.border }]}
+                    accessible={true}
+                    accessibilityRole="text"
+                    accessibilityLabel={`${item.title}${subtitle ? `. ${subtitle}` : ''}. ${dateLabel}. ${statusLabel}`}
+                  >
+                    <View 
+                      style={{ flex: 1 }}
+                      accessible={false}
+                    >
+                      <Text 
+                        style={[styles.itemTitle, { color: colors.text }]}
+                        accessible={false}
+                      >
+                        {item.title}
+                      </Text>
                       {"subtitle" in item && item.subtitle ? (
-                        <Text style={[styles.itemSub, { color: colors.sub }]}>{item.subtitle}</Text>
+                        <Text 
+                          style={[styles.itemSub, { color: colors.sub }]}
+                          accessible={false}
+                        >
+                          {item.subtitle}
+                        </Text>
                       ) : null}
-                      <Text style={[styles.itemSub, { color: colors.sub }]}>
+                      <Text 
+                        style={[styles.itemSub, { color: colors.sub }]}
+                        accessible={false}
+                      >
                         {"date" in item ? item.date : item.time}
                       </Text>
                     </View>
@@ -247,6 +402,7 @@ export default function TasksScreen() {
                               : "#CCFBF1",
                         },
                       ]}
+                      accessible={false}
                     >
                       <Text
                         style={{
@@ -264,6 +420,7 @@ export default function TasksScreen() {
                               ? "#000"
                               : "#115E59",
                         }}
+                        accessible={false}
                       >
                         {isTask ? (item.completed ? "Completed" : "Pending") : "Appointment"}
                       </Text>
@@ -272,7 +429,11 @@ export default function TasksScreen() {
                 );
               })
             ) : (
-              <Text style={{ textAlign: "center", paddingVertical: 12, color: colors.sub }}>
+              <Text 
+                style={{ textAlign: "center", paddingVertical: 12, color: colors.sub }}
+                accessible={true}
+                accessibilityRole="text"
+              >
                 No upcoming tasks or appointments
               </Text>
             )}
@@ -283,8 +444,15 @@ export default function TasksScreen() {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}>
-        <View style={styles.navRow}>
+      <View 
+        style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}
+        accessible={false}
+        accessibilityRole="tabbar"
+      >
+        <View 
+          style={styles.navRow}
+          accessible={false}
+        >
           <NavItem label="Home" to="/dashboard" active={pathname === "/dashboard"} />
           <NavItem label="Tasks" to="/tasks" active={pathname === "/tasks"} />
           <NavItem label="Health" to="/health" active={pathname === "/health"} />

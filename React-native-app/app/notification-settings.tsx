@@ -139,12 +139,18 @@ export default function NotificationSettingsScreen() {
     value,
     onValueChange,
     onColor,
+    accessibilityLabel,
   }: {
     value: boolean;
     onValueChange: (v: boolean) => void;
     onColor: string;
+    accessibilityLabel: string;
   }) => (
     <Switch
+      accessible={true}
+      accessibilityRole="switch"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ checked: value }}
       value={value}
       onValueChange={onValueChange}
       trackColor={{
@@ -191,15 +197,19 @@ export default function NotificationSettingsScreen() {
       : "#BFDBFE";
 
     return (
-      <View style={[styles.block, { backgroundColor: wrapBg, borderColor: wrapBorder }]}>
-        <Text style={[styles.blockTitle, { color: colors.title }]}>{label}</Text>
+      <View accessible={false} style={[styles.block, { backgroundColor: wrapBg, borderColor: wrapBorder }]}>
+        <Text accessibilityRole="text" style={[styles.blockTitle, { color: colors.title }]}>{label}</Text>
 
-        <View style={styles.pillRow}>
+        <View accessible={false} style={styles.pillRow}>
           {(["off", "low", "medium", "high"] as const).map((level) => {
             const selected = value === level;
             return (
               <Pressable
                 key={level}
+                accessible={true}
+                accessibilityRole="radio"
+                accessibilityLabel={`${level} vibration`}
+                accessibilityState={{ checked: selected }}
                 onPress={() => onChange(level)}
                 style={({ pressed }) => [
                   styles.pill,
@@ -211,6 +221,7 @@ export default function NotificationSettingsScreen() {
                 ]}
               >
                 <Text
+                  accessible={false}
                   style={{
                     fontWeight: "900",
                     textTransform: "capitalize",
@@ -228,10 +239,11 @@ export default function NotificationSettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView accessible={false} style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <View accessible={false} style={[styles.screen, { backgroundColor: colors.bg }]}>
         {/* Header */}
         <View
+          accessible={false}
           style={[
             styles.header,
             {
@@ -240,39 +252,44 @@ export default function NotificationSettingsScreen() {
             },
           ]}
         >
-          <View style={styles.headerIconWrap}>
+          <View accessible={false} style={styles.headerIconWrap}>
             <View
+              accessible={false}
               style={[
                 styles.headerIcon,
                 { backgroundColor: highContrastMode ? colors.accent : colors.danger },
               ]}
             >
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}>
+              <Text accessible={false} style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}>
                 ⚙️
               </Text>
             </View>
           </View>
 
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/alerts")} style={styles.backBtn}>
-              <Text style={{ fontSize: 20, fontWeight: "900", color: colors.accent }}>←</Text>
+          <View accessible={false} style={styles.headerRow}>
+            <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Back to notifications" accessibilityHint="Navigates back to the alerts screen" onPress={() => router.push("/alerts")} style={styles.backBtn}>
+              <Text accessible={false} style={{ fontSize: 20, fontWeight: "900", color: colors.accent }}>←</Text>
             </Pressable>
 
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Notification Settings</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>
+            <View accessible={false} style={{ flex: 1, alignItems: "center" }}>
+              <Text accessibilityRole="header" style={[styles.headerTitle, { color: colors.title }]}>Notification Settings</Text>
+              <Text accessibilityRole="text" style={[styles.headerSub, { color: colors.sub }]}>
                 Customize your notification preferences
               </Text>
             </View>
 
-            <View style={{ width: 40 }} />
+            <View accessible={false} style={{ width: 40 }} />
           </View>
         </View>
 
         {/* Main */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView accessible={false} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {/* Back Button Card */}
           <Pressable
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Notifications"
+            accessibilityHint="Navigates back to the alerts screen"
             onPress={() => router.push("/alerts")}
             style={({ pressed }) => [
               styles.backCard,
@@ -280,43 +297,43 @@ export default function NotificationSettingsScreen() {
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: colors.accent }}>← Back to Notifications</Text>
+            <Text accessible={false} style={{ fontWeight: "900", color: colors.accent }}>← Back to Notifications</Text>
           </Pressable>
 
           {/* Notification Channels */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionTitle, { color: colors.title }]}>Notification Channels</Text>
-            <Text style={[styles.sectionSub, { color: colors.sub }]}>
+          <View accessible={false} style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.title }]}>Notification Channels</Text>
+            <Text accessibilityRole="text" style={[styles.sectionSub, { color: colors.sub }]}>
               Choose how you want to receive notifications
             </Text>
 
-            <View style={[styles.rowCard, { backgroundColor: colors.block, borderColor: colors.border }]}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: "900", color: colors.title }}>Push Notifications</Text>
-                <Text style={{ marginTop: 2, fontWeight: "800", color: colors.sub }}>
+            <View accessible={false} style={[styles.rowCard, { backgroundColor: colors.block, borderColor: colors.border }]}>
+              <View accessible={false} style={{ flex: 1 }}>
+                <Text accessibilityRole="text" style={{ fontWeight: "900", color: colors.title }}>Push Notifications</Text>
+                <Text accessibilityRole="text" style={{ marginTop: 2, fontWeight: "800", color: colors.sub }}>
                   Receive alerts on this device
                 </Text>
               </View>
 
-              <SwitchHC value={pushEnabled} onValueChange={setPushEnabled} onColor={colors.accent} />
+              <SwitchHC value={pushEnabled} onValueChange={setPushEnabled} onColor={colors.accent} accessibilityLabel="Push Notifications" />
             </View>
 
-            <View style={[styles.rowCard, { backgroundColor: colors.block, borderColor: colors.border }]}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: "900", color: colors.title }}>Email Notifications</Text>
-                <Text style={{ marginTop: 2, fontWeight: "800", color: colors.sub }}>
+            <View accessible={false} style={[styles.rowCard, { backgroundColor: colors.block, borderColor: colors.border }]}>
+              <View accessible={false} style={{ flex: 1 }}>
+                <Text accessibilityRole="text" style={{ fontWeight: "900", color: colors.title }}>Email Notifications</Text>
+                <Text accessibilityRole="text" style={{ marginTop: 2, fontWeight: "800", color: colors.sub }}>
                   Receive reminders via email
                 </Text>
               </View>
 
-              <SwitchHC value={emailEnabled} onValueChange={setEmailEnabled} onColor={colors.teal} />
+              <SwitchHC value={emailEnabled} onValueChange={setEmailEnabled} onColor={colors.teal} accessibilityLabel="Email Notifications" />
             </View>
           </View>
 
           {/* Vibration Settings */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionTitle, { color: colors.title }]}>Vibration Settings</Text>
-            <Text style={[styles.sectionSub, { color: colors.sub }]}>
+          <View accessible={false} style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.title }]}>Vibration Settings</Text>
+            <Text accessibilityRole="text" style={[styles.sectionSub, { color: colors.sub }]}>
               Adjust vibration intensity for different priorities
             </Text>
 
@@ -336,11 +353,11 @@ export default function NotificationSettingsScreen() {
           </View>
 
           {/* Quiet Hours */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={styles.rowBetween}>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.sectionTitle, { color: colors.title }]}>Quiet Hours</Text>
-                <Text style={[styles.sectionSub, { color: colors.sub }]}>
+          <View accessible={false} style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View accessible={false} style={styles.rowBetween}>
+              <View accessible={false} style={{ flex: 1 }}>
+                <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.title }]}>Quiet Hours</Text>
+                <Text accessibilityRole="text" style={[styles.sectionSub, { color: colors.sub }]}>
                   Silence notifications during specific times
                 </Text>
               </View>
@@ -349,15 +366,19 @@ export default function NotificationSettingsScreen() {
                 value={quietHoursEnabled}
                 onValueChange={setQuietHoursEnabled}
                 onColor={colors.accent}
+                accessibilityLabel="Quiet Hours"
               />
             </View>
 
             {quietHoursEnabled && (
-              <View style={{ gap: 12, marginTop: 10 }}>
-                <View style={{ flexDirection: "row", gap: 12 }}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.label, { color: colors.title }]}>Start Time</Text>
+              <View accessible={false} style={{ gap: 12, marginTop: 10 }}>
+                <View accessible={false} style={{ flexDirection: "row", gap: 12 }}>
+                  <View accessible={false} style={{ flex: 1 }}>
+                    <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>Start Time</Text>
                     <TextInput
+                      accessible={true}
+                      accessibilityLabel="Quiet hours start time"
+                      accessibilityHint="Enter the time when quiet hours should begin, in 24-hour format"
                       value={quietStart}
                       onChangeText={setQuietStart}
                       placeholder="22:00"
@@ -369,9 +390,12 @@ export default function NotificationSettingsScreen() {
                     />
                   </View>
 
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.label, { color: colors.title }]}>End Time</Text>
+                  <View accessible={false} style={{ flex: 1 }}>
+                    <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>End Time</Text>
                     <TextInput
+                      accessible={true}
+                      accessibilityLabel="Quiet hours end time"
+                      accessibilityHint="Enter the time when quiet hours should end, in 24-hour format"
                       value={quietEnd}
                       onChangeText={setQuietEnd}
                       placeholder="07:00"
@@ -385,6 +409,7 @@ export default function NotificationSettingsScreen() {
                 </View>
 
                 <View
+                  accessible={false}
                   style={[
                     styles.warning,
                     {
@@ -393,7 +418,7 @@ export default function NotificationSettingsScreen() {
                     },
                   ]}
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#FFFFFF" : colors.danger }}>
+                  <Text accessibilityRole="text" style={{ fontWeight: "900", color: highContrastMode ? "#FFFFFF" : colors.danger }}>
                     Urgent priority vibrations will bypass quiet hours
                   </Text>
                 </View>
@@ -403,6 +428,10 @@ export default function NotificationSettingsScreen() {
 
           {/* Save */}
           <Pressable
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Save Settings"
+            accessibilityHint="Saves your notification preferences and returns to the alerts screen"
             onPress={handleSaveSettings}
             style={({ pressed }) => [
               styles.saveBtn,
@@ -410,50 +439,50 @@ export default function NotificationSettingsScreen() {
               pressed && { opacity: 0.92 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff", fontSize: 16 }}>
+            <Text accessible={false} style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff", fontSize: 16 }}>
               Save Settings
             </Text>
           </Pressable>
 
-          <View style={{ height: 110 }} />
+          <View accessible={false} style={{ height: 110 }} />
         </ScrollView>
 
         {/* Bottom Navigation */}
-        <View style={[styles.nav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}>
-          <View style={styles.navRow}>
+        <View accessible={false} style={[styles.nav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}>
+          <View accessible={false} style={styles.navRow}>
             <Link href="/dashboard" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Home</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Home" accessibilityHint="Navigates to the home screen" style={styles.navItem}>
+                <Text accessible={false} style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Home</Text>
               </Pressable>
             </Link>
 
             <Link href="/tasks" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Tasks</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Tasks" accessibilityHint="Navigates to the tasks screen" style={styles.navItem}>
+                <Text accessible={false} style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Tasks</Text>
               </Pressable>
             </Link>
 
             <Link href="/health" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Health</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Health" accessibilityHint="Navigates to the health screen" style={styles.navItem}>
+                <Text accessible={false} style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Health</Text>
               </Pressable>
             </Link>
 
             <Link href="/communication" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Messages</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Messages" accessibilityHint="Navigates to the messages screen" style={styles.navItem}>
+                <Text accessible={false} style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Messages</Text>
               </Pressable>
             </Link>
 
             <Link href="/alerts" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: colors.accent, fontWeight: "900" }}>Alerts</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Alerts" accessibilityHint="Navigates to the alerts screen. Currently selected" style={styles.navItem}>
+                <Text accessible={false} style={{ color: colors.accent, fontWeight: "900" }}>Alerts</Text>
               </Pressable>
             </Link>
 
             <Link href="/profile" asChild>
-              <Pressable style={styles.navItem}>
-                <Text style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Profile</Text>
+              <Pressable accessible={true} accessibilityRole="button" accessibilityLabel="Profile" accessibilityHint="Navigates to the profile screen" style={styles.navItem}>
+                <Text accessible={false} style={{ color: highContrastMode ? "#FFFFFF" : colors.inactive, fontWeight: "800" }}>Profile</Text>
               </Pressable>
             </Link>
           </View>

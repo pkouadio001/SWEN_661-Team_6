@@ -66,17 +66,35 @@ export default function ForgotUsernameScreen() {
     <KeyboardAvoidingView
       style={[styles.screen, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      accessible={false}
     >
-      <View style={styles.container}>
-        <Text style={[styles.title, { color: colors.text }]}>
+      <View 
+        style={styles.container}
+        accessible={false}
+      >
+        <Text 
+          style={[styles.title, { color: colors.text }]}
+          accessible={true}
+          accessibilityRole="header"
+        >
           Forgot Username
         </Text>
 
-        <Text style={[styles.subtitle, { color: colors.subText }]}>
+        <Text 
+          style={[styles.subtitle, { color: colors.subText }]}
+          accessible={true}
+          accessibilityRole="text"
+        >
           Enter your email address and we will send you a link to recover your username.
         </Text>
 
-        <Text style={[styles.label, { color: colors.text }]}>Email Address</Text>
+        <Text 
+          style={[styles.label, { color: colors.text }]}
+          accessible={true}
+          accessibilityRole="text"
+        >
+          Email Address
+        </Text>
 
         <TextInput
           value={email}
@@ -85,6 +103,9 @@ export default function ForgotUsernameScreen() {
           keyboardType="email-address"
           autoCapitalize="none"
           placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+          accessible={true}
+          accessibilityLabel="Email Address"
+          accessibilityHint="Enter your email address to receive username recovery link"
           style={[
             styles.input,
             {
@@ -96,19 +117,32 @@ export default function ForgotUsernameScreen() {
         />
 
         {error ? (
-          <Text style={[styles.errorText, { color: colors.error }]}>
+          <Text 
+            style={[styles.errorText, { color: colors.error }]}
+            accessible={true}
+            accessibilityRole="alert"
+            accessibilityLiveRegion="polite"
+          >
             {error}
           </Text>
         ) : null}
 
         {message ? (
-          <Text style={[styles.successText, { color: colors.accent }]}>
+          <Text 
+            style={[styles.successText, { color: colors.accent }]}
+            accessible={true}
+            accessibilityRole="text"
+          >
             {message}
           </Text>
         ) : null}
 
         <Pressable
           onPress={handleSendLink}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Send Recovery Link"
+          accessibilityHint="Send username recovery link to your email"
           style={[
             styles.primaryBtn,
             { backgroundColor: highContrastMode ? colors.accent : "#155DFC" },
@@ -119,6 +153,7 @@ export default function ForgotUsernameScreen() {
               color: highContrastMode ? "#000" : "#fff",
               fontWeight: "700",
             }}
+            accessible={false}
           >
             Send Recovery Link
           </Text>
@@ -127,8 +162,15 @@ export default function ForgotUsernameScreen() {
         <Pressable
           onPress={() => router.replace("/")}
           style={{ marginTop: 20 }}
+          accessible={true}
+          accessibilityRole="link"
+          accessibilityLabel="Back to Login"
+          accessibilityHint="Navigate to login screen"
         >
-          <Text style={{ color: colors.accent, fontWeight: "700" }}>
+          <Text 
+            style={{ color: colors.accent, fontWeight: "700" }}
+            accessible={false}
+          >
             Back to Login
           </Text>
         </Pressable>

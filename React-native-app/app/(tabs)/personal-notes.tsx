@@ -319,29 +319,36 @@ export default function PersonalNotesScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} accessible={false}>
+      <View style={[styles.screen, { backgroundColor: colors.bg }]} accessible={false}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontSize: 20, fontWeight: "900" }}>
+        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]} accessible={false}>
+          <View style={styles.headerRow} accessible={false}>
+            <Pressable
+              onPress={() => router.push("/health")}
+              style={styles.iconBtn}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Health"
+              accessibilityHint="Navigate back to the health screen"
+            >
+              <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontSize: 20, fontWeight: "900" }} accessible={false}>
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.primary }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>📝</Text>
+            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.primary : colors.primary }]} accessible={false}>
+              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }} accessible={false}>📝</Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Personal Notes</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Track your thoughts and symptoms</Text>
+            <View style={{ flex: 1 }} accessible={false}>
+              <Text style={[styles.headerTitle, { color: colors.title }]} accessibilityRole="header">Personal Notes</Text>
+              <Text style={[styles.headerSub, { color: colors.sub }]} accessibilityRole="text">Track your thoughts and symptoms</Text>
             </View>
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} accessible={false}>
           {/* Back */}
           <Pressable
             onPress={() => router.push("/health")}
@@ -350,21 +357,25 @@ export default function PersonalNotesScreen() {
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Notes and Health Logs"
+            accessibilityHint="Navigate back to the notes and health logs screen"
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>
               ← Back to Notes & Health Logs
             </Text>
           </Pressable>
 
           {/* Main Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={styles.titleRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.bigTitle, { color: colors.title }]}>Personal Notes</Text>
-                <Text style={[styles.smallSub, { color: colors.sub }]}>Track your thoughts and symptoms</Text>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]} accessible={false}>
+            <View style={styles.titleRow} accessible={false}>
+              <View style={{ flex: 1 }} accessible={false}>
+                <Text style={[styles.bigTitle, { color: colors.title }]} accessibilityRole="header">Personal Notes</Text>
+                <Text style={[styles.smallSub, { color: colors.sub }]} accessibilityRole="text">Track your thoughts and symptoms</Text>
               </View>
 
-              <View style={{ gap: 10 }}>
+              <View style={{ gap: 10 }} accessible={false}>
                 <Pressable
                   onPress={() => setShowNewNoteModal(true)}
                   style={({ pressed }) => [
@@ -372,8 +383,12 @@ export default function PersonalNotesScreen() {
                     { borderColor: colors.border, backgroundColor: colors.chipBg },
                     pressed && { opacity: 0.9 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="New Note"
+                  accessibilityHint="Opens dialog to create a new personal note"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>
                     ＋ New Note
                   </Text>
                 </Pressable>
@@ -387,12 +402,17 @@ export default function PersonalNotesScreen() {
                       : { borderColor: colors.border, backgroundColor: colors.chipBg },
                     pressed && { opacity: 0.9 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel={selectedDateFilter ? `Filter by Date: ${selectedDateFilter}` : "Filter by Date"}
+                  accessibilityHint="Opens calendar to filter notes by date"
                 >
                   <Text
                     style={{
                       fontWeight: "900",
                       color: selectedDateFilter ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? colors.primary : colors.title),
                     }}
+                    accessible={false}
                   >
                     📅 {selectedDateFilter ? selectedDateFilter : "Filter by Date"}
                   </Text>
@@ -401,7 +421,7 @@ export default function PersonalNotesScreen() {
             </View>
 
             {/* Notes List */}
-            <View style={{ marginTop: 14, gap: 12 }}>
+            <View style={{ marginTop: 14, gap: 12 }} accessible={false}>
               {filteredNotes.map((note) => (
                 <View
                   key={note.id}
@@ -409,27 +429,43 @@ export default function PersonalNotesScreen() {
                     styles.noteCard,
                     { backgroundColor: colors.noteCardBg, borderColor: colors.border },
                   ]}
+                  accessible={false}
                 >
-                  <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 10 }}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontWeight: "900", color: colors.title }}>{note.title}</Text>
+                  <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 10 }} accessible={false}>
+                    <View style={{ flex: 1 }} accessible={false}>
+                      <Text style={{ fontWeight: "900", color: colors.title }} accessibilityRole="text">{note.title}</Text>
                       <Text
                         numberOfLines={2}
                         style={{ marginTop: 6, fontWeight: "800", color: highContrastMode ? colors.sub : colors.sub }}
+                        accessibilityRole="text"
                       >
                         {note.content}
                       </Text>
-                      <Text style={{ marginTop: 8, fontWeight: "800", color: highContrastMode ? "#CCCCCC" : "#9CA3AF" }}>
+                      <Text style={{ marginTop: 8, fontWeight: "800", color: highContrastMode ? "#CCCCCC" : "#9CA3AF" }} accessibilityRole="text">
                         {note.date} - {note.time}
                       </Text>
                     </View>
 
-                    <View style={{ flexDirection: "row", gap: 8 }}>
-                      <Pressable onPress={() => openEditModal(note)} style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}>
-                        <Text style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900" }}>✎</Text>
+                    <View style={{ flexDirection: "row", gap: 8 }} accessible={false}>
+                      <Pressable
+                        onPress={() => openEditModal(note)}
+                        style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}
+                        accessible={true}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Edit note: ${note.title}`}
+                        accessibilityHint="Opens dialog to edit this note"
+                      >
+                        <Text style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900" }} accessible={false}>✎</Text>
                       </Pressable>
-                      <Pressable onPress={() => openDeleteModal(note)} style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}>
-                        <Text style={{ color: colors.danger, fontWeight: "900" }}>🗑</Text>
+                      <Pressable
+                        onPress={() => openDeleteModal(note)}
+                        style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}
+                        accessible={true}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Delete note: ${note.title}`}
+                        accessibilityHint="Opens dialog to delete this note"
+                      >
+                        <Text style={{ color: colors.danger, fontWeight: "900" }} accessible={false}>🗑</Text>
                       </Pressable>
                     </View>
                   </View>
@@ -437,14 +473,14 @@ export default function PersonalNotesScreen() {
               ))}
 
               {filteredNotes.length === 0 && (
-                <View style={{ alignItems: "center", paddingVertical: 28 }}>
-                  <View style={[styles.emptyIcon, { backgroundColor: highContrastMode ? "#2a2a2a" : "#EFF6FF" }]}>
-                    <Text style={{ fontSize: 22 }}>📝</Text>
+                <View style={{ alignItems: "center", paddingVertical: 28 }} accessible={false}>
+                  <View style={[styles.emptyIcon, { backgroundColor: highContrastMode ? "#2a2a2a" : "#EFF6FF" }]} accessible={false}>
+                    <Text style={{ fontSize: 22 }} accessible={false}>📝</Text>
                   </View>
-                  <Text style={{ marginTop: 10, fontWeight: "900", fontSize: 16, color: colors.title }}>
+                  <Text style={{ marginTop: 10, fontWeight: "900", fontSize: 16, color: colors.title }} accessibilityRole="text">
                     {selectedDateFilter ? "No notes on this date" : "No notes yet"}
                   </Text>
-                  <Text style={{ marginTop: 6, fontWeight: "800", color: colors.sub }}>
+                  <Text style={{ marginTop: 6, fontWeight: "800", color: colors.sub }} accessibilityRole="text">
                     {selectedDateFilter ? "Try selecting a different date" : 'Tap "New Note" to add your first note'}
                   </Text>
                 </View>
@@ -452,46 +488,47 @@ export default function PersonalNotesScreen() {
             </View>
           </View>
 
-          <View style={{ height: 40 }} />
+          <View style={{ height: 40 }} accessible={false} />
         </ScrollView>
 
         {/* Calendar Modal */}
-        <Modal transparent visible={showDatePicker} animationType="fade" onRequestClose={() => setShowDatePicker(false)}>
-          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]}>
-            <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]}>
+        <Modal transparent visible={showDatePicker} animationType="fade" onRequestClose={() => setShowDatePicker(false)} accessible={true} accessibilityLabel="Date filter calendar">
+          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]} accessible={false}>
+            <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]} accessible={false}>
               <View
                 style={[
                   styles.modalHeader,
                   { backgroundColor: highContrastMode ? colors.primary : colors.primary },
                 ]}
+                accessible={false}
               >
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                  <Pressable onPress={handlePrevMonth} style={styles.navBtn}>
-                    <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>‹</Text>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} accessible={false}>
+                  <Pressable onPress={handlePrevMonth} style={styles.navBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Previous month" accessibilityHint="Navigate to the previous month">
+                    <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>‹</Text>
                   </Pressable>
 
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text style={{ fontSize: 18, fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessibilityRole="header">
                     {monthNames[calendarMonth.getMonth()]} {calendarMonth.getFullYear()}
                   </Text>
 
-                  <Pressable onPress={handleNextMonth} style={styles.navBtn}>
-                    <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>›</Text>
+                  <Pressable onPress={handleNextMonth} style={styles.navBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Next month" accessibilityHint="Navigate to the next month">
+                    <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>›</Text>
                   </Pressable>
                 </View>
               </View>
 
-              <View style={{ padding: 16 }}>
-                <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+              <View style={{ padding: 16 }} accessible={false}>
+                <View style={{ flexDirection: "row", flexWrap: "wrap" }} accessible={false}>
                   {dayNames.map((d) => (
-                    <View key={d} style={[styles.dayNameCell]}>
-                      <Text style={{ fontWeight: "900", color: colors.sub }}>{d}</Text>
+                    <View key={d} style={[styles.dayNameCell]} accessible={false}>
+                      <Text style={{ fontWeight: "900", color: colors.sub }} accessibilityRole="text">{d}</Text>
                     </View>
                   ))}
                 </View>
 
-                <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 8 }}>
+                <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 8 }} accessible={false}>
                   {calendarDays.map((day, idx) => {
-                    if (!day) return <View key={`e-${idx}`} style={styles.dayCell} />;
+                    if (!day) return <View key={`e-${idx}`} style={styles.dayCell} accessible={false} />;
 
                     const formatted = formatDateForComparison(
                       calendarMonth.getFullYear(),
@@ -519,7 +556,7 @@ export default function PersonalNotesScreen() {
                       hasNotes && !isSelected ? (highContrastMode ? colors.primary : colors.primary) : "transparent";
 
                     return (
-                      <View key={`d-${idx}`} style={styles.dayCell}>
+                      <View key={`d-${idx}`} style={styles.dayCell} accessible={false}>
                         <Pressable
                           onPress={() => handleDateSelect(day)}
                           style={({ pressed }) => [
@@ -527,14 +564,19 @@ export default function PersonalNotesScreen() {
                             { backgroundColor: bg, borderColor: borderColor },
                             pressed && { opacity: 0.85 },
                           ]}
+                          accessible={true}
+                          accessibilityRole="button"
+                          accessibilityLabel={`${formatted}${hasNotes ? ', has notes' : ''}${isSelected ? ', selected' : ''}`}
+                          accessibilityHint="Select this date to filter notes"
                         >
-                          <Text style={{ fontWeight: "900", color: textColor }}>{day}</Text>
+                          <Text style={{ fontWeight: "900", color: textColor }} accessible={false}>{day}</Text>
                           {hasNotes && !isSelected ? (
                             <View
                               style={[
                                 styles.dot,
                                 { backgroundColor: highContrastMode ? "#000" : colors.primary },
                               ]}
+                              accessible={false}
                             />
                           ) : null}
                         </Pressable>
@@ -544,7 +586,7 @@ export default function PersonalNotesScreen() {
                 </View>
               </View>
 
-              <View style={[styles.modalFooter, { borderTopColor: colors.border }]}>
+              <View style={[styles.modalFooter, { borderTopColor: colors.border }]} accessible={false}>
                 <Pressable
                   onPress={() => {
                     setSelectedDateFilter(null);
@@ -555,8 +597,12 @@ export default function PersonalNotesScreen() {
                     { borderColor: colors.border },
                     pressed && { opacity: 0.9 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Clear Filter"
+                  accessibilityHint="Remove the date filter and show all notes"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>
                     Clear Filter
                   </Text>
                 </Pressable>
@@ -568,8 +614,12 @@ export default function PersonalNotesScreen() {
                     { backgroundColor: highContrastMode ? colors.primary : colors.primary },
                     pressed && { opacity: 0.9 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Done"
+                  accessibilityHint="Close the calendar"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>
                     Done
                   </Text>
                 </Pressable>
@@ -579,20 +629,20 @@ export default function PersonalNotesScreen() {
         </Modal>
 
         {/* New Note Modal */}
-        <Modal transparent visible={showNewNoteModal} animationType="fade" onRequestClose={closeAllModals}>
-          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]}>
-            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]}>
-              <View style={styles.simpleModalHeader}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }}>New Note</Text>
-                  <Text style={{ marginTop: 4, fontWeight: "800", color: colors.sub }}>Add a new personal note</Text>
+        <Modal transparent visible={showNewNoteModal} animationType="fade" onRequestClose={closeAllModals} accessible={true} accessibilityLabel="New note dialog">
+          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]} accessible={false}>
+            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]} accessible={false}>
+              <View style={styles.simpleModalHeader} accessible={false}>
+                <View style={{ flex: 1 }} accessible={false}>
+                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }} accessibilityRole="header">New Note</Text>
+                  <Text style={{ marginTop: 4, fontWeight: "800", color: colors.sub }} accessibilityRole="text">Add a new personal note</Text>
                 </View>
-                <Pressable onPress={closeAllModals} style={styles.closeBtn}>
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>✕</Text>
+                <Pressable onPress={closeAllModals} style={styles.closeBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Close" accessibilityHint="Close the new note dialog">
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>✕</Text>
                 </Pressable>
               </View>
 
-              <View style={{ gap: 12 }}>
+              <View style={{ gap: 12 }} accessible={false}>
                 <LabeledInput
                   label="Title"
                   value={noteTitle}
@@ -617,8 +667,12 @@ export default function PersonalNotesScreen() {
                     pressed && { opacity: 0.9 },
                   ]}
                   disabled={!noteTitle.trim() || !noteContent.trim()}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Add Note"
+                  accessibilityHint="Save the new note"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>
                     Add Note
                   </Text>
                 </Pressable>
@@ -628,20 +682,20 @@ export default function PersonalNotesScreen() {
         </Modal>
 
         {/* Edit Note Modal */}
-        <Modal transparent visible={showEditNoteModal} animationType="fade" onRequestClose={closeAllModals}>
-          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]}>
-            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]}>
-              <View style={styles.simpleModalHeader}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }}>Edit Note</Text>
-                  <Text style={{ marginTop: 4, fontWeight: "800", color: colors.sub }}>Update your personal note</Text>
+        <Modal transparent visible={showEditNoteModal} animationType="fade" onRequestClose={closeAllModals} accessible={true} accessibilityLabel="Edit note dialog">
+          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]} accessible={false}>
+            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]} accessible={false}>
+              <View style={styles.simpleModalHeader} accessible={false}>
+                <View style={{ flex: 1 }} accessible={false}>
+                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }} accessibilityRole="header">Edit Note</Text>
+                  <Text style={{ marginTop: 4, fontWeight: "800", color: colors.sub }} accessibilityRole="text">Update your personal note</Text>
                 </View>
-                <Pressable onPress={closeAllModals} style={styles.closeBtn}>
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>✕</Text>
+                <Pressable onPress={closeAllModals} style={styles.closeBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Close" accessibilityHint="Close the edit note dialog">
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>✕</Text>
                 </Pressable>
               </View>
 
-              <View style={{ gap: 12 }}>
+              <View style={{ gap: 12 }} accessible={false}>
                 <LabeledInput
                   label="Title"
                   value={noteTitle}
@@ -666,8 +720,12 @@ export default function PersonalNotesScreen() {
                     pressed && { opacity: 0.9 },
                   ]}
                   disabled={!noteTitle.trim() || !noteContent.trim()}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Save Changes"
+                  accessibilityHint="Save the edited note"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }} accessible={false}>
                     Save Changes
                   </Text>
                 </Pressable>
@@ -677,32 +735,32 @@ export default function PersonalNotesScreen() {
         </Modal>
 
         {/* Delete Modal */}
-        <Modal transparent visible={showDeleteModal} animationType="fade" onRequestClose={closeAllModals}>
-          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]}>
-            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]}>
-              <View style={styles.simpleModalHeader}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }}>Delete Note</Text>
+        <Modal transparent visible={showDeleteModal} animationType="fade" onRequestClose={closeAllModals} accessible={true} accessibilityLabel="Delete note confirmation dialog">
+          <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]} accessible={false}>
+            <View style={[styles.simpleModal, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 2 : 0 }]} accessible={false}>
+              <View style={styles.simpleModalHeader} accessible={false}>
+                <View style={{ flex: 1 }} accessible={false}>
+                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }} accessibilityRole="header">Delete Note</Text>
                 </View>
-                <Pressable onPress={closeAllModals} style={styles.closeBtn}>
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>✕</Text>
+                <Pressable onPress={closeAllModals} style={styles.closeBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Close" accessibilityHint="Close the delete confirmation dialog">
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>✕</Text>
                 </Pressable>
               </View>
 
-              <Text style={{ fontWeight: "800", color: colors.sub, marginBottom: 12 }}>
+              <Text style={{ fontWeight: "800", color: colors.sub, marginBottom: 12 }} accessibilityRole="text">
                 Are you sure you want to delete this note? This action cannot be undone.
               </Text>
 
-              <View style={[styles.warningBox, { backgroundColor: colors.dangerSoft, borderColor: highContrastMode ? "#FF6B6B" : "#FCA5A5" }]}>
-                <Text style={{ fontWeight: "900", color: colors.title, marginBottom: 6 }}>
+              <View style={[styles.warningBox, { backgroundColor: colors.dangerSoft, borderColor: highContrastMode ? "#FF6B6B" : "#FCA5A5" }]} accessible={false}>
+                <Text style={{ fontWeight: "900", color: colors.title, marginBottom: 6 }} accessibilityRole="text">
                   {selectedNote?.title}
                 </Text>
-                <Text numberOfLines={2} style={{ fontWeight: "800", color: highContrastMode ? "#CCCCCC" : "#6B7280" }}>
+                <Text numberOfLines={2} style={{ fontWeight: "800", color: highContrastMode ? "#CCCCCC" : "#6B7280" }} accessibilityRole="text">
                   {selectedNote?.content}
                 </Text>
               </View>
 
-              <View style={{ gap: 10 }}>
+              <View style={{ gap: 10 }} accessible={false}>
                 <Pressable
                   onPressIn={handleDeleteHoldStart}
                   onPressOut={handleDeleteHoldEnd}
@@ -711,16 +769,20 @@ export default function PersonalNotesScreen() {
                     { backgroundColor: colors.danger },
                     pressed && { opacity: 0.92 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Delete Note"
+                  accessibilityHint="Press and hold for 5 seconds to delete the note"
                 >
                   {isHoldingDelete ? (
-                    <View style={styles.progressWrap}>
-                      <View style={styles.progressTrack}>
-                        <View style={[styles.progressFill, { width: `${deleteHoldProgress}%` }]} />
+                    <View style={styles.progressWrap} accessible={false}>
+                      <View style={styles.progressTrack} accessible={false}>
+                        <View style={[styles.progressFill, { width: `${deleteHoldProgress}%` }]} accessible={false} />
                       </View>
                     </View>
                   ) : null}
 
-                  <Text style={{ fontWeight: "900", color: "#fff" }}>
+                  <Text style={{ fontWeight: "900", color: "#fff" }} accessible={false}>
                     Delete Note {isHoldingDelete ? `(${Math.round(deleteHoldProgress / 20)}s)` : ""}
                   </Text>
                 </Pressable>
@@ -732,8 +794,12 @@ export default function PersonalNotesScreen() {
                     { borderColor: colors.border, backgroundColor: highContrastMode ? "#2a2a2a" : "#fff" },
                     pressed && { opacity: 0.9 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Cancel and close the delete dialog"
                 >
-                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }}>
+                  <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : colors.title }} accessible={false}>
                     Cancel
                   </Text>
                 </Pressable>
@@ -757,8 +823,8 @@ function LabeledInput(props: {
   const { label, value, onChangeText, colors, highContrastMode, multiline } = props;
 
   return (
-    <View>
-      <Text style={{ fontSize: 13, fontWeight: "900", color: highContrastMode ? colors.sub : colors.title, marginBottom: 6 }}>
+    <View accessible={false}>
+      <Text style={{ fontSize: 13, fontWeight: "900", color: highContrastMode ? colors.sub : colors.title, marginBottom: 6 }} accessibilityRole="text">
         {label}
       </Text>
       <TextInput
@@ -777,6 +843,9 @@ function LabeledInput(props: {
             textAlignVertical: multiline ? "top" : "center",
           },
         ]}
+        accessible={true}
+        accessibilityLabel={label}
+        accessibilityHint={`Enter ${label.toLowerCase()}`}
       />
     </View>
   );

@@ -141,28 +141,28 @@ export default function HealthLogsScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} accessible={false}>
+      <View style={[styles.screen, { backgroundColor: colors.bg }]} accessible={false}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900", fontSize: 20 }}>
+        <View style={[styles.header, { backgroundColor: highContrastMode ? "#000" : "#fff", borderBottomColor: colors.border }]} accessible={false}>
+          <View style={styles.headerRow} accessible={false}>
+            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Go back to Health" accessibilityHint="Navigates to the Health screen">
+              <Text style={{ color: highContrastMode ? colors.accent : colors.title, fontWeight: "900", fontSize: 20 }} accessible={false}>
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.accent : colors.teal }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>❤</Text>
+            <View style={[styles.headerIcon, { backgroundColor: highContrastMode ? colors.accent : colors.teal }]} accessible={false}>
+              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }} accessible={false}>❤</Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Health Logs</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Recent vital measurements</Text>
+            <View style={{ flex: 1 }} accessible={false}>
+              <Text style={[styles.headerTitle, { color: colors.title }]} accessibilityRole="header">Health Logs</Text>
+              <Text style={[styles.headerSub, { color: colors.sub }]} accessibilityRole="text">Recent vital measurements</Text>
             </View>
 
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn}>
-              <Text style={{ color: highContrastMode ? colors.accent : colors.muted, fontWeight: "900", fontSize: 18 }}>
+            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Go to Health" accessibilityHint="Navigates to the Health screen">
+              <Text style={{ color: highContrastMode ? colors.accent : colors.muted, fontWeight: "900", fontSize: 18 }} accessible={false}>
                 →
               </Text>
             </Pressable>
@@ -170,7 +170,7 @@ export default function HealthLogsScreen() {
         </View>
 
         {/* Content */}
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} accessible={false}>
           {/* Back button (sticky in web; here top card) */}
           <Pressable
             onPress={() => router.push("/health")}
@@ -179,48 +179,54 @@ export default function HealthLogsScreen() {
               { backgroundColor: colors.card, borderColor: colors.border },
               pressed && { opacity: 0.92 },
             ]}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Notes & Health Logs"
+            accessibilityHint="Returns to the Notes & Health Logs screen"
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }}>
+            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.accent : colors.title }} accessible={false}>
               ← Back to Notes & Health Logs
             </Text>
           </Pressable>
 
           {/* Main Card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={{ marginBottom: 14 }}>
-              <Text style={[styles.bigTitle, { color: colors.title }]}>Health Logs</Text>
-              <Text style={[styles.bigSub, { color: colors.sub }]}>Recent vital measurements</Text>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]} accessible={false}>
+            <View style={{ marginBottom: 14 }} accessible={false}>
+              <Text style={[styles.bigTitle, { color: colors.title }]} accessibilityRole="header">Health Logs</Text>
+              <Text style={[styles.bigSub, { color: colors.sub }]} accessibilityRole="text">Recent vital measurements</Text>
             </View>
 
             {/* Filters */}
-            <View style={styles.filters}>
-              <Pressable onPress={() => setSelectedCategory("all")}>
-                <Text style={[styles.filterText, { color: selectedCategory === "all" ? colors.title : colors.muted, fontWeight: "900" }]}>
+            <View style={styles.filters} accessible={false}>
+              <Pressable onPress={() => setSelectedCategory("all")} accessible={true} accessibilityRole="button" accessibilityLabel="View All entries" accessibilityHint={`Filter to show all health log entries${selectedCategory === "all" ? ", currently selected" : ""}`}>
+                <Text style={[styles.filterText, { color: selectedCategory === "all" ? colors.title : colors.muted, fontWeight: "900" }]} accessible={false}>
                   • View All
                 </Text>
               </Pressable>
 
-              {(["vital", "mood", "symptoms", "meals"] as const).map((c) => (
-                <Pressable key={c} onPress={() => setSelectedCategory(c)}>
-                  <Text
-                    style={[
-                      styles.filterText,
-                      {
-                        color: selectedCategory === c ? colors.title : colors.muted,
-                        fontWeight: selectedCategory === c ? "900" : "800",
-                      },
-                    ]}
-                  >
-                    {c === "vital"
-                      ? "Vital Measurements"
-                      : c.charAt(0).toUpperCase() + c.slice(1)}
-                  </Text>
-                </Pressable>
-              ))}
+              {(["vital", "mood", "symptoms", "meals"] as const).map((c) => {
+                const label = c === "vital" ? "Vital Measurements" : c.charAt(0).toUpperCase() + c.slice(1);
+                return (
+                  <Pressable key={c} onPress={() => setSelectedCategory(c)} accessible={true} accessibilityRole="button" accessibilityLabel={`Filter by ${label}`} accessibilityHint={`Show only ${label} entries${selectedCategory === c ? ", currently selected" : ""}`}>
+                    <Text
+                      style={[
+                        styles.filterText,
+                        {
+                          color: selectedCategory === c ? colors.title : colors.muted,
+                          fontWeight: selectedCategory === c ? "900" : "800",
+                        },
+                      ]}
+                      accessible={false}
+                    >
+                      {label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
 
             {/* Add Entry */}
-            <View style={{ alignItems: "flex-end", marginBottom: 14 }}>
+            <View style={{ alignItems: "flex-end", marginBottom: 14 }} accessible={false}>
               <Pressable
                 onPress={() => setShowAddMenu((v) => !v)}
                 style={({ pressed }) => [
@@ -228,12 +234,16 @@ export default function HealthLogsScreen() {
                   { backgroundColor: highContrastMode ? colors.accent : colors.accent },
                   pressed && { opacity: 0.9 },
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Add Entry"
+                accessibilityHint={`${showAddMenu ? "Closes" : "Opens"} menu to add a new health log entry`}
               >
-                <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>＋ Add Entry</Text>
+                <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }} accessible={false}>＋ Add Entry</Text>
               </Pressable>
 
               {showAddMenu && (
-                <View style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <View style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.border }]} accessible={false}>
                   <MenuItem
                     label="Vital Measurements"
                     onPress={() => {
@@ -279,7 +289,7 @@ export default function HealthLogsScreen() {
             </View>
 
             {/* Entries */}
-            <View style={{ gap: 12 }}>
+            <View style={{ gap: 12 }} accessible={false}>
               {displayedEntries.map((entry) => {
                 const icon = iconForCategory(entry.category);
                 const isHolding = longPressEntryId === entry.id;
@@ -298,32 +308,36 @@ export default function HealthLogsScreen() {
                       },
                       isHolding && { borderColor: colors.accent, borderWidth: 2 },
                     ]}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${entry.type}, ${entry.value}, ${entry.date} at ${entry.time}`}
+                    accessibilityHint="Press and hold for 10 seconds to delete this entry"
                   >
                     {/* progress bar */}
                     {isHolding && (
-                      <View style={styles.progressTrack}>
-                        <View style={[styles.progressFill, { width: `${longPressProgress}%`, backgroundColor: colors.accent }]} />
+                      <View style={styles.progressTrack} accessible={false}>
+                        <View style={[styles.progressFill, { width: `${longPressProgress}%`, backgroundColor: colors.accent }]} accessible={false} />
                       </View>
                     )}
 
-                    <View style={[styles.entryIcon, { backgroundColor: icon.bg }]}>
-                      <Text style={{ fontSize: 18 }}>{icon.emoji}</Text>
+                    <View style={[styles.entryIcon, { backgroundColor: icon.bg }]} accessible={false}>
+                      <Text style={{ fontSize: 18 }} accessible={false}>{icon.emoji}</Text>
                     </View>
 
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontWeight: "900", color: colors.title }}>{entry.type}</Text>
-                      <Text style={{ marginTop: 2, fontWeight: "800", color: colors.muted }}>
+                    <View style={{ flex: 1 }} accessible={false}>
+                      <Text style={{ fontWeight: "900", color: colors.title }} accessible={false}>{entry.type}</Text>
+                      <Text style={{ marginTop: 2, fontWeight: "800", color: colors.muted }} accessible={false}>
                         {entry.date} at {entry.time}
                       </Text>
                       {isHolding && (
-                        <Text style={{ marginTop: 6, fontWeight: "900", color: colors.accent }}>
+                        <Text style={{ marginTop: 6, fontWeight: "900", color: colors.accent }} accessible={false}>
                           Hold to delete...
                         </Text>
                       )}
                     </View>
 
-                    <View style={{ alignItems: "flex-end" }}>
-                      <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }}>{entry.value}</Text>
+                    <View style={{ alignItems: "flex-end" }} accessible={false}>
+                      <Text style={{ fontSize: 18, fontWeight: "900", color: colors.title }} accessible={false}>{entry.value}</Text>
                     </View>
                   </Pressable>
                 );
@@ -339,8 +353,12 @@ export default function HealthLogsScreen() {
                   { backgroundColor: highContrastMode ? colors.card2 : "#fff", borderColor: colors.border },
                   pressed && { opacity: 0.92 },
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`View All ${filteredEntries.length} entries`}
+                accessibilityHint="Expands the list to show all health log entries"
               >
-                <Text style={{ fontWeight: "900", color: colors.title }}>
+                <Text style={{ fontWeight: "900", color: colors.title }} accessible={false}>
                   View All ({filteredEntries.length} entries)
                 </Text>
               </Pressable>
@@ -354,13 +372,17 @@ export default function HealthLogsScreen() {
                   { backgroundColor: highContrastMode ? colors.card2 : "#fff", borderColor: colors.border },
                   pressed && { opacity: 0.92 },
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Show Less"
+                accessibilityHint="Collapses the list to show only the first 5 entries"
               >
-                <Text style={{ fontWeight: "900", color: colors.title }}>Show Less</Text>
+                <Text style={{ fontWeight: "900", color: colors.title }} accessible={false}>Show Less</Text>
               </Pressable>
             )}
           </View>
 
-          <View style={{ height: 110 }} />
+          <View style={{ height: 110 }} accessible={false} />
         </ScrollView>
 
         {/* Forms (assuming these are RN components using Modal inside or full-screen overlays) */}
@@ -370,15 +392,15 @@ export default function HealthLogsScreen() {
         {activeForm === "meals" && <AddMealsForm onClose={() => setActiveForm(null)} />}
 
         {/* Delete Confirm Modal */}
-        <Modal transparent visible={showDeleteConfirm !== null} animationType="fade" onRequestClose={() => setShowDeleteConfirm(null)}>
-          <View style={styles.modalBackdrop}>
-            <View style={[styles.confirmCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 1 : 0 }]}>
-              <Text style={{ fontSize: 20, fontWeight: "900", color: colors.title }}>Delete Entry?</Text>
-              <Text style={{ marginTop: 8, fontWeight: "800", color: highContrastMode ? colors.muted : colors.sub }}>
+        <Modal transparent visible={showDeleteConfirm !== null} animationType="fade" onRequestClose={() => setShowDeleteConfirm(null)} accessible={true} accessibilityLabel="Delete entry confirmation dialog">
+          <View style={styles.modalBackdrop} accessible={false}>
+            <View style={[styles.confirmCard, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrastMode ? 1 : 0 }]} accessible={false}>
+              <Text style={{ fontSize: 20, fontWeight: "900", color: colors.title }} accessibilityRole="header">Delete Entry?</Text>
+              <Text style={{ marginTop: 8, fontWeight: "800", color: highContrastMode ? colors.muted : colors.sub }} accessibilityRole="text">
                 Are you sure you want to delete this health entry? This action cannot be undone.
               </Text>
 
-              <View style={{ flexDirection: "row", gap: 12, marginTop: 16 }}>
+              <View style={{ flexDirection: "row", gap: 12, marginTop: 16 }} accessible={false}>
                 <Pressable
                   onPress={() => setShowDeleteConfirm(null)}
                   style={({ pressed }) => [
@@ -389,8 +411,12 @@ export default function HealthLogsScreen() {
                     },
                     pressed && { opacity: 0.92 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Cancels deletion and closes the dialog"
                 >
-                  <Text style={{ fontWeight: "900", color: colors.title }}>Cancel</Text>
+                  <Text style={{ fontWeight: "900", color: colors.title }} accessible={false}>Cancel</Text>
                 </Pressable>
 
                 <Pressable
@@ -400,8 +426,12 @@ export default function HealthLogsScreen() {
                     { backgroundColor: colors.danger },
                     pressed && { opacity: 0.92 },
                   ]}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Delete"
+                  accessibilityHint="Permanently deletes the health log entry"
                 >
-                  <Text style={{ fontWeight: "900", color: "#fff" }}>Delete</Text>
+                  <Text style={{ fontWeight: "900", color: "#fff" }} accessible={false}>Delete</Text>
                 </Pressable>
               </View>
             </View>
@@ -409,30 +439,30 @@ export default function HealthLogsScreen() {
         </Modal>
 
         {/* Bottom Nav */}
-        <View style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]}>
-          <View style={styles.navRow}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Home</Text>
+        <View style={[styles.nav, { backgroundColor: highContrastMode ? "#000" : "#fff", borderTopColor: colors.border }]} accessible={false}>
+          <View style={styles.navRow} accessible={false}>
+            <Pressable onPress={() => router.push("/dashboard")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Home" accessibilityHint="Navigate to Home screen">
+              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }} accessible={false}>Home</Text>
             </Pressable>
 
-            <Pressable onPress={() => router.push("/tasks")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Tasks</Text>
+            <Pressable onPress={() => router.push("/tasks")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Tasks" accessibilityHint="Navigate to Tasks screen">
+              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }} accessible={false}>Tasks</Text>
             </Pressable>
 
-            <Pressable onPress={() => router.push("/health")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }}>Health</Text>
+            <Pressable onPress={() => router.push("/health")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Health, currently active" accessibilityHint="Navigate to Health screen">
+              <Text style={{ color: highContrastMode ? colors.accent : "#155DFC", fontWeight: "900" }} accessible={false}>Health</Text>
             </Pressable>
 
-            <Pressable onPress={() => router.push("/messages")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Messages</Text>
+            <Pressable onPress={() => router.push("/messages")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Messages" accessibilityHint="Navigate to Messages screen">
+              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }} accessible={false}>Messages</Text>
             </Pressable>
 
-            <Pressable onPress={() => router.push("/alerts")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Alerts</Text>
+            <Pressable onPress={() => router.push("/alerts")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Alerts" accessibilityHint="Navigate to Alerts screen">
+              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }} accessible={false}>Alerts</Text>
             </Pressable>
 
-            <Pressable onPress={() => router.push("/profile")} style={styles.navItem}>
-              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }}>Profile</Text>
+            <Pressable onPress={() => router.push("/profile")} style={styles.navItem} accessible={true} accessibilityRole="button" accessibilityLabel="Profile" accessibilityHint="Navigate to Profile screen">
+              <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "800" }} accessible={false}>Profile</Text>
             </Pressable>
           </View>
         </View>
@@ -462,8 +492,12 @@ function MenuItem({
         borderTop && { borderTopWidth: 1, borderTopColor: colors.border },
         pressed && { opacity: 0.92 },
       ]}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`Add ${label}`}
+      accessibilityHint={`Opens form to add a new ${label} entry`}
     >
-      <Text style={{ fontWeight: "900", color: highContrastMode ? "#fff" : colors.title }}>
+      <Text style={{ fontWeight: "900", color: highContrastMode ? "#fff" : colors.title }} accessible={false}>
         {label}
       </Text>
     </Pressable>

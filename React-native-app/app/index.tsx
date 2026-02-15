@@ -86,10 +86,17 @@ export default function Index() {
     <KeyboardAvoidingView
       style={[styles.screen, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      accessible={false}
     >
-      <View style={styles.container}>
+      <View 
+        style={styles.container}
+        accessible={false}
+      >
         {/* Header */}
-        <View style={styles.header}>
+        <View 
+          style={styles.header}
+          accessible={false}
+        >
           <View
             style={[
               styles.logo,
@@ -97,15 +104,31 @@ export default function Index() {
                 backgroundColor: highContrastMode ? colors.accent : "transparent",
               },
             ]}
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel="CareConnect logo with heart symbol"
           >
             {/* Simple icon placeholder */}
-            <Text style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}>
+            <Text 
+              style={{ fontWeight: "900", color: highContrastMode ? "#000" : "#fff" }}
+              accessible={false}
+            >
               ♥
             </Text>
           </View>
 
-          <Text style={[styles.title, { color: colors.text }]}>CareConnect</Text>
-          <Text style={[styles.subtitle, { color: highContrastMode ? colors.accent : colors.subText }]}>
+          <Text 
+            style={[styles.title, { color: colors.text }]}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            CareConnect
+          </Text>
+          <Text 
+            style={[styles.subtitle, { color: highContrastMode ? colors.accent : colors.subText }]}
+            accessible={true}
+            accessibilityRole="text"
+          >
             Your Healthcare Partner
           </Text>
         </View>
@@ -120,27 +143,49 @@ export default function Index() {
               borderWidth: highContrastMode ? 2 : 1,
             },
           ]}
+          accessible={false}
         >
           {/* Tabs */}
-<View style={[styles.tabsWrap, { backgroundColor: highContrastMode ? "#2a2a2a" : "#ECECF0" }]}>
-  <View style={styles.tabsRow}>
+<View 
+  style={[styles.tabsWrap, { backgroundColor: highContrastMode ? "#2a2a2a" : "#ECECF0" }]}
+  accessible={false}
+>
+  <View 
+    style={styles.tabsRow}
+    accessible={false}
+  >
     <Pressable
       onPress={() => {}}
+      accessible={true}
+      accessibilityRole="tab"
+      accessibilityLabel="Login tab"
+      accessibilityState={{ selected: true }}
       style={[
         styles.tabBtn,
         { backgroundColor: highContrastMode ? colors.accent : "#fff" }, // ✅ always active on login screen
       ]}
     >
-      <Text style={{ color: highContrastMode ? "#000" : "#101828", fontWeight: "600" }}>
+      <Text 
+        style={{ color: highContrastMode ? "#000" : "#101828", fontWeight: "600" }}
+        accessible={false}
+      >
         Login
       </Text>
     </Pressable>
 
     <Pressable
       onPress={() => router.push("/register")}
+      accessible={true}
+      accessibilityRole="tab"
+      accessibilityLabel="Register tab"
+      accessibilityHint="Switch to registration form"
+      accessibilityState={{ selected: false }}
       style={styles.tabBtn}
     >
-      <Text style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "600" }}>
+      <Text 
+        style={{ color: highContrastMode ? "#fff" : "#6B7280", fontWeight: "600" }}
+        accessible={false}
+      >
         Register
       </Text>
     </Pressable>
@@ -149,19 +194,41 @@ export default function Index() {
 
 
           {/* Form */}
-          <View style={styles.form}>
-            <Text style={[styles.formTitle, { color: colors.text }]}>Welcome Back</Text>
-            <Text style={[styles.formDesc, { color: colors.subText }]}>
+          <View 
+            style={styles.form}
+            accessible={false}
+          >
+            <Text 
+              style={[styles.formTitle, { color: colors.text }]}
+              accessible={true}
+              accessibilityRole="header"
+            >
+              Welcome Back
+            </Text>
+            <Text 
+              style={[styles.formDesc, { color: colors.subText }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
               Enter your credentials to access your account
             </Text>
 
             {/* Username */}
-            <Text style={[styles.label, { color: colors.text }]}>Username</Text>
+            <Text 
+              style={[styles.label, { color: colors.text }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              Username
+            </Text>
             <TextInput
               value={username}
               onChangeText={setUsername}
               placeholder="username"
               placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+              accessible={true}
+              accessibilityLabel="Username"
+              accessibilityHint="Enter your username"
               style={[
                 styles.input,
                 {
@@ -173,8 +240,17 @@ export default function Index() {
             />
 
             {/* PIN */}
-            <Text style={[styles.label, { color: colors.text, marginTop: 16 }]}>PIN Number</Text>
-            <View style={styles.pinRow}>
+            <Text 
+              style={[styles.label, { color: colors.text, marginTop: 16 }]}
+              accessible={true}
+              accessibilityRole="text"
+            >
+              PIN Number
+            </Text>
+            <View 
+              style={styles.pinRow}
+              accessible={false}
+            >
               {pin.map((digit, index) => (
                 <TextInput
                   key={index}
@@ -183,6 +259,9 @@ export default function Index() {
                   onChangeText={(v) => handlePinChange(index, v)}
                   keyboardType="number-pad"
                   maxLength={1}
+                  accessible={true}
+                  accessibilityLabel={`PIN digit ${index + 1}`}
+                  accessibilityHint={`Enter digit ${index + 1} of 6`}
                   style={[
                     styles.pinBox,
                     {
@@ -196,41 +275,94 @@ export default function Index() {
               ))}
             </View>
 
-            <Text style={{ fontSize: 12, textAlign: "center", color: highContrastMode ? colors.accent : "#9CA3AF" }}>
+            <Text 
+              style={{ fontSize: 12, textAlign: "center", color: highContrastMode ? colors.accent : "#9CA3AF" }}
+              accessible={true}
+              accessibilityRole="text"
+            >
               Enter your 6-digit PIN
             </Text>
 
             {/* Error */}
             {loginError ? (
-              <View style={[styles.errorBox, { backgroundColor: colors.errorBg, borderColor: colors.inputBorder }]}>
-                <Text style={{ color: highContrastMode ? colors.accent : "#DC2626" }}>{loginError}</Text>
+              <View 
+                style={[styles.errorBox, { backgroundColor: colors.errorBg, borderColor: colors.inputBorder }]}
+                accessible={true}
+                accessibilityRole="alert"
+                accessibilityLiveRegion="polite"
+              >
+                <Text 
+                  style={{ color: highContrastMode ? colors.accent : "#DC2626" }}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  {loginError}
+                </Text>
               </View>
             ) : null}
 
             {/* Submit */}
             <Pressable
               onPress={handleLogin}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Login"
+              accessibilityHint="Submit credentials to log into your account"
               style={[
                 styles.primaryBtn,
                 { backgroundColor: highContrastMode ? colors.accent : "#155DFC" },
               ]}
             >
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "700" }}>Login</Text>
+              <Text 
+                style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "700" }}
+                accessible={false}
+              >
+                Login
+              </Text>
             </Pressable>
 
             {/* Links */}
-            <View style={styles.links}>
-              <Pressable onPress={() => router.push("/forgot-username")}>
-                <Text style={{ color: colors.link }}>Forgot username?</Text>
+            <View 
+              style={styles.links}
+              accessible={false}
+            >
+              <Pressable 
+                onPress={() => router.push("/forgot-username")}
+                accessible={true}
+                accessibilityRole="link"
+                accessibilityLabel="Forgot username"
+                accessibilityHint="Navigate to username recovery page"
+              >
+                <Text 
+                  style={{ color: colors.link }}
+                  accessible={false}
+                >
+                  Forgot username?
+                </Text>
               </Pressable>
-              <Pressable onPress={() => router.push("/forgot-pin")}>
-                <Text style={{ color: colors.link }}>Forgot your PIN?</Text>
+              <Pressable 
+                onPress={() => router.push("/forgot-pin")}
+                accessible={true}
+                accessibilityRole="link"
+                accessibilityLabel="Forgot PIN"
+                accessibilityHint="Navigate to PIN recovery page"
+              >
+                <Text 
+                  style={{ color: colors.link }}
+                  accessible={false}
+                >
+                  Forgot your PIN?
+                </Text>
               </Pressable>
             </View>
           </View>
         </View>
 
-        <Text style={{ marginTop: 18, fontSize: 12, textAlign: "center", color: highContrastMode ? colors.accent : "#6B7280" }}>
+        <Text 
+          style={{ marginTop: 18, fontSize: 12, textAlign: "center", color: highContrastMode ? colors.accent : "#6B7280" }}
+          accessible={true}
+          accessibilityRole="text"
+        >
           © 2026 CareConnect. All rights reserved.
         </Text>
       </View>

@@ -119,104 +119,339 @@ export default function Profile() {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <SafeAreaView 
+      style={styles.screen}
+      accessible={false}
+    >
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerRow}>
-          <View style={styles.headerLeft}>
-            <Pressable onPress={() => router.push("/dashboard")} style={styles.iconBtn}>
-              <Text style={styles.iconText}>←</Text>
+      <View 
+        style={styles.header}
+        accessible={false}
+      >
+        <View 
+          style={styles.headerRow}
+          accessible={false}
+        >
+          <View 
+            style={styles.headerLeft}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={() => router.push("/dashboard")} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Dashboard"
+              accessibilityHint="Navigate back to Dashboard"
+              style={styles.iconBtn}
+            >
+              <Text 
+                style={styles.iconText}
+                accessible={false}
+              >
+                ←
+              </Text>
             </Pressable>
 
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>👤</Text>
+            <View 
+              style={styles.avatar}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Profile avatar"
+            >
+              <Text 
+                style={styles.avatarText}
+                accessible={false}
+              >
+                👤
+              </Text>
             </View>
 
-            <View>
-              <Text style={styles.title}>Profile & Settings</Text>
-              <Text style={styles.subtitle}>Manage your account</Text>
+            <View accessible={false}>
+              <Text 
+                style={styles.title}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Profile & Settings
+              </Text>
+              <Text 
+                style={styles.subtitle}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Manage your account
+              </Text>
             </View>
           </View>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        contentContainerStyle={styles.content} 
+        showsVerticalScrollIndicator={false}
+        accessible={false}
+      >
         {/* Back to Dashboard */}
-        <Pressable onPress={() => router.push("/dashboard")} style={styles.primaryCardBtn}>
-          <Text style={styles.primaryCardBtnText}>← Back to Dashboard</Text>
+        <Pressable 
+          onPress={() => router.push("/dashboard")} 
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Back to Dashboard"
+          accessibilityHint="Navigate back to Dashboard"
+          style={styles.primaryCardBtn}
+        >
+          <Text 
+            style={styles.primaryCardBtnText}
+            accessible={false}
+          >
+            ← Back to Dashboard
+          </Text>
         </Pressable>
 
         {/* Profile Information Card */}
-        <View style={styles.card}>
-          <View style={styles.cardHeaderRow}>
-            <View>
-              <Text style={styles.cardTitle}>Profile Information</Text>
-              <Text style={styles.cardSubtitle}>Your personal details</Text>
+        <View 
+          style={styles.card}
+          accessible={false}
+        >
+          <View 
+            style={styles.cardHeaderRow}
+            accessible={false}
+          >
+            <View accessible={false}>
+              <Text 
+                style={styles.cardTitle}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Profile Information
+              </Text>
+              <Text 
+                style={styles.cardSubtitle}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Your personal details
+              </Text>
             </View>
-            <Pressable onPress={() => setIsEditingProfile(true)} style={styles.smallBtn}>
-              <Text style={styles.smallBtnText}>Edit</Text>
+            <Pressable 
+              onPress={() => setIsEditingProfile(true)} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Edit profile"
+              accessibilityHint="Edit your profile information"
+              style={styles.smallBtn}
+            >
+              <Text 
+                style={styles.smallBtnText}
+                accessible={false}
+              >
+                Edit
+              </Text>
             </Pressable>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Full Name</Text>
-            <View style={styles.valueBox}>
-              <Text style={styles.valueText}>{profileData.fullName}</Text>
+          <View 
+            style={styles.field}
+            accessible={true}
+            accessibilityRole="text"
+            accessibilityLabel={`Full Name: ${profileData.fullName}`}
+          >
+            <Text 
+              style={styles.label}
+              accessible={false}
+            >
+              Full Name
+            </Text>
+            <View 
+              style={styles.valueBox}
+              accessible={false}
+            >
+              <Text 
+                style={styles.valueText}
+                accessible={false}
+              >
+                {profileData.fullName}
+              </Text>
             </View>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Email</Text>
-            <View style={styles.valueBox}>
-              <Text style={styles.valueText}>{profileData.email}</Text>
+          <View 
+            style={styles.field}
+            accessible={true}
+            accessibilityRole="text"
+            accessibilityLabel={`Email: ${profileData.email}`}
+          >
+            <Text 
+              style={styles.label}
+              accessible={false}
+            >
+              Email
+            </Text>
+            <View 
+              style={styles.valueBox}
+              accessible={false}
+            >
+              <Text 
+                style={styles.valueText}
+                accessible={false}
+              >
+                {profileData.email}
+              </Text>
             </View>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Username</Text>
-            <View style={styles.valueBox}>
-              <Text style={styles.valueText}>{profileData.username}</Text>
+          <View 
+            style={styles.field}
+            accessible={true}
+            accessibilityRole="text"
+            accessibilityLabel={`Username: ${profileData.username}`}
+          >
+            <Text 
+              style={styles.label}
+              accessible={false}
+            >
+              Username
+            </Text>
+            <View 
+              style={styles.valueBox}
+              accessible={false}
+            >
+              <Text 
+                style={styles.valueText}
+                accessible={false}
+              >
+                {profileData.username}
+              </Text>
             </View>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Role</Text>
-            <View style={styles.valueBox}>
-              <Text style={styles.valueText}>{profileData.role}</Text>
+          <View 
+            style={styles.field}
+            accessible={true}
+            accessibilityRole="text"
+            accessibilityLabel={`Role: ${profileData.role}`}
+          >
+            <Text 
+              style={styles.label}
+              accessible={false}
+            >
+              Role
+            </Text>
+            <View 
+              style={styles.valueBox}
+              accessible={false}
+            >
+              <Text 
+                style={styles.valueText}
+                accessible={false}
+              >
+                {profileData.role}
+              </Text>
             </View>
           </View>
         </View>
 
         {/* Settings Card */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Settings</Text>
-          <Text style={styles.cardSubtitle}>Manage your preferences</Text>
+        <View 
+          style={styles.card}
+          accessible={false}
+        >
+          <Text 
+            style={styles.cardTitle}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            Settings
+          </Text>
+          <Text 
+            style={styles.cardSubtitle}
+            accessible={true}
+            accessibilityRole="text"
+          >
+            Manage your preferences
+          </Text>
 
           {/* Change PIN */}
-          <View style={styles.settingRow}>
-            <Text style={styles.settingText}>Change PIN</Text>
-            <Pressable onPress={() => setIsChangingPin(true)} style={styles.smallBtnAlt}>
-              <Text style={styles.smallBtnAltText}>Update</Text>
+          <View 
+            style={styles.settingRow}
+            accessible={false}
+          >
+            <Text 
+              style={styles.settingText}
+              accessible={false}
+            >
+              Change PIN
+            </Text>
+            <Pressable 
+              onPress={() => setIsChangingPin(true)} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Change PIN"
+              accessibilityHint="Change your security PIN"
+              style={styles.smallBtnAlt}
+            >
+              <Text 
+                style={styles.smallBtnAltText}
+                accessible={false}
+              >
+                Update
+              </Text>
             </Pressable>
           </View>
 
           {/* High Contrast Mode */}
-          <View style={styles.settingRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.settingText}>High Contrast Mode</Text>
-              <Text style={styles.settingSubText}>Enhance visibility</Text>
+          <View 
+            style={styles.settingRow}
+            accessible={false}
+          >
+            <View 
+              style={{ flex: 1 }}
+              accessible={false}
+            >
+              <Text 
+                style={styles.settingText}
+                accessible={false}
+              >
+                High Contrast Mode
+              </Text>
+              <Text 
+                style={styles.settingSubText}
+                accessible={false}
+              >
+                Enhance visibility
+              </Text>
             </View>
             <Pressable
               onPress={() => setHighContrastMode(!highContrastMode)}
+              accessible={true}
+              accessibilityRole="switch"
+              accessibilityLabel="High Contrast Mode"
+              accessibilityHint="Toggle high contrast mode for better visibility"
+              accessibilityState={{ checked: highContrastMode }}
               style={[styles.switch, highContrastMode ? styles.switchOn : styles.switchOff]}
             >
-              <View style={[styles.switchKnob, highContrastMode ? styles.knobOn : styles.knobOff]} />
+              <View 
+                style={[styles.switchKnob, highContrastMode ? styles.knobOn : styles.knobOff]}
+                accessible={false}
+              />
             </Pressable>
           </View>
 
           {/* Logout */}
-          <Pressable onPress={handleLogout} style={styles.logoutBtn}>
-            <Text style={styles.logoutText}>Logout</Text>
+          <Pressable 
+            onPress={handleLogout} 
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Logout"
+            accessibilityHint="Log out of your account"
+            style={styles.logoutBtn}
+          >
+            <Text 
+              style={styles.logoutText}
+              accessible={false}
+            >
+              Logout
+            </Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -229,31 +464,55 @@ export default function Profile() {
             <Text style={styles.modalSubtitle}>Your personal details</Text>
 
             <View style={styles.modalField}>
-              <Text style={styles.label}>Full Name</Text>
+              <Text 
+                style={styles.label}
+                accessible={false}
+              >
+                Full Name
+              </Text>
               <TextInput
                 value={profileData.fullName}
                 onChangeText={(t) => handleProfileChange("fullName", t)}
+                accessible={true}
+                accessibilityLabel="Full Name"
+                accessibilityHint="Enter your full name"
                 style={styles.input}
               />
             </View>
 
             <View style={styles.modalField}>
-              <Text style={styles.label}>Email</Text>
+              <Text 
+                style={styles.label}
+                accessible={false}
+              >
+                Email
+              </Text>
               <TextInput
                 value={profileData.email}
                 onChangeText={(t) => handleProfileChange("email", t)}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                accessible={true}
+                accessibilityLabel="Email"
+                accessibilityHint="Enter your email address"
                 style={styles.input}
               />
             </View>
 
             <View style={styles.modalField}>
-              <Text style={styles.label}>Username</Text>
+              <Text 
+                style={styles.label}
+                accessible={false}
+              >
+                Username
+              </Text>
               <TextInput
                 value={profileData.username}
                 onChangeText={(t) => handleProfileChange("username", t)}
                 autoCapitalize="none"
+                accessible={true}
+                accessibilityLabel="Username"
+                accessibilityHint="Enter your username"
                 style={styles.input}
               />
             </View>
@@ -266,11 +525,35 @@ export default function Profile() {
             </View>
 
             <View style={styles.modalBtnRow}>
-              <Pressable onPress={handleSaveProfile} style={styles.modalPrimaryBtn}>
-                <Text style={styles.modalPrimaryText}>Save Changes</Text>
+              <Pressable 
+                onPress={handleSaveProfile} 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Save Changes"
+                accessibilityHint="Save your profile changes"
+                style={styles.modalPrimaryBtn}
+              >
+                <Text 
+                  style={styles.modalPrimaryText}
+                  accessible={false}
+                >
+                  Save Changes
+                </Text>
               </Pressable>
-              <Pressable onPress={handleCancelEdit} style={styles.modalSecondaryBtn}>
-                <Text style={styles.modalSecondaryText}>Cancel</Text>
+              <Pressable 
+                onPress={handleCancelEdit} 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel"
+                accessibilityHint="Cancel editing profile"
+                style={styles.modalSecondaryBtn}
+              >
+                <Text 
+                  style={styles.modalSecondaryText}
+                  accessible={false}
+                >
+                  Cancel
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -313,11 +596,35 @@ export default function Profile() {
             />
 
             <View style={styles.modalBtnRow}>
-              <Pressable onPress={handleCancelPin} style={styles.modalSecondaryBtn}>
-                <Text style={styles.modalSecondaryText}>Cancel</Text>
+              <Pressable 
+                onPress={handleCancelPin} 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel"
+                accessibilityHint="Cancel changing PIN"
+                style={styles.modalSecondaryBtn}
+              >
+                <Text 
+                  style={styles.modalSecondaryText}
+                  accessible={false}
+                >
+                  Cancel
+                </Text>
               </Pressable>
-              <Pressable onPress={handleSavePin} style={styles.modalPrimaryBtn}>
-                <Text style={styles.modalPrimaryText}>Save Changes</Text>
+              <Pressable 
+                onPress={handleSavePin} 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Save Changes"
+                accessibilityHint="Save your new PIN"
+                style={styles.modalPrimaryBtn}
+              >
+                <Text 
+                  style={styles.modalPrimaryText}
+                  accessible={false}
+                >
+                  Save Changes
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -346,8 +653,17 @@ function PinRow({
 }) {
   return (
     <View style={{ marginTop: 14 }}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={styles.pinRow}>
+      <Text 
+        style={styles.label}
+        accessible={true}
+        accessibilityRole="header"
+      >
+        {label}
+      </Text>
+      <View 
+        style={styles.pinRow}
+        accessible={false}
+      >
         {value.map((digit, index) => (
           <TextInput
             key={`${type}-${index}`}
@@ -357,6 +673,9 @@ function PinRow({
             onKeyPress={({ nativeEvent }) => onKeyPress(nativeEvent.key, index, type)}
             keyboardType="number-pad"
             maxLength={1}
+            accessible={true}
+            accessibilityLabel={`${label} digit ${index + 1} of 6`}
+            accessibilityHint="Enter a single digit"
             style={styles.pinBox}
             textAlign="center"
           />

@@ -97,6 +97,11 @@ export default function SOSButton({ onActivate }: SOSButtonProps) {
         onPressIn={startHold}
         onPressOut={endHold}
         disabled={isActivated}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={isActivated ? "SOS activated" : "Emergency SOS button"}
+        accessibilityHint={isActivated ? "Emergency alert has been sent" : "Press and hold for 5 seconds to send emergency alert"}
+        accessibilityState={{ disabled: isActivated }}
         style={[
           styles.button,
           { backgroundColor: bgColor },
@@ -105,7 +110,12 @@ export default function SOSButton({ onActivate }: SOSButtonProps) {
       >
         {/* Simple progress ring substitute: a top bar that fills (RN-friendly) */}
         {isHolding && (
-          <View style={styles.progressTrack}>
+          <View 
+            style={styles.progressTrack}
+            accessible={true}
+            accessibilityRole="progressbar"
+            accessibilityLabel={`Emergency alert progress ${Math.round(holdProgress * 100)} percent`}
+          >
             <View style={[styles.progressFill, { width: `${holdProgress * 100}%`, backgroundColor: highContrastMode ? "#FFFF00" : "rgba(255,255,255,0.6)" }]} />
           </View>
         )}
