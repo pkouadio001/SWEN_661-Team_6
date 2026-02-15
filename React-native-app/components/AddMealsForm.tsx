@@ -73,10 +73,15 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      accessible={true}
+      accessibilityViewIsModal={true}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.overlay}
+        accessible={true}
+        accessibilityRole="none"
+        accessibilityLabel="Meal logging form overlay"
       >
         <Pressable style={styles.backdrop} onPress={onClose} />
 
@@ -85,13 +90,18 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
             styles.card,
             highContrastMode ? styles.cardHC : styles.cardNormal,
           ]}
+          accessible={true}
+          accessibilityRole="none"
+          accessibilityLabel="Meal logging form"
         >
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false} accessible={false}>
             <Text
               style={[
                 styles.title,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="header"
             >
               Log Meal
             </Text>
@@ -101,6 +111,8 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.label,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="text"
             >
               Meal Type
             </Text>
@@ -111,12 +123,17 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.input,
                 highContrastMode ? styles.inputHC : styles.inputNormal,
               ]}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Meal type ${mealType}`}
+              accessibilityHint="Select meal type from menu"
             >
               <Text
                 style={[
                   styles.inputText,
                   highContrastMode ? styles.textHC : styles.textNormal,
                 ]}
+                accessible={false}
               >
                 {mealType}
               </Text>
@@ -128,6 +145,7 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                   styles.menu,
                   highContrastMode ? styles.menuHC : styles.menuNormal,
                 ]}
+                accessible={false}
               >
                 {mealTypes.map((type) => (
                   <Pressable
@@ -137,12 +155,17 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                       setShowMealTypeMenu(false);
                     }}
                     style={styles.menuItem}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${type} meal type`}
+                    accessibilityHint={`Select ${type} as meal type`}
                   >
                     <Text
                       style={[
                         styles.menuItemText,
                         highContrastMode ? styles.textHC : styles.textNormal,
                       ]}
+                      accessible={false}
                     >
                       {type}
                     </Text>
@@ -156,6 +179,8 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.label,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="text"
             >
               What did you eat?
             </Text>
@@ -172,6 +197,9 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 highContrastMode ? styles.inputHC : styles.inputNormal,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityLabel="Meal description"
+              accessibilityHint="Describe what you ate"
             />
 
             <Text
@@ -179,6 +207,8 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.label,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="text"
             >
               Calories (optional)
             </Text>
@@ -193,6 +223,9 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 highContrastMode ? styles.inputHC : styles.inputNormal,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityLabel="Calories"
+              accessibilityHint="Optional calorie count for the meal"
             />
 
             <Text
@@ -200,6 +233,8 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.label,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="text"
             >
               Date
             </Text>
@@ -211,6 +246,9 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 highContrastMode ? styles.inputHC : styles.inputNormal,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityLabel="Date"
+              accessibilityHint="Date when meal was consumed"
             />
 
             <Text
@@ -218,6 +256,8 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 styles.label,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityRole="text"
             >
               Time
             </Text>
@@ -229,21 +269,29 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                 highContrastMode ? styles.inputHC : styles.inputNormal,
                 highContrastMode ? styles.textHC : styles.textNormal,
               ]}
+              accessible={true}
+              accessibilityLabel="Time"
+              accessibilityHint="Time when meal was consumed"
             />
 
-            <View style={styles.buttonRow}>
+            <View style={styles.buttonRow} accessible={false}>
               <Pressable
                 onPress={onClose}
                 style={[
                   styles.button,
                   highContrastMode ? styles.cancelHC : styles.cancelNormal,
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel"
+                accessibilityHint="Close meal logging form without saving"
               >
                 <Text
                   style={[
                     styles.buttonText,
                     highContrastMode ? styles.textHC : styles.textNormal,
                   ]}
+                  accessible={false}
                 >
                   Cancel
                 </Text>
@@ -255,12 +303,17 @@ export default function AddMealsForm({ onClose, visible }: AddMealsFormProps) {
                   styles.button,
                   highContrastMode ? styles.addHC : styles.addNormal,
                 ]}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Add meal entry"
+                accessibilityHint="Save and add this meal entry to your health logs"
               >
                 <Text
                   style={[
                     styles.buttonText,
                     highContrastMode ? styles.addTextHC : styles.addTextNormal,
                   ]}
+                  accessible={false}
                 >
                   Add
                 </Text>

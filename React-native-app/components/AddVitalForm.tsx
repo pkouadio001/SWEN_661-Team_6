@@ -77,8 +77,8 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
   const labelColor = highContrastMode ? "#fff" : "#101828";
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose} accessible={true} accessibilityViewIsModal={true}>
+      <View style={styles.overlay} accessible={true} accessibilityRole="none" accessibilityLabel="Vital measurement form overlay">
         <View
           style={[
             styles.card,
@@ -86,14 +86,17 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
               ? { backgroundColor: "#1a1a1a", borderColor: "#FFFF00", borderWidth: 2 }
               : { backgroundColor: "#fff" },
           ]}
+          accessible={true}
+          accessibilityRole="none"
+          accessibilityLabel="Vital measurement form"
         >
-          <Text style={[styles.title, { color: labelColor }]}>Add Vital Measurement</Text>
+          <Text style={[styles.title, { color: labelColor }]} accessible={true} accessibilityRole="header">Add Vital Measurement</Text>
 
-          <ScrollView contentContainerStyle={{ paddingBottom: 8 }} style={{ maxHeight: "80%" }}>
+          <ScrollView contentContainerStyle={{ paddingBottom: 8 }} style={{ maxHeight: "80%" }} accessible={false}>
             {/* Measurement Type */}
-            <Text style={[styles.label, { color: labelColor }]}>Measurement Type</Text>
+            <Text style={[styles.label, { color: labelColor }]} accessible={true} accessibilityRole="text">Measurement Type</Text>
 
-            <View style={styles.typeGrid}>
+            <View style={styles.typeGrid} accessible={false}>
               {vitalTypes.map((t) => {
                 const selected = t.label === vitalType;
                 return (
@@ -110,6 +113,11 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                           ? { backgroundColor: "#2a2a2a", borderColor: "#FFFF00", borderWidth: 1 }
                           : { backgroundColor: "#F3F4F6", borderColor: "#E5E7EB", borderWidth: 1 },
                     ]}
+                    accessible={true}
+                    accessibilityRole="radio"
+                    accessibilityLabel={`${t.label} measurement type`}
+                    accessibilityHint={`Select ${t.label} as measurement type`}
+                    accessibilityState={{ checked: selected }}
                   >
                     <Text
                       style={{
@@ -118,6 +126,7 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                         textAlign: "center",
                         color: selected ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? "#fff" : "#101828"),
                       }}
+                      accessible={false}
                     >
                       {t.label}
                     </Text>
@@ -129,6 +138,7 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                         opacity: 0.9,
                         color: selected ? (highContrastMode ? "#000" : "#fff") : (highContrastMode ? "#fff" : "#6B7280"),
                       }}
+                      accessible={false}
                     >
                       {t.placeholder}
                     </Text>
@@ -138,7 +148,7 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
             </View>
 
             {/* Value */}
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>Value</Text>
+            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]} accessible={true} accessibilityRole="text">Value</Text>
             <TextInput
               value={value}
               onChangeText={setValue}
@@ -150,10 +160,13 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                   ? { backgroundColor: "#2a2a2a", borderColor: "#FFFF00", color: "#fff" }
                   : { backgroundColor: "#fff", borderColor: "#E5E7EB", color: "#101828" },
               ]}
+              accessible={true}
+              accessibilityLabel={`${vitalType} value`}
+              accessibilityHint={`Enter value for ${vitalType}`}
             />
 
             {/* Date */}
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>Date</Text>
+            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]} accessible={true} accessibilityRole="text">Date</Text>
             <TextInput
               value={date}
               onChangeText={setDate}
@@ -163,10 +176,13 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                   ? { backgroundColor: "#2a2a2a", borderColor: "#FFFF00", color: "#fff" }
                   : { backgroundColor: "#fff", borderColor: "#E5E7EB", color: "#101828" },
               ]}
+              accessible={true}
+              accessibilityLabel="Date"
+              accessibilityHint="Date when vital was measured"
             />
 
             {/* Time */}
-            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]}>Time</Text>
+            <Text style={[styles.label, { color: labelColor, marginTop: 12 }]} accessible={true} accessibilityRole="text">Time</Text>
             <TextInput
               value={time}
               onChangeText={setTime}
@@ -176,11 +192,14 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                   ? { backgroundColor: "#2a2a2a", borderColor: "#FFFF00", color: "#fff" }
                   : { backgroundColor: "#fff", borderColor: "#E5E7EB", color: "#101828" },
               ]}
+              accessible={true}
+              accessibilityLabel="Time"
+              accessibilityHint="Time when vital was measured"
             />
           </ScrollView>
 
           {/* Actions */}
-          <View style={styles.actions}>
+          <View style={styles.actions} accessible={false}>
             <Pressable
               onPress={onClose}
               style={[
@@ -189,8 +208,12 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                   ? { backgroundColor: "#2a2a2a", borderColor: "#FFFF00", borderWidth: 1 }
                   : { backgroundColor: "#F3F4F6" },
               ]}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Cancel"
+              accessibilityHint="Close vital measurement form without saving"
             >
-              <Text style={{ fontWeight: "900", color: highContrastMode ? "#fff" : "#101828" }}>
+              <Text style={{ fontWeight: "900", color: highContrastMode ? "#fff" : "#101828" }} accessible={false}>
                 Cancel
               </Text>
             </Pressable>
@@ -208,6 +231,11 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                     ? { backgroundColor: "#FFFF00" }
                     : { backgroundColor: "#155DFC" },
               ]}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Add vital entry"
+              accessibilityHint={canSubmit ? "Save and add vital measurement to your health logs" : "Enter a value to enable"}
+              accessibilityState={{ disabled: !canSubmit }}
             >
               <Text
                 style={{
@@ -220,6 +248,7 @@ export default function AddVitalForm({ visible, onClose }: AddVitalFormProps) {
                       ? "#000"
                       : "#fff",
                 }}
+                accessible={false}
               >
                 Add
               </Text>
