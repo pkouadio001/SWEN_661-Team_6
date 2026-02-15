@@ -67,38 +67,90 @@ export default function DashboardScreen() {
   const Card = ({ title, subtitle, to, icon, badge }: CardProps) => (
     <Pressable
       onPress={() => go(to)}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${title}. ${subtitle}`}
+      accessibilityHint={`Navigate to ${title} section`}
       style={({ pressed }) => [
         styles.card,
         { backgroundColor: colors.card, borderColor: colors.border },
         pressed && { transform: [{ scale: 0.99 }], opacity: 0.96 },
       ]}
     >
-      <View style={styles.cardInner}>
-        <View style={[styles.iconTile, { backgroundColor: highContrastMode ? "#2a2a2a" : "#EFF6FF" }]}>
-          <Text style={[styles.iconText, { color: highContrastMode ? "#FFFF00" : "#155DFC" }]}>{icon}</Text>
+      <View 
+        style={styles.cardInner}
+        accessible={false}
+      >
+        <View 
+          style={[styles.iconTile, { backgroundColor: highContrastMode ? "#2a2a2a" : "#EFF6FF" }]}
+          accessible={false}
+        >
+          <Text 
+            style={[styles.iconText, { color: highContrastMode ? "#FFFF00" : "#155DFC" }]}
+            accessible={false}
+          >
+            {icon}
+          </Text>
         </View>
 
         {badge && badge > 0 ? (
-          <View style={[styles.cardBadge, { backgroundColor: colors.badge }]}>
-            <Text style={[styles.cardBadgeText, { color: highContrastMode ? "#000" : "#fff" }]}>
+          <View 
+            style={[styles.cardBadge, { backgroundColor: colors.badge }]}
+            accessible={true}
+            accessibilityLabel={`${badge} ${badge > 1 ? 'notifications' : 'notification'}`}
+            accessibilityRole="text"
+          >
+            <Text 
+              style={[styles.cardBadgeText, { color: highContrastMode ? "#000" : "#fff" }]}
+              accessible={false}
+            >
               {badge > 99 ? "99+" : badge}
             </Text>
           </View>
         ) : null}
 
-        <Text style={[styles.cardTitle, { color: colors.title }]}>{title}</Text>
-        <Text style={[styles.cardSub, { color: colors.muted }]}>{subtitle}</Text>
+        <Text 
+          style={[styles.cardTitle, { color: colors.title }]}
+          accessible={false}
+        >
+          {title}
+        </Text>
+        <Text 
+          style={[styles.cardSub, { color: colors.muted }]}
+          accessible={false}
+        >
+          {subtitle}
+        </Text>
       </View>
     </Pressable>
   );
 
   const NavItem = ({ label, icon, to, active, badge, onPress, color }: NavItemProps) => {
     const iconColor = color ?? (active ? colors.navActive : colors.navInactive);
+    const accessibilityLabel = badge && badge > 0 
+      ? `${label}. ${badge} ${badge > 1 ? 'items' : 'item'}`
+      : label;
 
     return (
-      <Pressable onPress={onPress ?? (() => to && go(to))} style={styles.navItem}>
-        <View style={styles.navIconWrap}>
-          <Text style={[styles.navIcon, { color: iconColor }]}>{icon}</Text>
+      <Pressable 
+        onPress={onPress ?? (() => to && go(to))} 
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={onPress ? `Perform ${label} action` : `Navigate to ${label} tab`}
+        accessibilityState={{ selected: active }}
+        style={styles.navItem}
+      >
+        <View 
+          style={styles.navIconWrap}
+          accessible={false}
+        >
+          <Text 
+            style={[styles.navIcon, { color: iconColor }]}
+            accessible={false}
+          >
+            {icon}
+          </Text>
 
           {badge && badge > 0 ? (
             <View
@@ -106,37 +158,84 @@ export default function DashboardScreen() {
                 styles.badge,
                 { backgroundColor: label === "Alerts" && highContrastMode ? "#FFFF00" : "#EF4444" },
               ]}
+              accessible={false}
             >
-              <Text style={[styles.badgeText, { color: label === "Alerts" && highContrastMode ? "#000" : "#fff" }]}>
+              <Text 
+                style={[styles.badgeText, { color: label === "Alerts" && highContrastMode ? "#000" : "#fff" }]}
+                accessible={false}
+              >
                 {badge > 99 ? "99+" : badge}
               </Text>
             </View>
           ) : null}
         </View>
 
-        <Text style={[styles.navLabel, { color: iconColor }]}>{label}</Text>
+        <Text 
+          style={[styles.navLabel, { color: iconColor }]}
+          accessible={false}
+        >
+          {label}
+        </Text>
       </Pressable>
     );
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
+        <ScrollView 
+          contentContainerStyle={styles.content} 
+          showsVerticalScrollIndicator={false}
+          accessible={false}
+        >
           {/* Header */}
-          <View style={styles.headerRow}>
-            <View style={[styles.logo, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}>
-              <Text style={[styles.logoText, { color: highContrastMode ? "#000" : "#fff" }]}>❤</Text>
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <View 
+              style={[styles.logo, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="CareConnect logo"
+            >
+              <Text 
+                style={[styles.logoText, { color: highContrastMode ? "#000" : "#fff" }]}
+                accessible={false}
+              >
+                ❤
+              </Text>
             </View>
 
-            <View>
-              <Text style={[styles.appTitle, { color: colors.title }]}>CareConnect</Text>
-              <Text style={[styles.welcome, { color: colors.sub }]}>Welcome, {userName}</Text>
+            <View accessible={false}>
+              <Text 
+                style={[styles.appTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                CareConnect
+              </Text>
+              <Text 
+                style={[styles.welcome, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Welcome, {userName}
+              </Text>
             </View>
           </View>
 
           {/* Grid */}
-          <View style={styles.grid}>
+          <View 
+            style={styles.grid}
+            accessible={false}
+          >
             <Card title="Tasks & Scheduling" subtitle="4 tasks today" to="/tasks" icon="🗓️" />
             <Card title="Notes & Health Logs" subtitle="3 recent logs" to="/health" icon="📝" />
             <Card title="Communication & Safety" subtitle={`${unread} unread`} to="/communication" icon="💬" badge={unread} />
@@ -149,8 +248,15 @@ export default function DashboardScreen() {
         </ScrollView>
 
         {/* Bottom Nav */}
-        <View style={[styles.bottomNav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}>
-          <View style={styles.bottomNavRow}>
+        <View 
+          style={[styles.bottomNav, { backgroundColor: colors.navBg, borderTopColor: colors.border }]}
+          accessible={false}
+          accessibilityRole="tabbar"
+        >
+          <View 
+            style={styles.bottomNavRow}
+            accessible={false}
+          >
             <NavItem label="Tasks" icon="✅" to="/tasks" active={pathname === "/tasks"} />
             <NavItem label="Health" icon="❤" to="/health" active={pathname === "/health"} />
             <NavItem label="Messages" icon="✉️" to="/messages" active={pathname === "/messages"} badge={unread} />
