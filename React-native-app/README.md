@@ -149,3 +149,28 @@ Test files are NOT imported by production files
 If tests behave strangely:
 
 npx jest --clearCache
+
+## ♿ Accessibility Testing
+
+This app follows WCAG 2.1 Level AA accessibility standards. See [ACCESSIBILITY_TESTING.md](./ACCESSIBILITY_TESTING.md) for comprehensive testing guidelines.
+
+### Quick Start
+
+**Automated Testing:**
+```bash
+# Run all accessibility tests
+npm test -- accessibility.test.tsx
+
+# Run all tests
+npm test
+```
+
+**Manual Testing:**
+- **Android TalkBack:** Enable in Settings → Accessibility → TalkBack
+- **iOS VoiceOver:** Enable in Settings → Accessibility → VoiceOver (or Cmd+F5 in simulator)
+
+See [ACCESSIBILITY_TESTING.md](./ACCESSIBILITY_TESTING.md) for detailed instructions on:
+- Using React Native Testing Library accessibility matchers
+- Testing with TalkBack (Android)
+- Testing with VoiceOver (iOS)
+- Accessibility checklists and best practices

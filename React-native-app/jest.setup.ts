@@ -1,4 +1,5 @@
-import "@testing-library/jest-native/extend-expect";
+// React Native Testing Library v12.4+ includes built-in matchers
+// No need for @testing-library/jest-native anymore
 
 jest.mock("expo-router", () => {
   const push = jest.fn();

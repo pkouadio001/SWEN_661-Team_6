@@ -179,13 +179,50 @@ No security vulnerabilities introduced. All changes are purely accessibility enh
 
 ## Testing Recommendations
 
-1. Test with iOS VoiceOver
-2. Test with Android TalkBack
-3. Verify all interactive elements are reachable via screen reader
-4. Confirm all state changes are announced
-5. Verify form inputs have clear labels and hints
-6. Test modal dialogs are properly announced
-7. Verify calendar navigation is accessible
+### Automated Testing
+The app now includes comprehensive automated accessibility tests using React Native Testing Library's built-in accessibility matchers (v12.4+).
+
+**Run accessibility tests:**
+```bash
+cd React-native-app
+npm test -- accessibility.test.tsx
+```
+
+**Key automated test capabilities:**
+- Query by accessibility role: `screen.getByRole('button', { name: 'Submit' })`
+- Query by accessibility label: `screen.getByLabelText('Username')`
+- Query by accessibility hint: `screen.getByA11yHint('Enter your username')`
+- Validate semantic structure and navigation order
+- Test interactive element behavior
+
+See `React-native-app/app/__tests__/accessibility.test.tsx` for comprehensive test examples.
+
+### Manual Testing with Screen Readers
+
+#### Test with iOS VoiceOver
+1. Enable VoiceOver: Settings → Accessibility → VoiceOver (or Cmd+F5 in simulator)
+2. Navigate with swipe gestures (swipe right/left)
+3. Verify all interactive elements are announced properly
+4. Test heading navigation using Rotor
+5. Verify button and form control navigation
+
+#### Test with Android TalkBack
+1. Enable TalkBack: Settings → Accessibility → TalkBack
+2. Quick toggle: Hold Volume Up + Volume Down for 3 seconds
+3. Navigate with swipe gestures (swipe right/left)
+4. Verify all interactive elements are announced
+5. Test that buttons activate on double-tap
+6. Verify scrolling works with two-finger gestures
+
+#### What to Verify:
+1. All interactive elements are reachable via screen reader
+2. All state changes are announced (checked, expanded, selected)
+3. Form inputs have clear labels and hints
+4. Modal dialogs are properly announced
+5. Calendar navigation is accessible
+6. Error messages are announced immediately
+
+For detailed instructions, see: `React-native-app/ACCESSIBILITY_TESTING.md`
 
 ## Conclusion
 
