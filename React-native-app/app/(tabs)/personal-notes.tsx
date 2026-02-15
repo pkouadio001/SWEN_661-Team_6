@@ -324,7 +324,14 @@ export default function PersonalNotesScreen() {
         {/* Header */}
         <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]} accessible={false}>
           <View style={styles.headerRow} accessible={false}>
-            <Pressable onPress={() => router.push("/health")} style={styles.iconBtn} accessible={true} accessibilityRole="button" accessibilityLabel="Back to Health" accessibilityHint="Navigate back to the health screen">
+            <Pressable
+              onPress={() => router.push("/health")}
+              style={styles.iconBtn}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to Health"
+              accessibilityHint="Navigate back to the health screen"
+            >
               <Text style={{ color: highContrastMode ? colors.primary : colors.title, fontSize: 20, fontWeight: "900" }} accessible={false}>
                 ←
               </Text>
@@ -440,10 +447,24 @@ export default function PersonalNotesScreen() {
                     </View>
 
                     <View style={{ flexDirection: "row", gap: 8 }} accessible={false}>
-                      <Pressable onPress={() => openEditModal(note)} style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]} accessible={true} accessibilityRole="button" accessibilityLabel={`Edit note: ${note.title}`} accessibilityHint="Opens dialog to edit this note">
+                      <Pressable
+                        onPress={() => openEditModal(note)}
+                        style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}
+                        accessible={true}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Edit note: ${note.title}`}
+                        accessibilityHint="Opens dialog to edit this note"
+                      >
                         <Text style={{ color: highContrastMode ? colors.primary : colors.primary, fontWeight: "900" }} accessible={false}>✎</Text>
                       </Pressable>
-                      <Pressable onPress={() => openDeleteModal(note)} style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]} accessible={true} accessibilityRole="button" accessibilityLabel={`Delete note: ${note.title}`} accessibilityHint="Opens dialog to delete this note">
+                      <Pressable
+                        onPress={() => openDeleteModal(note)}
+                        style={({ pressed }) => [styles.iconAction, pressed && { opacity: 0.8 }]}
+                        accessible={true}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Delete note: ${note.title}`}
+                        accessibilityHint="Opens dialog to delete this note"
+                      >
                         <Text style={{ color: colors.danger, fontWeight: "900" }} accessible={false}>🗑</Text>
                       </Pressable>
                     </View>
