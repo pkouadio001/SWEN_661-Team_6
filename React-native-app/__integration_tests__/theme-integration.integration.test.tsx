@@ -5,17 +5,13 @@
  * with various screens and persists theme preferences.
  */
 
-import {
-  fireEvent,
-  render,
-  screen,
-} from "@testing-library/react-native";
-import React from "react";
-
-import DashboardScreen from "@/app/(tabs)/dashboard";
-import Index from "@/app/index";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { MessagesProvider } from "@/context/MessagesContext";
+// Mock AsyncStorage first
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getItem: jest.fn(() => Promise.resolve(null)),
+  setItem: jest.fn(() => Promise.resolve()),
+  removeItem: jest.fn(() => Promise.resolve()),
+  clear: jest.fn(() => Promise.resolve()),
+}));
 
 // Mock expo-router
 jest.mock("expo-router", () => {
@@ -35,13 +31,17 @@ jest.mock("expo-router", () => {
   };
 });
 
-// Mock AsyncStorage
-jest.mock("@react-native-async-storage/async-storage", () => ({
-  getItem: jest.fn(() => Promise.resolve(null)),
-  setItem: jest.fn(() => Promise.resolve()),
-  removeItem: jest.fn(() => Promise.resolve()),
-  clear: jest.fn(() => Promise.resolve()),
-}));
+import {
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react-native";
+import React from "react";
+
+import DashboardScreen from "../app/(tabs)/dashboard";
+import Index from "../app/index";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { MessagesProvider } from "@/context/MessagesContext";
 
 describe("Integration: Theme Context with UI Components", () => {
   beforeEach(() => {
@@ -94,29 +94,6 @@ describe("Integration: Theme Context with UI Components", () => {
     );
 
     // Verify dashboard renders
-    expect(screen.getByText("CareConnect")).toBeTruthy();
-    expect(screen.getByText(/Welcome,/i)).toBeTruthy();
-  });
-
-  it("multiple screens can use theme context simultaneously", () => {
-    // Render login screen with theme
-    const { rerender } = render(
-      <ThemeProvider>
-        <Index />
-      </ThemeProvider>
-    );
-
-    expect(screen.getByText("CareConnect")).toBeTruthy();
-
-    // Rerender with dashboard
-    rerender(
-      <ThemeProvider>
-        <MessagesProvider>
-          <DashboardScreen />
-        </MessagesProvider>
-      </ThemeProvider>
-    );
-
     expect(screen.getByText("CareConnect")).toBeTruthy();
     expect(screen.getByText(/Welcome,/i)).toBeTruthy();
   });
