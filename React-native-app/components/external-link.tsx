@@ -20,6 +20,9 @@ export function ExternalLink({ href, ...rest }: Props) {
           });
         }
       }}
+      accessible={true}
+      accessibilityRole="link"
+      accessibilityHint="Opens link in external browser"
     />
   );
 }
