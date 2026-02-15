@@ -84,14 +84,34 @@ export default function ForgotPinScreen() {
     <KeyboardAvoidingView
       style={[styles.screen, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      accessible={false}
     >
-      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <Text style={[styles.title, { color: colors.text }]}>Forgot PIN</Text>
-        <Text style={[styles.sub, { color: colors.sub }]}>
+      <View 
+        style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+        accessible={false}
+      >
+        <Text 
+          style={[styles.title, { color: colors.text }]}
+          accessible={true}
+          accessibilityRole="header"
+        >
+          Forgot PIN
+        </Text>
+        <Text 
+          style={[styles.sub, { color: colors.sub }]}
+          accessible={true}
+          accessibilityRole="text"
+        >
           Enter your email and we’ll send a 6-digit verification code.
         </Text>
 
-        <Text style={[styles.label, { color: colors.text }]}>Email</Text>
+        <Text 
+          style={[styles.label, { color: colors.text }]}
+          accessible={true}
+          accessibilityRole="text"
+        >
+          Email
+        </Text>
         <TextInput
           value={email}
           onChangeText={setEmail}
@@ -99,26 +119,65 @@ export default function ForgotPinScreen() {
           placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
           keyboardType="email-address"
           autoCapitalize="none"
+          accessible={true}
+          accessibilityLabel="Email"
+          accessibilityHint="Enter your email address to receive verification code"
           style={[
             styles.input,
             { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text },
           ]}
         />
 
-        {error ? <Text style={[styles.msg, { color: colors.error }]}>{error}</Text> : null}
-        {info ? <Text style={[styles.msg, { color: colors.accent }]}>{info}</Text> : null}
+        {error ? (
+          <Text 
+            style={[styles.msg, { color: colors.error }]}
+            accessible={true}
+            accessibilityRole="alert"
+            accessibilityLiveRegion="polite"
+          >
+            {error}
+          </Text>
+        ) : null}
+        {info ? (
+          <Text 
+            style={[styles.msg, { color: colors.accent }]}
+            accessible={true}
+            accessibilityRole="text"
+          >
+            {info}
+          </Text>
+        ) : null}
 
         <Pressable
           onPress={sendCode}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Send Code"
+          accessibilityHint="Send verification code to your email"
           style={[styles.btn, { backgroundColor: highContrastMode ? colors.accent : colors.accent }]}
         >
-          <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "800" }}>
+          <Text 
+            style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "800" }}
+            accessible={false}
+          >
             Send Code
           </Text>
         </Pressable>
 
-        <Pressable onPress={() => router.replace("/")} style={{ marginTop: 14, alignItems: "center" }}>
-          <Text style={{ color: colors.accent, fontWeight: "800" }}>Back to Login</Text>
+        <Pressable 
+          onPress={() => router.replace("/")} 
+          style={{ marginTop: 14, alignItems: "center" }}
+          accessible={true}
+          accessibilityRole="link"
+          accessibilityLabel="Back to Login"
+          accessibilityHint="Navigate to login screen"
+        >
+          <Text 
+            style={{ color: colors.accent, fontWeight: "800" }}
+            accessible={false}
+          >
+            Back to Login
+          </Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>

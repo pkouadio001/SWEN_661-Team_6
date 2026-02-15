@@ -32,7 +32,10 @@ export default function EmergencySOS() {
   };
 
   return (
-    <View style={[styles.overlay, { backgroundColor: "#000" }]}>
+    <View 
+      style={[styles.overlay, { backgroundColor: "#000" }]}
+      accessible={false}
+    >
       <View
         style={[
           styles.card,
@@ -42,20 +45,39 @@ export default function EmergencySOS() {
             borderWidth: 2,
           },
         ]}
+        accessible={false}
       >
-        <View style={[styles.header, { backgroundColor: "#DC2626" }]}>
-          <Text style={[styles.title, { color: highContrastMode ? "#FFFF00" : "#FFF" }]}>
+        <View 
+          style={[styles.header, { backgroundColor: "#DC2626" }]}
+          accessible={false}
+        >
+          <Text 
+            style={[styles.title, { color: highContrastMode ? "#FFFF00" : "#FFF" }]}
+            accessible={true}
+            accessibilityRole="header"
+          >
             Emergency SOS Activated
           </Text>
-          <Text style={{ color: highContrastMode ? "#FFFF00" : "rgba(255,255,255,0.9)" }}>
+          <Text 
+            style={{ color: highContrastMode ? "#FFFF00" : "rgba(255,255,255,0.9)" }}
+            accessible={true}
+            accessibilityRole="text"
+          >
             Select a contact to call immediately
           </Text>
         </View>
 
-        <View style={[styles.body, highContrastMode && { backgroundColor: "#1a1a1a" }]}>
+        <View 
+          style={[styles.body, highContrastMode && { backgroundColor: "#1a1a1a" }]}
+          accessible={false}
+        >
           {/* Primary Contact */}
           <Pressable
             onPress={() => callNumber(emergencyContactData.phone)}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`Call ${emergencyContactData.name} at ${emergencyContactData.phone}`}
+            accessibilityHint="Initiates emergency call to your primary contact"
             style={[
               styles.option,
               highContrastMode
@@ -63,10 +85,16 @@ export default function EmergencySOS() {
                 : { backgroundColor: "#EFF6FF", borderColor: "#155DFC", borderWidth: 2 },
             ]}
           >
-            <Text style={[styles.optionTitle, { color: highContrastMode ? "#FFFF00" : "#101828" }]}>
+            <Text 
+              style={[styles.optionTitle, { color: highContrastMode ? "#FFFF00" : "#101828" }]}
+              accessible={false}
+            >
               {emergencyContactData.name}
             </Text>
-            <Text style={{ color: highContrastMode ? "#FFF" : "#6B7280" }}>
+            <Text 
+              style={{ color: highContrastMode ? "#FFF" : "#6B7280" }}
+              accessible={false}
+            >
               {emergencyContactData.phone}
             </Text>
           </Pressable>
@@ -74,6 +102,10 @@ export default function EmergencySOS() {
           {/* Emergency 911 (US) */}
           <Pressable
             onPress={() => callNumber("911")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Call Emergency 911"
+            accessibilityHint="Initiates call to emergency services - Police, Fire, or EMS"
             style={[
               styles.option,
               highContrastMode
@@ -81,10 +113,16 @@ export default function EmergencySOS() {
                 : { backgroundColor: "#FEF2F2", borderColor: "#DC2626", borderWidth: 2 },
             ]}
           >
-            <Text style={[styles.optionTitle, { color: highContrastMode ? "#FFFF00" : "#101828" }]}>
+            <Text 
+              style={[styles.optionTitle, { color: highContrastMode ? "#FFFF00" : "#101828" }]}
+              accessible={false}
+            >
               Emergency: 911
             </Text>
-            <Text style={{ color: highContrastMode ? "#FFF" : "#6B7280" }}>
+            <Text 
+              style={{ color: highContrastMode ? "#FFF" : "#6B7280" }}
+              accessible={false}
+            >
               Police / Fire / EMS
             </Text>
           </Pressable>
@@ -92,6 +130,10 @@ export default function EmergencySOS() {
           {/* Cancel */}
           <Pressable
             onPress={handleCancel}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Cancel"
+            accessibilityHint="Cancel emergency call and return to previous screen"
             style={[
               styles.cancel,
               highContrastMode
@@ -99,7 +141,10 @@ export default function EmergencySOS() {
                 : { backgroundColor: "#FFF", borderColor: "#E5E7EB", borderWidth: 2 },
             ]}
           >
-            <Text style={{ fontSize: 18, fontWeight: "700", color: highContrastMode ? "#FFFF00" : "#101828" }}>
+            <Text 
+              style={{ fontSize: 18, fontWeight: "700", color: highContrastMode ? "#FFFF00" : "#101828" }}
+              accessible={false}
+            >
               Cancel
             </Text>
           </Pressable>

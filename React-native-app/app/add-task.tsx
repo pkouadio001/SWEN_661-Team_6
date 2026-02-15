@@ -84,45 +84,127 @@ export default function AddTaskScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView 
+      style={[styles.safe, { backgroundColor: colors.bg }]}
+      accessible={false}
+    >
+      <View 
+        style={[styles.screen, { backgroundColor: colors.bg }]}
+        accessible={false}
+      >
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={goBack} style={styles.backBtn}>
-              <Text style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.sub : "#101828" }}>
+        <View 
+          style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}
+          accessible={false}
+        >
+          <View 
+            style={styles.headerRow}
+            accessible={false}
+          >
+            <Pressable 
+              onPress={goBack} 
+              style={styles.backBtn}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Go back"
+              accessibilityHint="Return to tasks list"
+            >
+              <Text 
+                style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? colors.sub : "#101828" }}
+                accessible={false}
+              >
                 ←
               </Text>
             </Pressable>
 
-            <View style={[styles.iconBox, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}>
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}>＋</Text>
+            <View 
+              style={[styles.iconBox, { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" }]}
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel="Add task icon"
+            >
+              <Text 
+                style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900", fontSize: 18 }}
+                accessible={false}
+              >
+                ＋
+              </Text>
             </View>
 
-            <View>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Add New Task</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Create a task for your routine</Text>
+            <View accessible={false}>
+              <Text 
+                style={[styles.headerTitle, { color: colors.title }]}
+                accessible={true}
+                accessibilityRole="header"
+              >
+                Add New Task
+              </Text>
+              <Text 
+                style={[styles.headerSub, { color: colors.sub }]}
+                accessible={true}
+                accessibilityRole="text"
+              >
+                Create a task for your routine
+              </Text>
             </View>
           </View>
         </View>
 
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === "ios" ? "padding" : undefined} 
+          style={{ flex: 1 }}
+          accessible={false}
+        >
+          <ScrollView 
+            contentContainerStyle={styles.content} 
+            keyboardShouldPersistTaps="handled"
+            accessible={false}
+          >
             {/* Form Card */}
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <View style={{ marginBottom: 14 }}>
-                <Text style={[styles.bigTitle, { color: colors.title }]}>Task Details</Text>
-                <Text style={[styles.smallSub, { color: colors.sub }]}>Fill in the information below</Text>
+            <View 
+              style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+              accessible={false}
+            >
+              <View 
+                style={{ marginBottom: 14 }}
+                accessible={false}
+              >
+                <Text 
+                  style={[styles.bigTitle, { color: colors.title }]}
+                  accessible={true}
+                  accessibilityRole="header"
+                >
+                  Task Details
+                </Text>
+                <Text 
+                  style={[styles.smallSub, { color: colors.sub }]}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  Fill in the information below
+                </Text>
               </View>
 
               {/* Title */}
-              <View style={{ marginBottom: 12 }}>
-                <Text style={[styles.label, { color: colors.title }]}>Task Title</Text>
+              <View 
+                style={{ marginBottom: 12 }}
+                accessible={false}
+              >
+                <Text 
+                  style={[styles.label, { color: colors.title }]}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  Task Title
+                </Text>
                 <TextInput
                   value={taskTitle}
                   onChangeText={setTaskTitle}
                   placeholder="e.g., Take morning medication"
                   placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+                  accessible={true}
+                  accessibilityLabel="Task Title"
+                  accessibilityHint="Enter a title for your task"
                   style={[
                     styles.input,
                     {
@@ -136,13 +218,25 @@ export default function AddTaskScreen() {
               </View>
 
               {/* Date (YYYY-MM-DD text input for cross-platform simplicity) */}
-              <View style={{ marginBottom: 12 }}>
-                <Text style={[styles.label, { color: colors.title }]}>Date</Text>
+              <View 
+                style={{ marginBottom: 12 }}
+                accessible={false}
+              >
+                <Text 
+                  style={[styles.label, { color: colors.title }]}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  Date
+                </Text>
                 <TextInput
                   value={taskDate}
                   onChangeText={setTaskDate}
                   placeholder="YYYY-MM-DD (e.g., 2026-01-25)"
                   placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+                  accessible={true}
+                  accessibilityLabel="Date"
+                  accessibilityHint="Enter task date in format YYYY-MM-DD"
                   style={[
                     styles.input,
                     {
@@ -153,19 +247,35 @@ export default function AddTaskScreen() {
                   ]}
                   keyboardType="numbers-and-punctuation"
                 />
-                <Text style={{ marginTop: 6, color: colors.sub, fontWeight: "700", fontSize: 12 }}>
+                <Text 
+                  style={{ marginTop: 6, color: colors.sub, fontWeight: "700", fontSize: 12 }}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
                   Stored as: {taskDate ? formatDateShortened(taskDate) : "—"}
                 </Text>
               </View>
 
               {/* Time (HH:mm text input) */}
-              <View style={{ marginBottom: 12 }}>
-                <Text style={[styles.label, { color: colors.title }]}>Time</Text>
+              <View 
+                style={{ marginBottom: 12 }}
+                accessible={false}
+              >
+                <Text 
+                  style={[styles.label, { color: colors.title }]}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
+                  Time
+                </Text>
                 <TextInput
                   value={taskTime}
                   onChangeText={setTaskTime}
                   placeholder="HH:mm (e.g., 08:00)"
                   placeholderTextColor={highContrastMode ? "#777" : "#9CA3AF"}
+                  accessible={true}
+                  accessibilityLabel="Time"
+                  accessibilityHint="Enter task time in 24-hour format HH:mm"
                   style={[
                     styles.input,
                     {
@@ -176,38 +286,66 @@ export default function AddTaskScreen() {
                   ]}
                   keyboardType="numbers-and-punctuation"
                 />
-                <Text style={{ marginTop: 6, color: colors.sub, fontWeight: "700", fontSize: 12 }}>
+                <Text 
+                  style={{ marginTop: 6, color: colors.sub, fontWeight: "700", fontSize: 12 }}
+                  accessible={true}
+                  accessibilityRole="text"
+                >
                   Stored as: {taskTime ? formatTimeToAMPM(taskTime) : "—"}
                 </Text>
               </View>
 
               {/* Buttons */}
-              <View style={styles.btnRow}>
+              <View 
+                style={styles.btnRow}
+                accessible={false}
+              >
                 <Pressable
                   onPress={goBack}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Discard changes and return to tasks list"
                   style={({ pressed }) => [
                     styles.secondaryBtn,
                     { borderColor: colors.border, backgroundColor: highContrastMode ? "#1a1a1a" : "#fff" },
                     pressed && { opacity: 0.92 },
                   ]}
                 >
-                  <Text style={{ color: colors.primary, fontWeight: "900" }}>Cancel</Text>
+                  <Text 
+                    style={{ color: colors.primary, fontWeight: "900" }}
+                    accessible={false}
+                  >
+                    Cancel
+                  </Text>
                 </Pressable>
 
                 <Pressable
                   onPress={handleSave}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Add Task"
+                  accessibilityHint="Save task and return to tasks list"
                   style={({ pressed }) => [
                     styles.primaryBtn,
                     { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" },
                     pressed && { opacity: 0.92 },
                   ]}
                 >
-                  <Text style={{ color: colors.primaryText, fontWeight: "900" }}>Add Task</Text>
+                  <Text 
+                    style={{ color: colors.primaryText, fontWeight: "900" }}
+                    accessible={false}
+                  >
+                    Add Task
+                  </Text>
                 </Pressable>
               </View>
             </View>
 
-            <View style={{ height: 110 }} />
+            <View 
+              style={{ height: 110 }}
+              accessible={false}
+            />
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
