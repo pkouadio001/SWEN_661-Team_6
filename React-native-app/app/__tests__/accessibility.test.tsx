@@ -164,6 +164,7 @@ describe("Accessibility Testing - Dashboard Screen", () => {
 
       // Screen readers should be able to find all important text
       expect(screen.getByText("CareConnect")).toBeTruthy();
+      // Welcome message includes the hardcoded test user "John Doe"
       expect(screen.getByText(/Welcome,\s*John Doe/i)).toBeTruthy();
     });
   });
@@ -252,7 +253,8 @@ describe("Accessibility Testing - Dashboard Screen", () => {
       render(<DashboardScreen />);
 
       // Badges should be visible and announced
-      const badges = screen.getAllByText("3"); // unread count
+      // The mock returns 3 unread messages, verify badge is displayed
+      const badges = screen.getAllByText("3"); // unread count from MessagesContext mock
       expect(badges.length).toBeGreaterThan(0);
     });
   });

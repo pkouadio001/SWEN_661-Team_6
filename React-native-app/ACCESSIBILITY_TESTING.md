@@ -256,7 +256,7 @@ VoiceOver is Apple's screen reader for iOS devices. It's essential for accessibi
 1. Open the iOS Simulator from Xcode
 2. Go to **Settings** → **Accessibility** → **VoiceOver**
 3. Toggle **VoiceOver** to ON
-4. Or use keyboard shortcut: **Cmd + F5**
+4. Or use keyboard shortcut: **Cmd + F5** (macOS)
 
 ### VoiceOver Navigation Gestures
 
