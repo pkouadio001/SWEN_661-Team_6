@@ -156,6 +156,7 @@ export default function TodayTasksScreen() {
 
     return (
       <View
+        accessible={false}
         style={[
           styles.taskRow,
           {
@@ -166,6 +167,10 @@ export default function TodayTasksScreen() {
       >
         {/* Checkbox */}
         <Pressable
+          accessible={true}
+          accessibilityRole="checkbox"
+          accessibilityLabel={`${task.title}, ${completed ? 'completed, double tap to mark incomplete' : 'not completed, double tap to mark complete'}`}
+          accessibilityState={{ checked: completed }}
           onPress={() => toggleTask(task.id)}
           style={[
             styles.check,
@@ -175,12 +180,13 @@ export default function TodayTasksScreen() {
             },
           ]}
         >
-          {completed ? <Text style={{ color: highContrastMode ? "#FFFF00" : "#fff", fontWeight: "900" }}>✓</Text> : null}
+          {completed ? <Text accessible={false} style={{ color: highContrastMode ? "#FFFF00" : "#fff", fontWeight: "900" }}>✓</Text> : null}
         </Pressable>
 
         {/* Content */}
-        <View style={{ flex: 1 }}>
+        <View accessible={false} style={{ flex: 1 }}>
           <Text
+            accessibilityRole="text"
             style={[
               styles.taskTitle,
               {
@@ -191,22 +197,43 @@ export default function TodayTasksScreen() {
           >
             {task.title}
           </Text>
-          <Text style={[styles.taskTime, { color: highContrastMode ? "#fff" : colors.sub }]}>{task.time}</Text>
+          <Text accessibilityRole="text" style={[styles.taskTime, { color: highContrastMode ? "#fff" : colors.sub }]}>{task.time}</Text>
         </View>
 
         {/* Menu button */}
-        <Pressable onPress={() => setOpenMenuId(openMenuId === task.id ? null : task.id)} style={styles.menuBtn}>
-          <Text style={{ fontSize: 18, fontWeight: "900", color: colors.primary }}>⋯</Text>
+        <Pressable 
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={`Open menu for ${task.title}`}
+          accessibilityHint="Opens options to edit or delete this task"
+          onPress={() => setOpenMenuId(openMenuId === task.id ? null : task.id)} 
+          style={styles.menuBtn}
+        >
+          <Text accessible={false} style={{ fontSize: 18, fontWeight: "900", color: colors.primary }}>⋯</Text>
         </Pressable>
 
         {/* Menu (RN overlay) */}
         {openMenuId === task.id ? (
-          <View style={[styles.menu, { backgroundColor: highContrastMode ? "#2a2a2a" : "#fff", borderColor: colors.border }]}>
-            <Pressable onPress={() => handleEditClick(task)} style={styles.menuItem}>
-              <Text style={{ color: highContrastMode ? colors.primary : "#101828", fontWeight: "800" }}>Edit Task</Text>
+          <View accessible={false} style={[styles.menu, { backgroundColor: highContrastMode ? "#2a2a2a" : "#fff", borderColor: colors.border }]}>
+            <Pressable 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Edit task"
+              accessibilityHint="Opens form to edit task details"
+              onPress={() => handleEditClick(task)} 
+              style={styles.menuItem}
+            >
+              <Text accessible={false} style={{ color: highContrastMode ? colors.primary : "#101828", fontWeight: "800" }}>Edit Task</Text>
             </Pressable>
-            <Pressable onPress={() => handleDeleteClick(task)} style={styles.menuItem}>
-              <Text style={{ color: highContrastMode ? colors.primary : "#DC2626", fontWeight: "800" }}>Delete Task</Text>
+            <Pressable 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Delete task"
+              accessibilityHint="Opens confirmation to delete this task"
+              onPress={() => handleDeleteClick(task)} 
+              style={styles.menuItem}
+            >
+              <Text accessible={false} style={{ color: highContrastMode ? colors.primary : "#DC2626", fontWeight: "800" }}>Delete Task</Text>
             </Pressable>
           </View>
         ) : null}
@@ -215,34 +242,46 @@ export default function TodayTasksScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView accessible={false} style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <View accessible={false} style={[styles.screen, { backgroundColor: colors.bg }]}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => router.push("/tasks")} style={styles.backBtn}>
-              <Text style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? "#fff" : "#101828" }}>←</Text>
+        <View accessible={false} style={[styles.header, { backgroundColor: colors.headerBg, borderBottomColor: colors.border }]}>
+          <View accessible={false} style={styles.headerRow}>
+            <Pressable 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Back to tasks"
+              accessibilityHint="Returns to tasks list"
+              onPress={() => router.push("/tasks")} 
+              style={styles.backBtn}
+            >
+              <Text accessible={false} style={{ fontSize: 20, fontWeight: "900", color: highContrastMode ? "#fff" : "#101828" }}>←</Text>
             </Pressable>
 
             <View
+              accessible={false}
               style={[
                 styles.headerIcon,
                 { backgroundColor: highContrastMode ? "#FFFF00" : "#155DFC" },
               ]}
             >
-              <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>✅</Text>
+              <Text accessible={false} style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>✅</Text>
             </View>
 
-            <View>
-              <Text style={[styles.headerTitle, { color: colors.title }]}>Today&apos;s Tasks</Text>
-              <Text style={[styles.headerSub, { color: colors.sub }]}>Your daily care routine</Text>
+            <View accessible={false}>
+              <Text accessibilityRole="header" style={[styles.headerTitle, { color: colors.title }]}>Today&apos;s Tasks</Text>
+              <Text accessibilityRole="text" style={[styles.headerSub, { color: colors.sub }]}>Your daily care routine</Text>
             </View>
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <ScrollView accessible={false} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           {/* Back card */}
           <Pressable
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Back to Tasks and Scheduling"
+            accessibilityHint="Returns to main tasks page"
             onPress={() => router.push("/tasks")}
             style={({ pressed }) => [
               styles.backCard,
@@ -250,24 +289,28 @@ export default function TodayTasksScreen() {
               pressed && { opacity: 0.95 },
             ]}
           >
-            <Text style={{ fontWeight: "900", color: highContrastMode ? colors.primary : "#101828" }}>
+            <Text accessible={false} style={{ fontWeight: "900", color: highContrastMode ? colors.primary : "#101828" }}>
               ← Back to Tasks & Scheduling
             </Text>
           </Pressable>
 
           {/* Main card */}
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View accessible={false} style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
             {/* Title row + Add */}
-            <View style={styles.topRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.bigTitle, { color: colors.title }]}>Today&apos;s Tasks</Text>
-                <Text style={[styles.counts, { color: colors.sub }]}>
+            <View accessible={false} style={styles.topRow}>
+              <View accessible={false} style={{ flex: 1 }}>
+                <Text accessibilityRole="header" style={[styles.bigTitle, { color: colors.title }]}>Today&apos;s Tasks</Text>
+                <Text accessibilityRole="text" style={[styles.counts, { color: colors.sub }]}>
                   <Text style={{ color: colors.primary, fontWeight: "900" }}>{pendingCount} </Text>
                   pending • <Text style={{ fontWeight: "900" }}>{completedCount}</Text> completed
                 </Text>
               </View>
 
               <Pressable
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Add task"
+                accessibilityHint="Opens form to create a new task"
                 onPress={handleAddTask}
                 style={({ pressed }) => [
                   styles.addBtn,
@@ -275,26 +318,43 @@ export default function TodayTasksScreen() {
                   pressed && { opacity: 0.92 },
                 ]}
               >
-                <Text style={{ color: colors.primaryText, fontWeight: "900" }}>+ Add</Text>
+                <Text accessible={false} style={{ color: colors.primaryText, fontWeight: "900" }}>+ Add</Text>
               </Pressable>
             </View>
 
             {/* Toggle */}
-            <View style={styles.toggleRow}>
-              <Pressable onPress={() => setView("schedule")} style={styles.toggleItem}>
+            <View accessible={false} style={styles.toggleRow}>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Schedule view"
+                accessibilityHint="Switch to schedule view"
+                accessibilityState={{ selected: view === "schedule" }}
+                onPress={() => setView("schedule")} 
+                style={styles.toggleItem}
+              >
                 <View
+                  accessible={false}
                   style={[
                     styles.dot,
                     { backgroundColor: view === "schedule" ? colors.primary : "transparent" },
                   ]}
                 />
-                <Text style={{ fontWeight: "900", color: view === "schedule" ? colors.primary : colors.muted }}>
+                <Text accessible={false} style={{ fontWeight: "900", color: view === "schedule" ? colors.primary : colors.muted }}>
                   Schedule
                 </Text>
               </Pressable>
 
-              <Pressable onPress={() => setView("calendar")} style={styles.toggleItem}>
-                <Text style={{ fontWeight: "900", color: view === "calendar" ? colors.primary : colors.muted }}>
+              <Pressable 
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Calendar view"
+                accessibilityHint="Switch to calendar view"
+                accessibilityState={{ selected: view === "calendar" }}
+                onPress={() => setView("calendar")} 
+                style={styles.toggleItem}
+              >
+                <Text accessible={false} style={{ fontWeight: "900", color: view === "calendar" ? colors.primary : colors.muted }}>
                   Calendar
                 </Text>
               </Pressable>
@@ -302,21 +362,26 @@ export default function TodayTasksScreen() {
 
             {/* Schedule */}
             {view === "schedule" ? (
-              <View style={{ gap: 10 }}>
+              <View accessible={false} style={{ gap: 10 }}>
                 {todaysTasks.map((t) => (
                   <TaskRow key={t.id} task={t} />
                 ))}
                 {todaysTasks.length === 0 ? (
-                  <Text style={{ textAlign: "center", paddingVertical: 18, color: colors.sub, fontWeight: "800" }}>
+                  <Text accessibilityRole="text" style={{ textAlign: "center", paddingVertical: 18, color: colors.sub, fontWeight: "800" }}>
                     No tasks for today
                   </Text>
                 ) : null}
               </View>
             ) : (
-              <View>
+              <View accessible={false}>
                 {/* Month nav */}
-                <View style={styles.monthRow}>
+                <View accessible={false} style={styles.monthRow}>
                   <Pressable
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel="Previous month"
+                    accessibilityHint="Navigate to previous month"
+                    accessibilityState={{ disabled: currentMonth === -1 }}
                     onPress={() => {
                       if (currentMonth === -1) return;
                       setCurrentMonth((m) => Math.max(-1, m - 1));
@@ -324,16 +389,21 @@ export default function TodayTasksScreen() {
                     }}
                     style={styles.monthBtn}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "900", color: currentMonth === -1 ? "#888" : colors.title }}>
+                    <Text accessible={false} style={{ fontSize: 18, fontWeight: "900", color: currentMonth === -1 ? "#888" : colors.title }}>
                       ‹
                     </Text>
                   </Pressable>
 
-                  <Text style={[styles.monthTitle, { color: colors.title }]}>
+                  <Text accessibilityRole="header" style={[styles.monthTitle, { color: colors.title }]}>
                     {getMonthYear(currentMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
                   </Text>
 
                   <Pressable
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel="Next month"
+                    accessibilityHint="Navigate to next month"
+                    accessibilityState={{ disabled: currentMonth === 12 }}
                     onPress={() => {
                       if (currentMonth === 12) return;
                       setCurrentMonth((m) => Math.min(12, m + 1));
@@ -341,23 +411,23 @@ export default function TodayTasksScreen() {
                     }}
                     style={styles.monthBtn}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "900", color: currentMonth === 12 ? "#888" : colors.title }}>
+                    <Text accessible={false} style={{ fontSize: 18, fontWeight: "900", color: currentMonth === 12 ? "#888" : colors.title }}>
                       ›
                     </Text>
                   </Pressable>
                 </View>
 
                 {/* Day headers */}
-                <View style={styles.weekRow}>
+                <View accessible={false} style={styles.weekRow}>
                   {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-                    <Text key={d} style={[styles.weekDay, { color: colors.sub }]}>{d}</Text>
+                    <Text key={d} accessibilityRole="text" style={[styles.weekDay, { color: colors.sub }]}>{d}</Text>
                   ))}
                 </View>
 
                 {/* Grid */}
-                <View style={styles.grid}>
+                <View accessible={false} style={styles.grid}>
                   {generateCalendarDays(currentMonth).map((day, idx) => {
-                    if (day === null) return <View key={`e-${idx}`} style={styles.dayCell} />;
+                    if (day === null) return <View key={`e-${idx}`} accessible={false} style={styles.dayCell} />;
 
                     const tasksForDay = getTasksForDate(day, currentMonth);
                     const hasMultiple = tasksForDay.length > 1;
@@ -398,6 +468,11 @@ export default function TodayTasksScreen() {
                     return (
                       <Pressable
                         key={`d-${currentMonth}-${day}`}
+                        accessible={true}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${monthNames[getMonthYear(currentMonth).getMonth()]} ${day}, ${tasksForDay.length} task${tasksForDay.length !== 1 ? 's' : ''}`}
+                        accessibilityHint="Select this date to view tasks"
+                        accessibilityState={{ selected: isSelected }}
                         onPress={() => setSelectedDate(day)}
                         style={({ pressed }) => [
                           styles.dayCell,
@@ -405,21 +480,21 @@ export default function TodayTasksScreen() {
                           pressed && { opacity: 0.95 },
                         ]}
                       >
-                        <Text style={{ fontWeight: "900", color: dayColor }}>{day}</Text>
+                        <Text accessible={false} style={{ fontWeight: "900", color: dayColor }}>{day}</Text>
 
                         {/* dots */}
                         {tasksForDay.length > 0 ? (
-                          <View style={styles.dotsRow}>
+                          <View accessible={false} style={styles.dotsRow}>
                             {(hasMultiple ? [0, 1, 2] : [0]).map((n) => (
-                              <View key={n} style={[styles.dotSmall, { backgroundColor: colors.primary }]} />
+                              <View key={n} accessible={false} style={[styles.dotSmall, { backgroundColor: colors.primary }]} />
                             ))}
                           </View>
                         ) : null}
 
                         {/* +N */}
                         {hasMultiple ? (
-                          <View style={[styles.plusBadge, { borderColor: colors.primary, backgroundColor: bg }]}>
-                            <Text style={{ fontSize: 10, fontWeight: "900", color: colors.primary }}>
+                          <View accessible={false} style={[styles.plusBadge, { borderColor: colors.primary, backgroundColor: bg }]}>
+                            <Text accessible={false} style={{ fontSize: 10, fontWeight: "900", color: colors.primary }}>
                               +{tasksForDay.length - 1}
                             </Text>
                           </View>
@@ -431,13 +506,13 @@ export default function TodayTasksScreen() {
 
                 {/* Tasks for selected date */}
                 {selectedDate !== null ? (
-                  <View style={{ marginTop: 16, gap: 10 }}>
-                    <Text style={{ fontSize: 16, fontWeight: "900", color: colors.title }}>
+                  <View accessible={false} style={{ marginTop: 16, gap: 10 }}>
+                    <Text accessibilityRole="header" style={{ fontSize: 16, fontWeight: "900", color: colors.title }}>
                       Tasks for {monthNames[getMonthYear(currentMonth).getMonth()]} {selectedDate}
                     </Text>
 
                     {getTasksForDate(selectedDate, currentMonth).length === 0 ? (
-                      <Text style={{ color: colors.sub, fontWeight: "800", paddingVertical: 8 }}>
+                      <Text accessibilityRole="text" style={{ color: colors.sub, fontWeight: "800", paddingVertical: 8 }}>
                         No tasks scheduled
                       </Text>
                     ) : (
@@ -449,38 +524,59 @@ export default function TodayTasksScreen() {
             )}
           </View>
 
-          <View style={{ height: 110 }} />
+          <View accessible={false} style={{ height: 110 }} />
         </ScrollView>
 
         {/* Tap outside to close any open menu */}
         {openMenuId !== null ? (
-          <Pressable style={styles.menuBackdrop} onPress={() => setOpenMenuId(null)} />
+          <Pressable 
+            accessible={false}
+            style={styles.menuBackdrop} 
+            onPress={() => setOpenMenuId(null)} 
+          />
         ) : null}
 
         {/* Delete modal */}
-        <Modal visible={showDeleteModal} transparent animationType="fade" onRequestClose={() => setShowDeleteModal(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <View style={styles.modalHeader}>
-                <Text style={{ fontSize: 20, fontWeight: "900", color: colors.title }}>Delete Task</Text>
-                <Pressable onPress={() => setShowDeleteModal(false)}>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.sub }}>✕</Text>
+        <Modal 
+          accessible={true}
+          accessibilityLabel="Delete task confirmation"
+          visible={showDeleteModal} 
+          transparent 
+          animationType="fade" 
+          onRequestClose={() => setShowDeleteModal(false)}
+        >
+          <View accessible={false} style={styles.modalOverlay}>
+            <View accessible={false} style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <View accessible={false} style={styles.modalHeader}>
+                <Text accessibilityRole="header" style={{ fontSize: 20, fontWeight: "900", color: colors.title }}>Delete Task</Text>
+                <Pressable 
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Close"
+                  accessibilityHint="Closes delete confirmation dialog"
+                  onPress={() => setShowDeleteModal(false)}
+                >
+                  <Text accessible={false} style={{ fontSize: 18, fontWeight: "900", color: colors.sub }}>✕</Text>
                 </Pressable>
               </View>
 
-              <Text style={{ color: colors.sub, fontWeight: "700", marginBottom: 14 }}>
+              <Text accessibilityRole="text" style={{ color: colors.sub, fontWeight: "700", marginBottom: 14 }}>
                 Are you sure you want to delete this task? This action cannot be undone.
               </Text>
 
-              <View style={[styles.warnBox, { borderColor: colors.border, backgroundColor: highContrastMode ? "#2a2a2a" : "#FEF2F2" }]}>
-                <Text style={{ fontWeight: "900", color: colors.title, marginBottom: 4 }}>
+              <View accessible={false} style={[styles.warnBox, { borderColor: colors.border, backgroundColor: highContrastMode ? "#2a2a2a" : "#FEF2F2" }]}>
+                <Text accessibilityRole="text" style={{ fontWeight: "900", color: colors.title, marginBottom: 4 }}>
                   {selectedTask?.title ?? ""}
                 </Text>
-                <Text style={{ color: colors.sub, fontWeight: "700" }}>This task will be permanently removed.</Text>
+                <Text accessibilityRole="text" style={{ color: colors.sub, fontWeight: "700" }}>This task will be permanently removed.</Text>
               </View>
 
-              <View style={{ gap: 10, marginTop: 14 }}>
+              <View accessible={false} style={{ gap: 10, marginTop: 14 }}>
                 <Pressable
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Delete task"
+                  accessibilityHint="Permanently deletes this task"
                   onPress={confirmDelete}
                   style={({ pressed }) => [
                     styles.primaryBtn,
@@ -488,10 +584,14 @@ export default function TodayTasksScreen() {
                     pressed && { opacity: 0.92 },
                   ]}
                 >
-                  <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>Delete Task</Text>
+                  <Text accessible={false} style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>Delete Task</Text>
                 </Pressable>
 
                 <Pressable
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel"
+                  accessibilityHint="Closes dialog without deleting"
                   onPress={() => setShowDeleteModal(false)}
                   style={({ pressed }) => [
                     styles.secondaryBtn,
@@ -499,7 +599,7 @@ export default function TodayTasksScreen() {
                     pressed && { opacity: 0.92 },
                   ]}
                 >
-                  <Text style={{ color: colors.title, fontWeight: "900" }}>Cancel</Text>
+                  <Text accessible={false} style={{ color: colors.title, fontWeight: "900" }}>Cancel</Text>
                 </Pressable>
               </View>
             </View>
@@ -507,23 +607,39 @@ export default function TodayTasksScreen() {
         </Modal>
 
         {/* Edit modal */}
-        <Modal visible={showEditModal} transparent animationType="fade" onRequestClose={() => setShowEditModal(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <View style={styles.modalHeader}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 20, fontWeight: "900", color: colors.title }}>Edit Task</Text>
-                  <Text style={{ color: colors.sub, fontWeight: "700" }}>Update your task details and schedule.</Text>
+        <Modal 
+          accessible={true}
+          accessibilityLabel="Edit task form"
+          visible={showEditModal} 
+          transparent 
+          animationType="fade" 
+          onRequestClose={() => setShowEditModal(false)}
+        >
+          <View accessible={false} style={styles.modalOverlay}>
+            <View accessible={false} style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <View accessible={false} style={styles.modalHeader}>
+                <View accessible={false} style={{ flex: 1 }}>
+                  <Text accessibilityRole="header" style={{ fontSize: 20, fontWeight: "900", color: colors.title }}>Edit Task</Text>
+                  <Text accessibilityRole="text" style={{ color: colors.sub, fontWeight: "700" }}>Update your task details and schedule.</Text>
                 </View>
-                <Pressable onPress={() => setShowEditModal(false)}>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: colors.sub }}>✕</Text>
+                <Pressable 
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Close"
+                  accessibilityHint="Closes edit task form"
+                  onPress={() => setShowEditModal(false)}
+                >
+                  <Text accessible={false} style={{ fontSize: 18, fontWeight: "900", color: colors.sub }}>✕</Text>
                 </Pressable>
               </View>
 
-              <View style={{ gap: 12, marginTop: 12 }}>
-                <View>
-                  <Text style={[styles.label, { color: colors.title }]}>Task Title *</Text>
+              <View accessible={false} style={{ gap: 12, marginTop: 12 }}>
+                <View accessible={false}>
+                  <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>Task Title *</Text>
                   <TextInput
+                    accessible={true}
+                    accessibilityLabel="Task title"
+                    accessibilityHint="Enter the task title"
                     value={editTitle}
                     onChangeText={setEditTitle}
                     placeholder="Task title"
@@ -539,9 +655,12 @@ export default function TodayTasksScreen() {
                   />
                 </View>
 
-                <View>
-                  <Text style={[styles.label, { color: colors.title }]}>Date *</Text>
+                <View accessible={false}>
+                  <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>Date *</Text>
                   <TextInput
+                    accessible={true}
+                    accessibilityLabel="Date"
+                    accessibilityHint="Enter date in format like Jan 25, 2026"
                     value={editDate}
                     onChangeText={setEditDate}
                     placeholder="Jan 25, 2026"
@@ -557,9 +676,12 @@ export default function TodayTasksScreen() {
                   />
                 </View>
 
-                <View>
-                  <Text style={[styles.label, { color: colors.title }]}>Time *</Text>
+                <View accessible={false}>
+                  <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>Time *</Text>
                   <TextInput
+                    accessible={true}
+                    accessibilityLabel="Time"
+                    accessibilityHint="Enter time in format like 8:00 AM"
                     value={editTime}
                     onChangeText={setEditTime}
                     placeholder="8:00 AM"
@@ -575,9 +697,12 @@ export default function TodayTasksScreen() {
                   />
                 </View>
 
-                <View>
-                  <Text style={[styles.label, { color: colors.title }]}>Notes (Optional)</Text>
+                <View accessible={false}>
+                  <Text accessibilityRole="text" style={[styles.label, { color: colors.title }]}>Notes (Optional)</Text>
                   <TextInput
+                    accessible={true}
+                    accessibilityLabel="Notes"
+                    accessibilityHint="Enter additional notes for this task"
                     value={editNotes}
                     onChangeText={setEditNotes}
                     placeholder="Add any additional details..."
@@ -594,8 +719,12 @@ export default function TodayTasksScreen() {
                   />
                 </View>
 
-                <View style={{ gap: 10, marginTop: 2 }}>
+                <View accessible={false} style={{ gap: 10, marginTop: 2 }}>
                   <Pressable
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel="Save changes"
+                    accessibilityHint="Saves the updated task details"
                     onPress={saveEdit}
                     style={({ pressed }) => [
                       styles.primaryBtn,
@@ -603,10 +732,14 @@ export default function TodayTasksScreen() {
                       pressed && { opacity: 0.92 },
                     ]}
                   >
-                    <Text style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>Save Changes</Text>
+                    <Text accessible={false} style={{ color: highContrastMode ? "#000" : "#fff", fontWeight: "900" }}>Save Changes</Text>
                   </Pressable>
 
                   <Pressable
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel="Cancel"
+                    accessibilityHint="Closes form without saving changes"
                     onPress={() => setShowEditModal(false)}
                     style={({ pressed }) => [
                       styles.secondaryBtn,
@@ -614,7 +747,7 @@ export default function TodayTasksScreen() {
                       pressed && { opacity: 0.92 },
                     ]}
                   >
-                    <Text style={{ color: colors.title, fontWeight: "900" }}>Cancel</Text>
+                    <Text accessible={false} style={{ color: colors.title, fontWeight: "900" }}>Cancel</Text>
                   </Pressable>
                 </View>
               </View>
