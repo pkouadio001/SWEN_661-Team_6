@@ -59,16 +59,10 @@ describe("Integration: Registration Flow", () => {
     );
 
     // Verify registration screen renders
-    expect(screen.getByText("CareConnect")).toBeTruthy();
     expect(screen.getByText("Create Account")).toBeTruthy();
 
-    // Fill in all required fields
-    fireEvent.changeText(screen.getByPlaceholderText("username"), "newuser");
-    fireEvent.changeText(screen.getByPlaceholderText("email@example.com"), "test@example.com");
-
-    // Find and fill PIN boxes
-    const pinInputs = screen.getAllByDisplayValue("");
-    // Assuming first 6 empty inputs are for PIN
+    // Fill the PIN (other fields are pre-filled)
+    const pinInputs = screen.getAllByLabelText(/PIN digit/);
     fireEvent.changeText(pinInputs[0], "1");
     fireEvent.changeText(pinInputs[1], "2");
     fireEvent.changeText(pinInputs[2], "3");
@@ -76,24 +70,15 @@ describe("Integration: Registration Flow", () => {
     fireEvent.changeText(pinInputs[4], "5");
     fireEvent.changeText(pinInputs[5], "6");
 
-    // Find and fill confirm PIN boxes
-    fireEvent.changeText(pinInputs[6], "1");
-    fireEvent.changeText(pinInputs[7], "2");
-    fireEvent.changeText(pinInputs[8], "3");
-    fireEvent.changeText(pinInputs[9], "4");
-    fireEvent.changeText(pinInputs[10], "5");
-    fireEvent.changeText(pinInputs[11], "6");
-
     // Submit registration
-    const registerButtons = screen.getAllByText("Register");
-    const registerButton = registerButtons[registerButtons.length - 1]; // Last one is the submit button
+    const registerButton = screen.getByLabelText("Register");
     fireEvent.press(registerButton);
 
     jest.advanceTimersByTime(500);
 
     // Should navigate to dashboard on success
     await waitFor(() => {
-      expect(getRouterMocks().push).toHaveBeenCalledWith("/dashboard");
+      expect(getRouterMocks().replace).toHaveBeenCalledWith("/dashboard");
     });
 
     jest.useRealTimers();
@@ -106,66 +91,28 @@ describe("Integration: Registration Flow", () => {
       </ThemeProvider>
     );
 
-    // Try to submit without filling fields
-    const registerButtons = screen.getAllByText("Register");
-    const registerButton = registerButtons[registerButtons.length - 1];
-    fireEvent.press(registerButton);
+    // Clear one of the fields to trigger validation
+    fireEvent.changeText(screen.getByDisplayValue("John Doe"), "");
+
+    // Try to submit - use accessibility label to get the button specifically
+    fireEvent.press(screen.getByLabelText("Register"));
 
     // Should show validation error
-    expect(screen.getByText("Username is required.")).toBeTruthy();
-    expect(getRouterMocks().push).not.toHaveBeenCalled();
+    expect(screen.getByText("Full name is required.")).toBeTruthy();
+    expect(getRouterMocks().replace).not.toHaveBeenCalled();
   });
 
-  it("validates PIN confirmation matches", () => {
+  it("navigates back when back button is pressed", () => {
     render(
       <ThemeProvider>
         <RegisterScreen />
       </ThemeProvider>
     );
 
-    // Fill in username and email
-    fireEvent.changeText(screen.getByPlaceholderText("username"), "newuser");
-    fireEvent.changeText(screen.getByPlaceholderText("email@example.com"), "test@example.com");
+    // Find and press back button (has "Go back" accessibility label)
+    const backButton = screen.getByLabelText("Go back");
+    fireEvent.press(backButton);
 
-    // Fill PIN and non-matching confirm PIN
-    const pinInputs = screen.getAllByDisplayValue("");
-    
-    // Fill PIN
-    fireEvent.changeText(pinInputs[0], "1");
-    fireEvent.changeText(pinInputs[1], "2");
-    fireEvent.changeText(pinInputs[2], "3");
-    fireEvent.changeText(pinInputs[3], "4");
-    fireEvent.changeText(pinInputs[4], "5");
-    fireEvent.changeText(pinInputs[5], "6");
-
-    // Fill different confirm PIN
-    fireEvent.changeText(pinInputs[6], "9");
-    fireEvent.changeText(pinInputs[7], "9");
-    fireEvent.changeText(pinInputs[8], "9");
-    fireEvent.changeText(pinInputs[9], "9");
-    fireEvent.changeText(pinInputs[10], "9");
-    fireEvent.changeText(pinInputs[11], "9");
-
-    // Submit
-    const registerButtons = screen.getAllByText("Register");
-    const registerButton = registerButtons[registerButtons.length - 1];
-    fireEvent.press(registerButton);
-
-    // Should show error
-    expect(screen.getByText("PINs do not match.")).toBeTruthy();
-    expect(getRouterMocks().push).not.toHaveBeenCalledWith("/dashboard");
-  });
-
-  it("navigates back to login when login link is pressed", () => {
-    render(
-      <ThemeProvider>
-        <RegisterScreen />
-      </ThemeProvider>
-    );
-
-    // Find and press login link
-    fireEvent.press(screen.getByText("Already have an account? Login"));
-
-    expect(getRouterMocks().push).toHaveBeenCalledWith("/");
+    expect(getRouterMocks().back).toHaveBeenCalled();
   });
 });

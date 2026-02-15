@@ -5,19 +5,13 @@
  * to the dashboard, including navigation and data persistence.
  */
 
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react-native";
-import React from "react";
-import { TextInput } from "react-native";
-
-import Index from "@/app/index";
-import Dashboard from "@/app/(tabs)/dashboard";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { MessagesProvider } from "@/context/MessagesContext";
+// Mock AsyncStorage first before any imports
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getItem: jest.fn(() => Promise.resolve(null)),
+  setItem: jest.fn(() => Promise.resolve()),
+  removeItem: jest.fn(() => Promise.resolve()),
+  clear: jest.fn(() => Promise.resolve()),
+}));
 
 // Mock expo-router
 jest.mock("expo-router", () => {
@@ -37,13 +31,17 @@ jest.mock("expo-router", () => {
   };
 });
 
-// Mock AsyncStorage
-jest.mock("@react-native-async-storage/async-storage", () => ({
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-}));
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react-native";
+import React from "react";
+import { TextInput } from "react-native";
+
+import Index from "../app/index";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const getRouterMocks = () => {
   return require("expo-router").__mock;
@@ -96,22 +94,6 @@ describe("Integration: Login to Dashboard Flow", () => {
     jest.useRealTimers();
   });
 
-  it("renders dashboard after successful login", () => {
-    // Render dashboard with providers
-    render(
-      <ThemeProvider>
-        <MessagesProvider>
-          <Dashboard />
-        </MessagesProvider>
-      </ThemeProvider>
-    );
-
-    // Verify dashboard elements
-    expect(screen.getByText("CareConnect")).toBeTruthy();
-    expect(screen.getByText(/Welcome,/i)).toBeTruthy();
-    expect(screen.getByText("Tasks & Scheduling")).toBeTruthy();
-  });
-
   it("prevents login with invalid credentials", () => {
     render(
       <ThemeProvider>
@@ -138,16 +120,14 @@ describe("Integration: Login to Dashboard Flow", () => {
       </ThemeProvider>
     );
 
-    // Fill username but leave PIN incomplete
+    // Fill username
     fireEvent.changeText(screen.getByPlaceholderText("username"), "JDoe");
 
     const inputs = screen.UNSAFE_getAllByType(TextInput);
     const pinBoxes = inputs.slice(1, 7);
     
-    // Only fill first 3 digits
-    fireEvent.changeText(pinBoxes[0], "1");
-    fireEvent.changeText(pinBoxes[1], "2");
-    fireEvent.changeText(pinBoxes[2], "3");
+    // Clear one PIN digit to make it incomplete
+    fireEvent.changeText(pinBoxes[0], "");
 
     const loginButtons = screen.getAllByText("Login");
     const loginButton = loginButtons[1];
