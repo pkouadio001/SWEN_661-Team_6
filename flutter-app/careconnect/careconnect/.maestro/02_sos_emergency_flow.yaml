@@ -1,0 +1,37 @@
+appId: com.example.careconnect
+---
+# E2E Test 2: SOS Emergency Button Flow
+- launchApp
+
+# Quick login to dashboard
+- tapOn: "Login"
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 5000
+
+# Verify SOS button is visible
+- assertVisible: "SOS EMERGENCY"
+
+# Tap SOS button
+- tapOn: "SOS EMERGENCY"
+
+# Wait for dialog to appear
+- extendedWaitUntil:
+    visible: "Emergency Alert"
+    timeout: 3000
+
+# Verify confirmation dialog contents
+- assertVisible: "Emergency Alert"
+- assertVisible: "Send SOS"
+- assertVisible: "Cancel"
+
+# Cancel the alert
+- tapOn: "Cancel"
+
+# Verify dialog dismissed and back to dashboard
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 2000
+
+# Confirm dialog is gone
+- assertNotVisible: "Emergency Alert"

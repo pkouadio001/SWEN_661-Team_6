@@ -1,0 +1,36 @@
+appId: com.example.careconnect
+---
+# E2E Test 4: Profile Settings Flow
+- launchApp
+
+# Login to dashboard
+- tapOn: "Login"
+- extendedWaitUntil:
+    visible: "Profile & Settings"
+    timeout: 5000
+
+# Navigate to Profile Settings
+- tapOn: "Profile & Settings"
+- extendedWaitUntil:
+    visible: "Full Name"
+    timeout: 3000
+
+# Verify profile information fields
+- assertVisible: "Full Name"
+- assertVisible: "Email"
+- assertVisible: "Username"
+- assertVisible: "Role"
+
+# Verify settings sections
+- assertVisible: "Change PIN"
+- assertVisible: "High Contrast Mode"
+
+# Scroll down to see more settings (if needed)
+- scroll
+
+# Navigate back to dashboard
+- back
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 3000
+- assertVisible: "SOS EMERGENCY"
