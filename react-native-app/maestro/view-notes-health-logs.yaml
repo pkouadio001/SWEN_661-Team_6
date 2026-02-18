@@ -1,0 +1,26 @@
+appId: com.xxmetasolxx.buildertorn # <-- replace with your real appId
+---
+- launchApp
+
+- tapOn:
+    text: "Login"
+    index: 0
+# Go to Tasks tab/button (based on your bottom nav)
+- tapOn:
+    text: "Login"
+    index: 1
+
+# If you have a card/button to open Today’s Tasks
+# (your UI shows "Today's Tasks" in multiple places, so this may work)
+- tapOn:
+    text: "Notes & Health Logs"
+    index: 0
+
+- tapOn:
+    text: "Health Logs"
+    index: 0
+
+# Verify we’re on the Health Logs screen
+- assertVisible: "Health Logs"
+- assertVisible: "Blood Pressure"
+- assertVisible: "Heart Rate"
