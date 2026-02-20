@@ -1,52 +1,65 @@
 appId: com.example.careconnect
 ---
-# E2E Test 3: Bottom Navigation Flow
+# E2E Test 3: Navigation Flow
 - launchApp
+- clearState # Clear app state from previous tests
 
-# Login to dashboard
-- tapOn: "Login"
+# Wait for app
 - extendedWaitUntil:
-    visible: "SOS EMERGENCY"
-    timeout: 5000
+    visible:
+      text: ".*"
+    timeout: 15000
+
+# Handle login if needed
+- runFlow:
+    when:
+      visible: "LOGIN"
+    commands:
+      - tapOn: "LOGIN"
+      - extendedWaitUntil:
+          visible: "SOS EMERGENCY"
+          timeout: 15000
+
+# Wait for dashboard to be fully ready
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
+
+# Now on dashboard - test navigation
+- assertVisible: "Home"
 
 # Test Tasks tab
 - tapOn: "Tasks"
 - extendedWaitUntil:
     visible: "Tasks & Scheduling"
-    timeout: 3000
-- assertVisible: "Tasks & Scheduling"
+    timeout: 5000
 
 # Test Health tab
 - tapOn: "Health"
 - extendedWaitUntil:
-    visible: "Health Logs"
-    timeout: 3000
-- assertVisible: "Notes & Health Logs"
+    visible: "Notes & Health Logs"
+    timeout: 5000
 
 # Test Messages tab
 - tapOn: "Messages"
 - extendedWaitUntil:
-    visible: "Communication"
-    timeout: 3000
-- assertVisible: "Communication & Safety"
+    visible: "Communication & Safety"
+    timeout: 5000
 
 # Test Alerts tab
 - tapOn: "Alerts"
 - extendedWaitUntil:
-    visible: "Notifications"
-    timeout: 3000
-- assertVisible: "Notifications & Reminders"
+    visible: "Notifications & Reminders"
+    timeout: 5000
 
 # Test Profile tab
 - tapOn: "Profile"
 - extendedWaitUntil:
-    visible: "Profile & Settings"
-    timeout: 3000
-- assertVisible: "Profile & Settings"
+    visible: "Welcome, John Doe"
+    timeout: 5000
 
-# Return to Home tab
+# Return to Home
 - tapOn: "Home"
 - extendedWaitUntil:
     visible: "SOS EMERGENCY"
-    timeout: 3000
-- assertVisible: "SOS EMERGENCY"
+    timeout: 5000

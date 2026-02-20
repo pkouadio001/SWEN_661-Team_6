@@ -1,0 +1,7 @@
+appId: com.example.careconnect
+---
+# Debug: See what's actually on screen
+- launchApp
+- takeScreenshot: screen1.png
+- scroll
+- takeScreenshot: screen2.png

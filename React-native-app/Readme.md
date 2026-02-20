@@ -82,8 +82,8 @@ After running, Jest will generate a coverage summary in the terminal and create 
 
 To open the HTML report:
 
-open coverage/lcov-report/index.html # macOS
-start coverage/lcov-report/index.html # Windows
+open coverage/lcov-report/index.html   # macOS
+start coverage/lcov-report/index.html  # Windows
 🧪 5. Run a Specific Test File
 
 To run a single test file:
@@ -101,7 +101,7 @@ app/_tests_/
 
 Test files follow this naming convention:
 
-\*.test.tsx
+*.test.tsx
 
 Example:
 
@@ -130,9 +130,9 @@ Testing Library configuration
 Make sure AsyncStorage is mocked in jest.setup.ts:
 
 jest.mock(
-"@react-native-async-storage/async-storage",
-() =>
-require("@react-native-async-storage/async-storage/jest/async-storage-mock")
+  "@react-native-async-storage/async-storage",
+  () =>
+    require("@react-native-async-storage/async-storage/jest/async-storage-mock")
 );
 ❌ Expo bundling error referencing testing-library
 
@@ -149,3 +149,28 @@ Test files are NOT imported by production files
 If tests behave strangely:
 
 npx jest --clearCache
+
+## ♿ Accessibility Testing
+
+This app follows WCAG 2.1 Level AA accessibility standards. See [ACCESSIBILITY_TESTING.md](./ACCESSIBILITY_TESTING.md) for comprehensive testing guidelines.
+
+### Quick Start
+
+**Automated Testing:**
+```bash
+# Run all accessibility tests
+npm test -- accessibility.test.tsx
+
+# Run all tests
+npm test
+```
+
+**Manual Testing:**
+- **Android TalkBack:** Enable in Settings → Accessibility → TalkBack
+- **iOS VoiceOver:** Enable in Settings → Accessibility → VoiceOver (or Cmd+F5 in simulator)
+
+See [ACCESSIBILITY_TESTING.md](./ACCESSIBILITY_TESTING.md) for detailed instructions on:
+- Using React Native Testing Library accessibility matchers
+- Testing with TalkBack (Android)
+- Testing with VoiceOver (iOS)
+- Accessibility checklists and best practices

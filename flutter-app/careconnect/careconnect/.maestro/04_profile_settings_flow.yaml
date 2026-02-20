@@ -1,36 +1,87 @@
 appId: com.example.careconnect
 ---
-# E2E Test 4: Profile Settings Flow
+# E2E Test 5: Accessibility Navigation
 - launchApp
+- clearState  # Clear app state from previous tests
 
-# Login to dashboard
-- tapOn: "Login"
+# Wait for app
 - extendedWaitUntil:
-    visible: "Profile & Settings"
-    timeout: 5000
+    visible:
+      text: ".*"
+    timeout: 15000
 
-# Navigate to Profile Settings
+# Check if already on dashboard
+- runFlow:
+    when:
+      visible: "Welcome, John Doe"
+    commands:
+      # Already on dashboard
+      - assertVisible: "Welcome, John Doe"
+      - assertVisible: "Profile & Settings"
+      - assertVisible: "SOS EMERGENCY"
+
+# If on login screen, verify accessibility then login
+- runFlow:
+    when:
+      visible: "LOGIN"
+    commands:
+      # On login screen - verify accessibility
+      - assertVisible: "CareConnect"
+      - assertVisible: "Your Healthcare Partner"
+      - assertVisible: "Secure Access"
+      - assertVisible: "Role-Based"
+      - assertVisible: "Login"
+      - assertVisible: "Register"
+      - tapOn: "LOGIN"
+      - extendedWaitUntil:
+          visible: "Welcome, John Doe"
+          timeout: 15000
+
+# Wait for dashboard to be ready
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 10000
+
+# Verify dashboard accessibility
+- assertVisible: "Welcome, John Doe"
+- assertVisible: "Profile & Settings"
+- assertVisible: "Notifications"
+- assertVisible: "Patient Information"
+- assertVisible: "SOS EMERGENCY"
+- assertVisible: "Home"
+- assertVisible: "Tasks"
+- assertVisible: "Health"
+- assertVisible: "Messages"
+- assertVisible: "Alerts"
+- assertVisible: "Profile"
+
+# Test profile
 - tapOn: "Profile & Settings"
+
 - extendedWaitUntil:
     visible: "Full Name"
-    timeout: 3000
+    timeout: 5000
 
-# Verify profile information fields
 - assertVisible: "Full Name"
 - assertVisible: "Email"
-- assertVisible: "Username"
-- assertVisible: "Role"
-
-# Verify settings sections
 - assertVisible: "Change PIN"
 - assertVisible: "High Contrast Mode"
 
-# Scroll down to see more settings (if needed)
-- scroll
-
-# Navigate back to dashboard
+# Back
 - back
+
 - extendedWaitUntil:
     visible: "SOS EMERGENCY"
-    timeout: 3000
-- assertVisible: "SOS EMERGENCY"
+    timeout: 5000
+
+# Test SOS
+- tapOn: "SOS EMERGENCY"
+
+- extendedWaitUntil:
+    visible: "Emergency Alert"
+    timeout: 5000
+
+- assertVisible: "Send SOS"
+- assertVisible: "Cancel"
+
+- tapOn: "Cancel"

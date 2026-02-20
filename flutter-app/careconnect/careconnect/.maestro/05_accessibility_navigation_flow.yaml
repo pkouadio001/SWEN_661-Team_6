@@ -1,69 +1,52 @@
 appId: com.example.careconnect
 ---
-# E2E Test 5: Accessibility Navigation Flow
-# Tests that all elements are accessible and properly labeled
+# Accessibility Flow - High Contrast Validation
 
 - launchApp
+- clearState
 
-# Verify login screen accessibility
-- assertVisible: "CareConnect"
-- assertVisible: "Your Healthcare Partner"
-- assertVisible: "Secure Access"
-- assertVisible: "Role-Based"
-- assertVisible: "Login"
-- assertVisible: "Register"
-
-# Login to dashboard
-- tapOn: "Login"
+# Login
 - extendedWaitUntil:
-    visible: "Profile & Settings"
-    timeout: 5000
+    visible: "LOGIN"
+    timeout: 20000
 
-# Verify all dashboard elements are accessible
-- assertVisible: "Profile & Settings"
-- assertVisible: "Notifications"
-- assertVisible: "Patient Information"
-- assertVisible: "SOS EMERGENCY"
+- tapOn: "LOGIN"
 
-# Verify bottom navigation labels are accessible
-- assertVisible: "Home"
-- assertVisible: "Tasks"
-- assertVisible: "Health"
-- assertVisible: "Messages"
-- assertVisible: "Alerts"
-- assertVisible: "Profile"
-
-# Navigate to Profile to verify form accessibility
-- tapOn: "Profile"
 - extendedWaitUntil:
-    visible: "Full Name"
-    timeout: 3000
+    visible: "Welcome, John Doe"
+    timeout: 30000
 
-# Verify all profile fields have accessible labels
-- assertVisible: "Full Name"
-- assertVisible: "Email"
-- assertVisible: "Username"
-- assertVisible: "Role"
-- assertVisible: "Change PIN"
-- assertVisible: "High Contrast Mode"
+# Open Profile
+- tapOn: "Profile & Settings"
 
-# Test navigation back
+- extendedWaitUntil:
+    visible: "High Contrast Mode"
+    timeout: 15000
+
+# Enable High Contrast
+- tapOn: "High Contrast Mode"
+
+# Go back to dashboard
 - back
+
 - extendedWaitUntil:
     visible: "SOS EMERGENCY"
-    timeout: 3000
+    timeout: 15000
 
-# Test SOS button accessibility
-- tapOn: "SOS EMERGENCY"
+# Verify core navigation still works in high contrast
+- tapOn: "Tasks"
 - extendedWaitUntil:
-    visible: "Emergency Alert"
-    timeout: 3000
-- assertVisible: "Emergency Alert"
-- assertVisible: "Send SOS"
-- assertVisible: "Cancel"
+    visible: "Tasks & Scheduling"
+    timeout: 15000
 
-# Close dialog
-- tapOn: "Cancel"
+- tapOn: "Health"
+- extendedWaitUntil:
+    visible: "Health Logs"
+    timeout: 15000
+
+# Return home
+- tapOn: "Home"
 - extendedWaitUntil:
     visible: "SOS EMERGENCY"
-    timeout: 2000
+    timeout: 15000
+

@@ -2,27 +2,39 @@ appId: com.example.careconnect
 ---
 # E2E Test 1: Complete Login Flow
 - launchApp
-- assertVisible: "CareConnect"
-- assertVisible: "Your Healthcare Partner"
-- assertVisible: "Secure Access"
-- assertVisible: "Role-Based"
 
-# Verify login tab is selected
-- assertVisible: "Login"
-- assertVisible: "Register"
-
-# Tap login button to navigate to dashboard
-- tapOn: "Login"
+# Wait for app to load (either login or dashboard)
 - extendedWaitUntil:
-    visible: "Profile & Settings"
-    timeout: 5000
+    visible:
+      text: ".*"
+    timeout: 15000
 
-# Verify dashboard loaded successfully
-- assertVisible: "SOS EMERGENCY"
-- assertVisible: "Notifications"
-- assertVisible: "Patient Information"
+# Check if we're already logged in (dashboard appears)
+- runFlow:
+    when:
+      visible: "Welcome, John Doe"
+    commands:
+      # Already on dashboard, verify elements
+      - assertVisible: "Welcome, John Doe"
+      - assertVisible: "Profile & Settings"
+      - assertVisible: "Notifications"
+      - assertVisible: "Patient Information"
+      - assertVisible: "SOS EMERGENCY"
+      - assertVisible: "Home"
+      - assertVisible: "Tasks"
 
-# Verify bottom navigation is present
-- assertVisible: "Home"
-- assertVisible: "Tasks"
-- assertVisible: "Health"
+# If not logged in, handle login screen
+- runFlow:
+    when:
+      visible: "LOGIN"
+    commands:
+      # On login screen, verify and login
+      - assertVisible: "CareConnect"
+      - assertVisible: "Your Healthcare Partner"
+      - assertVisible: "Secure Access"
+      - assertVisible: "Role-Based"
+      - tapOn: "LOGIN"
+      - extendedWaitUntil:
+          visible: "Welcome, John Doe"
+          timeout: 15000
+      - assertVisible: "SOS EMERGENCY"

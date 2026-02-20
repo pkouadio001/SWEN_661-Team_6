@@ -1,0 +1,162 @@
+appId: com.example.careconnect
+---
+# Complete E2E Flow - Matching what we see in screenshot
+
+# ========================================
+# SECTION 1: Launch and Login
+# ========================================
+
+- launchApp
+
+# Wait for app
+- extendedWaitUntil:
+    visible:
+      text: ".*"
+    timeout: 30000
+
+# Wait for LOGIN button
+- extendedWaitUntil:
+    visible: "LOGIN"
+    timeout: 20000
+
+# Tap LOGIN
+- tapOn: "LOGIN"
+
+# Wait for dashboard - use Welcome message
+- extendedWaitUntil:
+    visible: "Welcome, John Doe"
+    timeout: 30000
+
+# Wait for Profile tile (we can see it in screenshot)
+- extendedWaitUntil:
+    visible: "Profile & Settings"
+    timeout: 20000
+
+# Scroll down to make sure SOS button is in view
+- scroll
+
+# Now verify SOS button (it's definitely there in your screenshot)
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 20000
+
+- assertVisible: "Welcome, John Doe"
+- assertVisible: "Profile & Settings"
+- assertVisible: "Notifications"
+- assertVisible: "Patient Information"
+- assertVisible: "SOS EMERGENCY"
+
+# ========================================
+# SECTION 2: SOS Emergency Flow
+# ========================================
+
+# Tap SOS button
+- tapOn: "SOS EMERGENCY"
+
+# Wait for dialog
+- extendedWaitUntil:
+    visible: "Emergency Alert"
+    timeout: 15000
+
+# Verify dialog
+- assertVisible: "Send SOS"
+- assertVisible: "Cancel"
+
+# Cancel
+- tapOn: "Cancel"
+
+# Wait for dashboard
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 15000
+
+# ========================================
+# SECTION 3: Navigation Flow
+# ========================================
+
+# Tap Tasks (we can see it in bottom nav)
+- tapOn:
+    point: "22%,96%"  # Tasks position in bottom nav
+
+- extendedWaitUntil:
+    visible: "Tasks & Scheduling"
+    timeout: 15000
+
+# Tap Health
+- tapOn:
+    point: "38%,96%"  # Health position
+
+- extendedWaitUntil:
+    visible: "Health Logs"
+    timeout: 15000
+
+# Tap Messages
+- tapOn:
+    point: "54%,96%"  # Messages position
+
+- extendedWaitUntil:
+    visible: "Messages"
+    timeout: 15000
+
+# Tap Alerts
+- tapOn:
+    point: "70%,96%"  # Alerts position
+
+- extendedWaitUntil:
+    visible: "Notifications"
+    timeout: 15000
+
+# Tap Profile
+- tapOn:
+    point: "86%,96%"  # Profile position
+
+- extendedWaitUntil:
+    visible: "Welcome, John Doe"
+    timeout: 15000
+
+# Tap Home to return
+- tapOn:
+    point: "6%,96%"  # Home position
+
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 15000
+
+# ========================================
+# SECTION 4: Profile Settings Flow
+# ========================================
+
+# Tap Profile & Settings tile
+- tapOn: "Profile & Settings"
+
+# Wait for profile
+- extendedWaitUntil:
+    visible: "Full Name"
+    timeout: 15000
+
+# Verify fields
+- assertVisible: "Full Name"
+- assertVisible: "Email"
+- assertVisible: "Username"
+- assertVisible: "Role"
+- assertVisible: "Change PIN"
+- assertVisible: "High Contrast Mode"
+
+# Go back
+- back
+
+# Wait for dashboard
+- extendedWaitUntil:
+    visible: "SOS EMERGENCY"
+    timeout: 15000
+
+# ========================================
+# SECTION 5: Final Verification
+# ========================================
+
+# Verify all key elements one more time
+- assertVisible: "Welcome, John Doe"
+- assertVisible: "Profile & Settings"
+- assertVisible: "Notifications"
+- assertVisible: "Patient Information"
+- assertVisible: "SOS EMERGENCY"
