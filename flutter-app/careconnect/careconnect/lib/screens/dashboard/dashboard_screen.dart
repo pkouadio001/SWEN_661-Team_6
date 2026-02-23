@@ -35,16 +35,23 @@ class DashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
         child: Column(
           children: [
+            // Welcome card with semantic header
             AppCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Welcome, John Doe',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                children: [
+                  Semantics(
+                    header: true,
+                    child: const Text(
+                      'Welcome, John Doe',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 6),
-                  Text(
+                  const SizedBox(height: 6),
+                  const Text(
                     'Select a module to continue',
                     style: TextStyle(color: Color(0xFF6B7A90)),
                   ),
@@ -52,12 +59,18 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
+
+            // Dashboard tiles with semantics
             for (final t in tiles) ...[
               _DashboardTile(t),
               const SizedBox(height: 12),
             ],
+
             const SizedBox(height: 12),
-            _SOSButton(),
+
+            // SOS button with enhanced semantics
+            const _SOSButton(),
+
             const SizedBox(height: 20),
           ],
         ),
@@ -81,30 +94,41 @@ class _DashboardTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
+      enabled: true,
       label: tile.title,
+      // Ensure the label is exposed to the test
       child: InkWell(
         onTap: tile.onTap,
         borderRadius: BorderRadius.circular(16),
         child: AppCard(
           child: Row(
             children: [
-              Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEAF2FF),
-                  borderRadius: BorderRadius.circular(14),
+              // Icon container - exclude from semantics since parent has label
+              ExcludeSemantics(
+                child: Container(
+                  width: 46,
+                  height: 46,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEAF2FF),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(tile.icon, color: const Color(0xFF0E67FF)),
                 ),
-                child: Icon(tile.icon, color: const Color(0xFF0E67FF)),
               ),
               const SizedBox(width: 12),
+
+              // Text with merged semantics
               Expanded(
-                child: Text(
-                  tile.title,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+                child: MergeSemantics(
+                  child: Text(
+                    tile.title,
+                    style: const TextStyle(fontWeight: FontWeight.w800),
+                  ),
                 ),
               ),
-              const Icon(Icons.chevron_right),
+
+              // Chevron - exclude from semantics (decorative)
+              ExcludeSemantics(child: const Icon(Icons.chevron_right)),
             ],
           ),
         ),
@@ -120,8 +144,9 @@ class _SOSButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Emergency SOS button',
-      hint: 'Tap to request emergency assistance',
+      enabled: true,
+      label: 'SOS EMERGENCY',
+      hint: 'Tap to request emergency assistance and notify your contacts',
       child: InkWell(
         onTap: () => _confirmSOS(context),
         borderRadius: BorderRadius.circular(20),
@@ -140,16 +165,27 @@ class _SOSButton extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.warning_amber_rounded, color: Colors.white, size: 28),
-              SizedBox(width: 12),
-              Text(
-                'SOS EMERGENCY',
-                style: TextStyle(
+            children: [
+              // Icon - exclude from semantics since parent has label
+              ExcludeSemantics(
+                child: const Icon(
+                  Icons.warning_amber_rounded,
                   color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 0.8,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 12),
+
+              // Text with merged semantics
+              MergeSemantics(
+                child: const Text(
+                  'SOS EMERGENCY',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.8,
+                  ),
                 ),
               ),
             ],
@@ -163,33 +199,49 @@ class _SOSButton extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: false, // user must choose
-      builder: (_) => AlertDialog(
-        title: const Text(
-          'Emergency Alert',
-          style: TextStyle(fontWeight: FontWeight.w800),
-        ),
-        content: const Text(
-          'This will notify your emergency contacts and caregivers.\n\nDo you want to continue?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFD32F2F),
-            ),
-            onPressed: () {
-              context.pop();
-              _triggerSOS(context);
-            },
+      builder: (_) => Semantics(
+        namesRoute: true,
+        label: 'Emergency alert confirmation dialog',
+        child: AlertDialog(
+          title: Semantics(
+            header: true,
             child: const Text(
-              'Send SOS',
+              'Emergency Alert',
               style: TextStyle(fontWeight: FontWeight.w800),
             ),
           ),
-        ],
+          content: const Text(
+            'This will notify your emergency contacts and caregivers.\n\nDo you want to continue?',
+          ),
+          actions: [
+            Semantics(
+              button: true,
+              label: 'Cancel emergency alert',
+              child: TextButton(
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop(),
+                child: const Text('Cancel'),
+              ),
+            ),
+            Semantics(
+              button: true,
+              label: 'Send emergency SOS now',
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD32F2F),
+                ),
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  _triggerSOS(context);
+                },
+                child: const Text(
+                  'Send SOS',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -208,6 +260,7 @@ class _SOSButton extends StatelessWidget {
           'Emergency alert sent!',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
+        duration: Duration(seconds: 3),
       ),
     );
   }
