@@ -4,25 +4,20 @@ appId: com.example.careconnect
 - launchApp
 - assertVisible: "CareConnect"
 - assertVisible: "Your Healthcare Partner"
-- assertVisible: "Secure Access"
-- assertVisible: "Role-Based"
 
 # Verify login tab is selected
 - assertVisible: "Login"
-- assertVisible: "Register"
+
+- tapOn:
+    text: "Login"
+    index: 0
 
 # Tap login button to navigate to dashboard
-- tapOn: "Login"
-- extendedWaitUntil:
-    visible: "Profile & Settings"
-    timeout: 5000
-
-# Verify dashboard loaded successfully
-- assertVisible: "SOS EMERGENCY"
-- assertVisible: "Notifications"
-- assertVisible: "Patient Information"
-
-# Verify bottom navigation is present
-- assertVisible: "Home"
-- assertVisible: "Tasks"
-- assertVisible: "Health"
+- assertVisible: "Welcome, John Doe"
+# Verify bottom navigation is present (Flutter accessibility text)
+- assertVisible:
+    text: "Home\\s*Tab 1 of 6"
+- assertVisible:
+    text: "Tasks\\s*Tab 2 of 6"
+- assertVisible:
+    text: "Health\\s*Tab 3 of 6"

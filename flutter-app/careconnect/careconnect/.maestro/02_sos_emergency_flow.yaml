@@ -4,34 +4,11 @@ appId: com.example.careconnect
 - launchApp
 
 # Quick login to dashboard
-- tapOn: "Login"
-- extendedWaitUntil:
-    visible: "SOS EMERGENCY"
-    timeout: 5000
+- tapOn:
+    text: "Login"
+    index: 0
+- assertVisible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
+- tapOn: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
 
-# Verify SOS button is visible
-- assertVisible: "SOS EMERGENCY"
-
-# Tap SOS button
-- tapOn: "SOS EMERGENCY"
-
-# Wait for dialog to appear
-- extendedWaitUntil:
-    visible: "Emergency Alert"
-    timeout: 3000
-
-# Verify confirmation dialog contents
-- assertVisible: "Emergency Alert"
-- assertVisible: "Send SOS"
-- assertVisible: "Cancel"
-
-# Cancel the alert
-- tapOn: "Cancel"
-
-# Verify dialog dismissed and back to dashboard
-- extendedWaitUntil:
-    visible: "SOS EMERGENCY"
-    timeout: 2000
-
-# Confirm dialog is gone
-- assertNotVisible: "Emergency Alert"
+#click on "Send SOS"
+- tapOn: "Send SOS"

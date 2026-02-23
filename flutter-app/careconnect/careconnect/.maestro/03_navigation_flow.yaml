@@ -6,47 +6,47 @@ appId: com.example.careconnect
 # Login to dashboard
 - tapOn: "Login"
 - extendedWaitUntil:
-    visible: "SOS EMERGENCY"
+    visible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
     timeout: 5000
 
 # Test Tasks tab
-- tapOn: "Tasks"
+- tapOn: "Tasks\\s*Tab 2 of 6"
 - extendedWaitUntil:
     visible: "Tasks & Scheduling"
     timeout: 3000
 - assertVisible: "Tasks & Scheduling"
 
 # Test Health tab
-- tapOn: "Health"
+- tapOn: "Health\\s*Tab 3 of 6"
 - extendedWaitUntil:
-    visible: "Health Logs"
+    visible: "Track your health and notes"
     timeout: 3000
 - assertVisible: "Notes & Health Logs"
 
 # Test Messages tab
-- tapOn: "Messages"
+- tapOn: "Messages\\s*Tab 4 of 6"
 - extendedWaitUntil:
-    visible: "Communication"
+    visible: "Messages and emergency contacts"
     timeout: 3000
 - assertVisible: "Communication & Safety"
 
 # Test Alerts tab
-- tapOn: "Alerts"
+- tapOn: "Alerts\\s*Tab 5 of 6"
 - extendedWaitUntil:
-    visible: "Notifications"
+    visible: "Upcoming this Week"
     timeout: 3000
 - assertVisible: "Notifications & Reminders"
 
 # Test Profile tab
-- tapOn: "Profile"
+- tapOn: "Profile\\s*Tab 6 of 6" 
 - extendedWaitUntil:
     visible: "Profile & Settings"
     timeout: 3000
 - assertVisible: "Profile & Settings"
 
 # Return to Home tab
-- tapOn: "Home"
+- tapOn: "Home\\s*Tab 1 of 6"
 - extendedWaitUntil:
-    visible: "SOS EMERGENCY"
+    visible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
     timeout: 3000
-- assertVisible: "SOS EMERGENCY"
+- assertVisible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"

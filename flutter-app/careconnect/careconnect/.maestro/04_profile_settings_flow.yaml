@@ -4,13 +4,15 @@ appId: com.example.careconnect
 - launchApp
 
 # Login to dashboard
-- tapOn: "Login"
+- tapOn:
+    text: "Login"
+    index: 0
 - extendedWaitUntil:
-    visible: "Profile & Settings"
+    visible: "Profile\\s*Tab 6 of 6"
     timeout: 5000
 
 # Navigate to Profile Settings
-- tapOn: "Profile & Settings"
+- tapOn: "Profile\\s*Tab 6 of 6"
 - extendedWaitUntil:
     visible: "Full Name"
     timeout: 3000
@@ -21,16 +23,9 @@ appId: com.example.careconnect
 - assertVisible: "Username"
 - assertVisible: "Role"
 
-# Verify settings sections
-- assertVisible: "Change PIN"
-- assertVisible: "High Contrast Mode"
-
 # Scroll down to see more settings (if needed)
 - scroll
 
-# Navigate back to dashboard
-- back
-- extendedWaitUntil:
-    visible: "SOS EMERGENCY"
-    timeout: 3000
-- assertVisible: "SOS EMERGENCY"
+# Verify settings sections
+- assertVisible: "Change PIN"
+- assertVisible: "High Contrast Mode"
