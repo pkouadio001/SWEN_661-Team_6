@@ -1,0 +1,23 @@
+appId: com.example.careconnect
+---
+# E2E Test 1: Complete Login Flow
+- launchApp
+- assertVisible: "CareConnect"
+- assertVisible: "Your Healthcare Partner"
+
+# Verify login tab is selected
+- assertVisible: "Login"
+
+- tapOn:
+    text: "Login"
+    index: 0
+
+# Tap login button to navigate to dashboard
+- assertVisible: "Welcome, John Doe"
+# Verify bottom navigation is present (Flutter accessibility text)
+- assertVisible:
+    text: "Home\\s*Tab 1 of 6"
+- assertVisible:
+    text: "Tasks\\s*Tab 2 of 6"
+- assertVisible:
+    text: "Health\\s*Tab 3 of 6"

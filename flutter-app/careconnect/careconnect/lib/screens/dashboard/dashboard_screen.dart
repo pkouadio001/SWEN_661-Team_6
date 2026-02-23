@@ -132,7 +132,7 @@ class _SOSButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.red.withOpacity(0.35),
+                color: Colors.red.withValues(alpha: 0.35),
                 blurRadius: 20,
                 offset: const Offset(0, 12),
               ),

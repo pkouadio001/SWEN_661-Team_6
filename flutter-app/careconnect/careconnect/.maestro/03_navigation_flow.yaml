@@ -1,0 +1,52 @@
+appId: com.example.careconnect
+---
+# E2E Test 3: Bottom Navigation Flow
+- launchApp
+
+# Login to dashboard
+- tapOn: "Login"
+- extendedWaitUntil:
+    visible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
+    timeout: 5000
+
+# Test Tasks tab
+- tapOn: "Tasks\\s*Tab 2 of 6"
+- extendedWaitUntil:
+    visible: "Tasks & Scheduling"
+    timeout: 3000
+- assertVisible: "Tasks & Scheduling"
+
+# Test Health tab
+- tapOn: "Health\\s*Tab 3 of 6"
+- extendedWaitUntil:
+    visible: "Track your health and notes"
+    timeout: 3000
+- assertVisible: "Notes & Health Logs"
+
+# Test Messages tab
+- tapOn: "Messages\\s*Tab 4 of 6"
+- extendedWaitUntil:
+    visible: "Messages and emergency contacts"
+    timeout: 3000
+- assertVisible: "Communication & Safety"
+
+# Test Alerts tab
+- tapOn: "Alerts\\s*Tab 5 of 6"
+- extendedWaitUntil:
+    visible: "Upcoming this Week"
+    timeout: 3000
+- assertVisible: "Notifications & Reminders"
+
+# Test Profile tab
+- tapOn: "Profile\\s*Tab 6 of 6" 
+- extendedWaitUntil:
+    visible: "Profile & Settings"
+    timeout: 3000
+- assertVisible: "Profile & Settings"
+
+# Return to Home tab
+- tapOn: "Home\\s*Tab 1 of 6"
+- extendedWaitUntil:
+    visible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"
+    timeout: 3000
+- assertVisible: "Emergency SOS button\nSOS EMERGENCY, Tap to request emergency assistance"

@@ -83,7 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             'Your Healthcare Partner',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xFF64748B),
+                              color: Color(0xFF475569),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -186,7 +186,7 @@ class _AuthScreenState extends State<AuthScreen> {
         const Text(
           'Enter your credentials to access your account',
           style: TextStyle(
-            color: Color(0xFF6B7A90),
+            color: Color(0xFF475569),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -490,7 +490,7 @@ class _SegmentTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 44,
+      height: 56,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: const Color(0xFFEFEFF3),
@@ -716,7 +716,7 @@ class _GradientButton extends StatelessWidget {
       label: text,
       child: SizedBox(
         width: double.infinity,
-        height: 48,
+        height: 52, // Increased for accessibility compliance
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
