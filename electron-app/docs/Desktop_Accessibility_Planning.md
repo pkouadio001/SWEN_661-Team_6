@@ -3,7 +3,7 @@
 **Application:** CareConnect Parkinson's Care Management System  
 **Platform:** Electron (Windows, macOS, Linux)  
 **Date:** February 19, 2026  
-**Assignee:** [Your Name]
+**Assignee:** Team 6
 
 ---
 

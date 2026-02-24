@@ -4,7 +4,7 @@
 **Platform:** Electron Desktop Application  
 **Target OS:** Windows 10+, macOS 10.15+, Linux (Ubuntu 20.04+)  
 **Date:** February 19, 2026  
-**Author:** [Your Name]
+**Author:** Team 6
 
 ---
 
