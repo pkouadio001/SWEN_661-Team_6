@@ -13,8 +13,8 @@ export default function Sidebar() {
     { label: "Symptoms", path: "/symptoms" },
     { label: "My Health", path: "/my-health" },
     { label: "Exercises", path: "/exercises" },
-    { label: "Activities"},
-    { label: "Emergency" },
+    { label: "Activities", path: "/activities" },
+    { label: "Emergency", path: "/emergency" },
     { label: "Size Demo", path: "/size-demo" }
   ];
 

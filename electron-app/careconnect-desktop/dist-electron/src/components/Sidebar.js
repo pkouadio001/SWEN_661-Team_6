@@ -13,8 +13,8 @@ function Sidebar() {
         { label: "Symptoms", path: "/symptoms" },
         { label: "My Health", path: "/my-health" },
         { label: "Exercises", path: "/exercises" },
-        { label: "Activities" },
-        { label: "Emergency" },
+        { label: "Activities", path: "/activities" },
+        { label: "Emergency", path: "/emergency" },
         { label: "Size Demo", path: "/size-demo" }
     ];
     return ((0, jsx_runtime_1.jsxs)("aside", { className: "sidebar", children: [(0, jsx_runtime_1.jsxs)("div", { className: "brand", children: [(0, jsx_runtime_1.jsx)("div", { className: "brandMark", children: "\u2661" }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("div", { className: "brandTitle", children: "Care Connect" }), (0, jsx_runtime_1.jsx)("div", { className: "brandSub", children: "Your Health Companion" })] })] }), (0, jsx_runtime_1.jsx)("nav", { className: "nav", children: items.map((it) => {

@@ -7,6 +7,7 @@ exports.default = Router;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_router_dom_1 = require("react-router-dom");
 const react_1 = require("react");
+//import AppLayout from "../app/layouts/AppLayout";
 const LoginScreen_1 = __importDefault(require("../screens/LoginScreen"));
 const DashboardScreen_1 = __importDefault(require("../screens/DashboardScreen"));
 const MyHealthScreen_1 = __importDefault(require("../screens/MyHealthScreen"));
@@ -15,12 +16,13 @@ const SizeDemoScreen_1 = __importDefault(require("../screens/SizeDemoScreen"));
 const ExercisesScreen_1 = __importDefault(require("../screens/ExercisesScreen"));
 const MyInfoScreen_1 = __importDefault(require("../screens/MyInfoScreen"));
 const SymptomsScreen_1 = __importDefault(require("../screens/SymptomsScreen"));
+const EmergencyScreen_1 = __importDefault(require("../screens/EmergencyScreen"));
+const ActivitiesScreen_1 = __importDefault(require("../screens/ActivitiesScreen"));
 function Router() {
     const navigate = (0, react_router_dom_1.useNavigate)();
-    // Main -> Renderer IPC navigation
     (0, react_1.useEffect)(() => {
         const off = window.careconnect.onNavigate((route) => navigate(route));
         return () => off();
     }, [navigate]);
-    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/login", element: (0, jsx_runtime_1.jsx)(LoginScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/dashboard", element: (0, jsx_runtime_1.jsx)(DashboardScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/my-health", element: (0, jsx_runtime_1.jsx)(MyHealthScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/medications", element: (0, jsx_runtime_1.jsx)(MedicationsScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/size-demo", element: (0, jsx_runtime_1.jsx)(SizeDemoScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/exercises", element: (0, jsx_runtime_1.jsx)(ExercisesScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/my-info", element: (0, jsx_runtime_1.jsx)(MyInfoScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/symptoms", element: (0, jsx_runtime_1.jsx)(SymptomsScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "*", element: (0, jsx_runtime_1.jsx)(react_router_dom_1.Navigate, { to: "/login", replace: true }) })] }));
+    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/login", element: (0, jsx_runtime_1.jsx)(LoginScreen_1.default, {}) }), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Route, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/dashboard", element: (0, jsx_runtime_1.jsx)(DashboardScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/my-health", element: (0, jsx_runtime_1.jsx)(MyHealthScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/medications", element: (0, jsx_runtime_1.jsx)(MedicationsScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/size-demo", element: (0, jsx_runtime_1.jsx)(SizeDemoScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/exercises", element: (0, jsx_runtime_1.jsx)(ExercisesScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/my-info", element: (0, jsx_runtime_1.jsx)(MyInfoScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/symptoms", element: (0, jsx_runtime_1.jsx)(SymptomsScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/activities", element: (0, jsx_runtime_1.jsx)(ActivitiesScreen_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/emergency", element: (0, jsx_runtime_1.jsx)(EmergencyScreen_1.default, {}) })] }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "*", element: (0, jsx_runtime_1.jsx)(react_router_dom_1.Navigate, { to: "/login", replace: true }) })] }));
 }

@@ -9,4 +9,5 @@ const client_1 = __importDefault(require("react-dom/client"));
 const react_router_dom_1 = require("react-router-dom");
 const App_1 = __importDefault(require("./app/App"));
 require("./styles/app.css");
-client_1.default.createRoot(document.getElementById("root")).render((0, jsx_runtime_1.jsx)(react_1.default.StrictMode, { children: (0, jsx_runtime_1.jsx)(react_router_dom_1.HashRouter, { children: (0, jsx_runtime_1.jsx)(App_1.default, {}) }) }));
+const activitiesStore_1 = require("./state/activitiesStore");
+client_1.default.createRoot(document.getElementById("root")).render((0, jsx_runtime_1.jsx)(react_1.default.StrictMode, { children: (0, jsx_runtime_1.jsx)(activitiesStore_1.ActivitiesProvider, { children: (0, jsx_runtime_1.jsx)(react_router_dom_1.HashRouter, { children: (0, jsx_runtime_1.jsx)(App_1.default, {}) }) }) }));
