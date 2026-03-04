@@ -13,12 +13,18 @@ function getWindow() {
     return mainWindow;
 }
 async function loadRenderer(win) {
-    const devUrl = process.env.ELECTRON_RENDERER_URL;
+    // allow either variable depending on the tooling/version
+    const devUrl = process.env.ELECTRON_RENDERER_URL || process.env.VITE_DEV_SERVER_URL;
     if (devUrl) {
+        // running in development; renderer is served by Vite
         await win.loadURL(devUrl);
     }
     else {
-        await win.loadFile(node_path_1.default.join(process.cwd(), "dist", "index.html"));
+        // packaged – main.js sits under dist-electron/electron/main
+        // the built renderer output lives in the `dist` folder at the project root,
+        // which is copied by electron-builder into the app resources.
+        const indexPath = node_path_1.default.join(__dirname, "../../../dist/index.html");
+        await win.loadFile(indexPath);
     }
 }
 electron_1.app.whenReady().then(async () => {
