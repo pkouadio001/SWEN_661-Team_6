@@ -1,5 +1,8 @@
 import { useState } from "react";
 import TextSizeModal from "../screens/components/TextSizeModal";
+import { useUiScale } from "../state/uiScale";
+
+const AUTH_KEY = "careconnect.authenticated";
 
 type Props = {
   onLogout: () => void;
@@ -8,22 +11,37 @@ type Props = {
 
 export default function TopBar({ onLogout, onQuit }: Props) {
   const [showSizeModal, setShowSizeModal] = useState(false);
+  const { highContrast, setHighContrast } = useUiScale();
 
   return (
     <>
       <header className="topbar">
         <div className="topActions">
-          <button className="chip">Colors / High Contrast</button>
+          <button
+            aria-pressed={highContrast}
+            className={`chip ${highContrast ? "chipActive" : ""}`}
+            onClick={() => setHighContrast(!highContrast)}
+          >
+            {highContrast ? "Standard Colors" : "High Contrast"}
+          </button>
 
           <button
-            className="topBtn"
+            className="chip topBtn"
             onClick={() => setShowSizeModal(true)}
           >
             Text &amp; Button Size
           </button>
 
           <button className="chip">Print Preview</button>
-          <button className="chip" onClick={onLogout}>Logout</button>
+          <button
+            className="chip"
+            onClick={() => {
+              localStorage.removeItem(AUTH_KEY);
+              onLogout();
+            }}
+          >
+            Logout
+          </button>
           <button className="btn btnDanger" onClick={onQuit}>
             ✕ Quit
           </button>

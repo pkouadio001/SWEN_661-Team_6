@@ -11,8 +11,9 @@ const TopBar_1 = __importDefault(require("../components/TopBar"));
 const Sidebar_1 = __importDefault(require("../components/Sidebar"));
 const Panel_1 = __importDefault(require("../components/Panel"));
 const TileCard_1 = __importDefault(require("../components/TileCard"));
+const uiScale_1 = require("../state/uiScale");
 const renderWithRouter = (component) => {
-    return (0, react_1.render)((0, jsx_runtime_1.jsx)(react_router_dom_1.BrowserRouter, { children: component }));
+    return (0, react_1.render)((0, jsx_runtime_1.jsx)(react_router_dom_1.BrowserRouter, { children: (0, jsx_runtime_1.jsx)(uiScale_1.UiScaleProvider, { children: component }) }));
 };
 afterEach(() => {
     jest.clearAllTimers();
@@ -35,7 +36,7 @@ describe('TopBar Component - Comprehensive Coverage', () => {
         });
         test('renders all action buttons', () => {
             renderWithRouter((0, jsx_runtime_1.jsx)(TopBar_1.default, { onLogout: mockOnLogout, onQuit: mockOnQuit }));
-            expect(react_1.screen.getByText(/colors/i)).toBeInTheDocument();
+            expect(react_1.screen.getByText(/high contrast/i)).toBeInTheDocument();
             expect(react_1.screen.getByText(/text.*button.*size/i)).toBeInTheDocument();
             expect(react_1.screen.getByText(/print/i)).toBeInTheDocument();
             expect(react_1.screen.getByText(/logout/i)).toBeInTheDocument();
@@ -45,9 +46,9 @@ describe('TopBar Component - Comprehensive Coverage', () => {
     describe('Button Interactions', () => {
         test('colors button is clickable', () => {
             renderWithRouter((0, jsx_runtime_1.jsx)(TopBar_1.default, { onLogout: mockOnLogout, onQuit: mockOnQuit }));
-            const colorsBtn = react_1.screen.getByText(/colors/i);
+            const colorsBtn = react_1.screen.getByRole('button', { name: /high contrast/i });
             react_1.fireEvent.click(colorsBtn);
-            expect(colorsBtn).toBeInTheDocument();
+            expect(react_1.screen.getByRole('button', { name: /standard colors/i })).toBeInTheDocument();
         });
         test('print button is clickable', () => {
             renderWithRouter((0, jsx_runtime_1.jsx)(TopBar_1.default, { onLogout: mockOnLogout, onQuit: mockOnQuit }));

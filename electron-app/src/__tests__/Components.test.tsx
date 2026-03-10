@@ -5,10 +5,15 @@ import TopBar from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import Panel from '../components/Panel';
 import TileCard from '../components/TileCard';
+import { UiScaleProvider } from '../state/uiScale';
 
 
 const renderWithRouter = (component: React.ReactElement) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
+  return render(
+    <BrowserRouter>
+      <UiScaleProvider>{component}</UiScaleProvider>
+    </BrowserRouter>,
+  );
 };
 
 afterEach(() => {
@@ -37,7 +42,7 @@ describe('TopBar Component - Comprehensive Coverage', () => {
 
     test('renders all action buttons', () => {
       renderWithRouter(<TopBar onLogout={mockOnLogout} onQuit={mockOnQuit} />);
-      expect(screen.getByText(/colors/i)).toBeInTheDocument();
+      expect(screen.getByText(/high contrast/i)).toBeInTheDocument();
       expect(screen.getByText(/text.*button.*size/i)).toBeInTheDocument();
       expect(screen.getByText(/print/i)).toBeInTheDocument();
       expect(screen.getByText(/logout/i)).toBeInTheDocument();
@@ -48,9 +53,9 @@ describe('TopBar Component - Comprehensive Coverage', () => {
   describe('Button Interactions', () => {
     test('colors button is clickable', () => {
       renderWithRouter(<TopBar onLogout={mockOnLogout} onQuit={mockOnQuit} />);
-      const colorsBtn = screen.getByText(/colors/i);
+      const colorsBtn = screen.getByRole('button', { name: /high contrast/i });
       fireEvent.click(colorsBtn);
-      expect(colorsBtn).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /standard colors/i })).toBeInTheDocument();
     });
 
     test('print button is clickable', () => {

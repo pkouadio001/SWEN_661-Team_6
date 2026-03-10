@@ -11,6 +11,86 @@
   --red: #dc2626;
 }
 
+body.high-contrast {
+  --bg: #000000;
+  --card: #0a0a0a;
+  --border: #ffffff;
+  --text: #ffffff;
+  --muted: #f0f0f0;
+  --blue: #00b7ff;
+  --purple: #ffd400;
+  --pink: #ff5fa2;
+  --green: #39ff14;
+  --red: #ff4d4d;
+}
+
+/* Force readable foreground/background in high-contrast mode,
+   even where legacy rules use fixed hex colors. */
+body.high-contrast,
+body.high-contrast .main,
+body.high-contrast .content,
+body.high-contrast .shell,
+body.high-contrast .sidebar,
+body.high-contrast .topbar,
+body.high-contrast .panel,
+body.high-contrast .tile,
+body.high-contrast .banner,
+body.high-contrast .modal,
+body.high-contrast .logModal,
+body.high-contrast .medCard,
+body.high-contrast .historyPanel,
+body.high-contrast .historyPanelV2,
+body.high-contrast .card {
+  background: var(--card) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+body.high-contrast .bg {
+  background: #000000 !important;
+}
+
+body.high-contrast .muted,
+body.high-contrast .pageSub,
+body.high-contrast .brandSub,
+body.high-contrast .hint,
+body.high-contrast .panelSub,
+body.high-contrast .tileSub,
+body.high-contrast .medDose,
+body.high-contrast .logModalSub {
+  color: var(--muted) !important;
+}
+
+body.high-contrast .navItem,
+body.high-contrast .chip,
+body.high-contrast .btn,
+body.high-contrast .topBtn,
+body.high-contrast .xBtn,
+body.high-contrast .iconBtn,
+body.high-contrast .moodChip,
+body.high-contrast .hpTab,
+body.high-contrast .hpRange,
+body.high-contrast .logTab,
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  color: #ffffff !important;
+  background: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+body.high-contrast .navItem.active,
+body.high-contrast .hpTab.active,
+body.high-contrast .hpRange.active,
+body.high-contrast .logTab.active,
+body.high-contrast .moodChip.active,
+body.high-contrast .btnPrimary,
+body.high-contrast .btnSuccess,
+body.high-contrast .btnDanger {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; color: var(--text); background: var(--bg); }
 
@@ -153,6 +233,24 @@ body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial
   font-weight: 700;
   font-size: 12px;
   color: #344054;
+}
+
+.chipActive {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+body.high-contrast .chip {
+  background: #000000;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+body.high-contrast .chipActive {
+  background: #1f2937;
+  color: #ffffff;
+  border-color: #ffffff;
 }
 
 .content {

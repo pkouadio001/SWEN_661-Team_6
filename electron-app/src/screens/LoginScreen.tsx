@@ -8,6 +8,8 @@ function isSixDigits(pin: string) {
   return /^[0-9]{6}$/.test(pin);
 }
 
+const AUTH_KEY = "careconnect.authenticated";
+
 export default function LoginScreen() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -32,6 +34,7 @@ export default function LoginScreen() {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+    localStorage.setItem(AUTH_KEY, "true");
     navigate("/dashboard", { state: { username: username.trim() } });
   }
 

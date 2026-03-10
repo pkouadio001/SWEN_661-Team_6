@@ -45,6 +45,16 @@ function setAppMenu(getWindow) {
         {
             label: "View",
             submenu: [
+                {
+                    label: "Go Home",
+                    accelerator: "Esc",
+                    click: () => {
+                        const win = getWindow();
+                        const payload = { route: "/dashboard" };
+                        win?.webContents.send(channels_1.IPC.NAVIGATE, payload);
+                    }
+                },
+                { type: "separator" },
                 { role: "reload", accelerator: "CmdOrCtrl+R" },
                 { role: "toggleDevTools", accelerator: "CmdOrCtrl+Shift+I" },
                 { role: "togglefullscreen", accelerator: "F11" }
