@@ -1,33 +1,51 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useApp } from '../context/AppContext';
 import { Heart, ArrowLeft, Eye, EyeOff, ArrowRight, HelpCircle } from 'lucide-react';
 
-export function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+const signInSchema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+type SignInForm = z.infer<typeof signInSchema>;
+
+export function SignInPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useApp();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+    setError,
+  } = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: { email: '', password: '' },
+  });
+
+  const onSubmit = async (data: SignInForm) => {
+    const success = await login(data.email, data.password);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Navigate to dashboard
-    navigate('/dashboard');
+    if (success) {
+      navigate('/dashboard');
+    } else {
+      setError('root', { message: 'Invalid email or password. Please try again.' });
+    }
   };
 
   const useDemoAccount = () => {
-    setEmail('demo@careconnect.com');
-    setPassword('demo123');
+    setValue('email', 'demo@careconnect.com');
+    setValue('password', 'demo123');
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Back to Home Link */}
       <div className="p-6">
         <Link
           to="/"
@@ -38,10 +56,8 @@ export function SignInPage() {
         </Link>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          {/* Logo and Welcome */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-cyan-500 rounded-2xl mb-4">
               <Heart className="w-10 h-10 text-white" fill="white" />
@@ -50,7 +66,6 @@ export function SignInPage() {
             <p className="text-lg text-gray-600">Welcome Back</p>
           </div>
 
-          {/* Sign In Card */}
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
               Sign In to Your Account
@@ -59,7 +74,14 @@ export function SignInPage() {
               Please enter your login information
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              {/* Error Message */}
+              {errors.root && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-red-800 text-sm">{errors.root.message}</p>
+                </div>
+              )}
+
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -68,12 +90,15 @@ export function SignInPage() {
                 <input
                   id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="demo@careconnect.com"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  {...register('email')}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                )}
               </div>
 
               {/* Password Field */}
@@ -85,11 +110,11 @@ export function SignInPage() {
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="••••••"
-                    required
+                    className={`w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      errors.password ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    {...register('password')}
                   />
                   <button
                     type="button"
@@ -99,15 +124,18 @@ export function SignInPage() {
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+                )}
               </div>
 
               {/* Sign In Button */}
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isSubmitting}
                 className="w-full py-3 px-4 bg-gradient-to-r from-primary-500 to-cyan-500 text-white rounded-lg hover:from-primary-600 hover:to-cyan-600 transition-all font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
               >
-                {loading ? (
+                {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Signing in...</span>
@@ -120,18 +148,13 @@ export function SignInPage() {
                 )}
               </button>
 
-              {/* Forgot Password */}
               <div className="text-center">
-                <button
-                  type="button"
-                  className="text-primary-500 hover:text-primary-600 text-sm font-medium"
-                >
+                <button type="button" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
                   Forgot Password?
                 </button>
               </div>
             </form>
 
-            {/* Demo Account Box */}
             <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
               <h3 className="text-sm font-semibold text-blue-900 mb-2">Demo Account</h3>
               <div className="space-y-1 text-sm text-blue-800 mb-3">
@@ -147,7 +170,6 @@ export function SignInPage() {
               </button>
             </div>
 
-            {/* Help Link */}
             <div className="mt-6 text-center">
               <button
                 type="button"
@@ -159,7 +181,6 @@ export function SignInPage() {
             </div>
           </div>
 
-          {/* Footer */}
           <p className="text-center text-gray-500 text-sm mt-8">
             © 2026 CareConnect. Designed for easy access.
           </p>

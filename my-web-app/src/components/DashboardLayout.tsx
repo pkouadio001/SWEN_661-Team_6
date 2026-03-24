@@ -1,9 +1,11 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Heart, LayoutDashboard, Pill, Calendar, Activity, Phone, Settings, LogOut } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 export function DashboardLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useApp();
 
   const getPageLabel = () => {
     const path = location.pathname;
@@ -43,7 +45,6 @@ export function DashboardLayout() {
           justifyContent: 'space-between',
           height: 76,
         }}>
-          {/* Logo */}
           <Link to="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 14 }}>
             <div style={{
               width: 52, height: 52, borderRadius: 12,
@@ -64,7 +65,6 @@ export function DashboardLayout() {
             </div>
           </Link>
 
-          {/* Nav Links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {navLinks.map((link) => (
               <Link
@@ -88,9 +88,8 @@ export function DashboardLayout() {
             ))}
           </div>
 
-          {/* Sign Out */}
           <button
-            onClick={() => navigate('/')}
+            onClick={() => { logout(); navigate('/'); }}
             style={{
               width: 52, height: 52,
               border: '2px solid #E2E8F0',
