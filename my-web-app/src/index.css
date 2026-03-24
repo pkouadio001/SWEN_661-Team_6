@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #F8FAFC;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 2px;
+}
+
+/* Accessibility base styles for Parkinson's patients */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* Larger base button size */
+button {
+  min-height: 52px;
+  font-size: 16px;
+}
+
+/* Larger base input size */
+input, select, textarea {
+  min-height: 52px;
+  font-size: 16px !important;
+  padding: 12px 16px !important;
+}
