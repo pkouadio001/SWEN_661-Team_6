@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:careconnect/main.dart';
 
 void main() {
+  setUpAll(() {
+    SharedPreferences.setMockInitialValues({
+      'high_contrast': false,
+      'push_enabled': true,
+    });
+  });
+
   group('WCAG 2.1 Level AA Accessibility Tests', () {
     testWidgets('App meets text contrast guidelines', (WidgetTester tester) async {
       await tester.pumpWidget(const ProviderScope(child: CareConnectApp()));

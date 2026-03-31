@@ -28,7 +28,7 @@ class _AddTaskDialogState extends ConsumerState<AddTaskDialog> {
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 18),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -202,7 +202,9 @@ class _PickerField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w700)),
+        ExcludeSemantics(
+          child: Text(label, style: const TextStyle(fontWeight: FontWeight.w700)),
+        ),
         const SizedBox(height: 6),
         Semantics(
           button: true,

@@ -6,11 +6,20 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:careconnect/main.dart';
 
 void main() {
+  setUpAll(() {
+    SharedPreferences.setMockInitialValues({
+      'high_contrast': false,
+      'push_enabled': true,
+    });
+  });
+
   testWidgets('CareConnectApp smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const CareConnectApp());
+    await tester.pumpWidget(const ProviderScope(child: CareConnectApp()));
   });
 }

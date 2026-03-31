@@ -92,7 +92,7 @@ void main() {
         ).first,
       );
 
-      expect(sizedBox.height, 46);
+      expect(sizedBox.height, 52);
     });
 
     testWidgets('has full width', (WidgetTester tester) async {
