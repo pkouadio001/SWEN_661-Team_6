@@ -16,16 +16,12 @@ class DashboardScreen extends StatelessWidget {
       _Tile(
         'Notifications',
         Icons.notifications_none,
-        () => ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Hook this to /notifications later')),
-        ),
+        () => context.go('/alerts'),
       ),
       _Tile(
         'Patient Information',
         Icons.badge_outlined,
-        () => ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Hook this to /patient later')),
-        ),
+        () => context.go('/patient'),
       ),
     ];
 

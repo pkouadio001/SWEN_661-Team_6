@@ -90,4 +90,50 @@ void main() {
 
     expect(find.text('PROFILE SETTINGS'), findsOneWidget);
   });
+
+  testWidgets('Tapping Notifications navigates to /alerts', (tester) async {
+    final router = GoRouter(
+      initialLocation: '/home',
+      routes: [
+        GoRoute(path: '/home', builder: (_, __) => const DashboardScreen()),
+        GoRoute(
+          path: '/alerts',
+          builder: (_, __) =>
+              const Scaffold(body: Center(child: Text('ALERTS'))),
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Notifications'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('ALERTS'), findsOneWidget);
+  });
+
+  testWidgets('Tapping Patient Information navigates to /patient', (
+    tester,
+  ) async {
+    final router = GoRouter(
+      initialLocation: '/home',
+      routes: [
+        GoRoute(path: '/home', builder: (_, __) => const DashboardScreen()),
+        GoRoute(
+          path: '/patient',
+          builder: (_, __) =>
+              const Scaffold(body: Center(child: Text('PATIENT INFO'))),
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Patient Information'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('PATIENT INFO'), findsOneWidget);
+  });
 }
